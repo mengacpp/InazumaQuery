@@ -2,6 +2,7 @@
 
 .cache/
 .ignore/
+.clangd
 build/
 
 scripts/__pycache__
