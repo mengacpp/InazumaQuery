@@ -7,7 +7,7 @@
 #define INAZUMA_API __declspec(dllimport)
 #endif
 #else
-#define INAZUMA_EXPORTS
+#define INAZUMA_API
 #endif
 
 #ifdef __cplusplus

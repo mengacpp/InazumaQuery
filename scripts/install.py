@@ -1,24 +1,19 @@
 import utils
-import sys
 import os
 
-def install(install_prefix: str = "\\usr\\local") -> int:
+def install(install_prefix: str = None) -> int:
+    if install_prefix is None:
+        install_prefix = r"\usr\local" if os.name == "nt" else "/usr/local"
+
+    prefix = install_prefix.replace("\\", "/")
+
     commands = [
         ["cmake", "-B", "build", "-S", ".", "--fresh"],
         ["cmake", "--build", "build"],
-        ["cmake", "--install", "build", "--prefix", install_prefix]
+        ["cmake", "--install", "build", "--prefix", prefix],
     ]
 
-    result = utils.run_processes(commands)
-
-    if result != 0:
-        return result
-
-    # bin_path = os.path.join(install_prefix, "bin")
-
-    # print("{:8}adding {} to user path".format("[INFO]", bin_path))
-    # utils.add_to_user_path(bin_path)
-    return 0
+    return utils.run_processes(commands)
 
 if __name__ == "__main__":
     install()
