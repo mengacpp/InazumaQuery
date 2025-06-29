@@ -1,19 +1,20 @@
-import utils
-import os
-
-def install(install_prefix: str = None) -> int:
-    if install_prefix is None:
-        install_prefix = r"\usr\local" if os.name == "nt" else "/usr/local"
-
-    prefix = install_prefix.replace("\\", "/")
-
-    commands = [
-        ["cmake", "-B", "build", "-S", ".", "--fresh"],
-        ["cmake", "--build", "build"],
-        ["cmake", "--install", "build", "--prefix", prefix],
-    ]
-
-    return utils.run_processes(commands)
+#!/usr/bin/env python3
+import sys
+import cmake_utils as inazuma
+from utils import exit_if_one_fails as check
 
 if __name__ == "__main__":
-    install()
+    specs = inazuma.CmakeSpecifications(
+        fresh_generation=True
+    )
+
+    if len(sys.argv) >= 2:
+        specs.install_prefix = sys.argv[1]
+
+    inazuma.specifications = specs
+
+    check([
+        inazuma.generate(),
+        inazuma.compile_and_link(),
+        inazuma.install()
+        ])

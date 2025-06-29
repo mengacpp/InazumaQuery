@@ -1,8 +1,5 @@
 # inazuma-api
 
-> [!CAUTION]
-> `scripts/install.py` will install everything to `usr/local` for now. You need to manually modify the script to change the install directory. I Will fix this someday :)
-
 A C++ API for querying and comparing Inazuma Eleven player stats.
 
 ## Credits

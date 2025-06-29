@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 def print_list(items: list):
     for item in items:
@@ -25,3 +26,12 @@ def run_processes(commands: list) -> int:
         if(result != 0):
             return result
     return 0
+
+def exit_if_fail(result: int):
+    if result != 0:
+        sys.exit(result)
+
+def exit_if_one_fails(results: list):
+    for result in results:
+        if result != 0:
+            sys.exit(result)
