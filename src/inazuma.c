@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "inazuma/hmap.h"
 #include "inazuma/player.h"
 #include "inazuma/utils.h"
 
@@ -17,7 +18,7 @@ struct InaPlayerDB
 {
     InaPlayer *players;
     size_t player_count;
-    // uint16_t *fullname_index;
+    InaHmap *fullname_hmap;
     // uint16_t *nickname_index;
 };
 
@@ -115,14 +116,13 @@ InaPlayerDB *ina_open_player_db(const char *csv_path)
     }
     (*db).player_count = 0;
 
-    // db->fullname_index =
-    //     malloc(INA_PLAYER_DB_MAX_PLAYERS * sizeof(*db->fullname_index));
-    // if (!db->fullname_index)
-    // {
-    //     perror("ERROR: malloc failed");
-    //     ina_close_player_db(&db);
-    //     return NULL;
-    // }
+    db->fullname_hmap = ina_hmap_create(INA_PLAYER_DB_MAX_PLAYERS);
+
+    if (!db->fullname_hmap)
+    {
+        ina_close_player_db(&db);
+        return NULL;
+    }
 
     // db->nickname_index =
     //     malloc(INA_PLAYER_DB_MAX_PLAYERS * sizeof(*db->nickname_index));
@@ -148,7 +148,7 @@ void ina_close_player_db(InaPlayerDB **db)
     if (!(*db)) return;
 
     free((*db)->players);
-    // free((*db)->fullname_index);
+    ina_hmap_destroy(&(*db)->fullname_hmap);
     // free((*db)->nickname_index);
 
     free(*db);
@@ -176,6 +176,27 @@ InaPlayer *ina_get_players(InaPlayerDB const *db, size_t max_count,
     }
 
     return result;
+}
+
+InaPlayer *ina_get_player_by_fullname(InaPlayerDB const *db,
+                                      char const *fullname)
+{
+    char fullname_normalised[INA_FULLNAME_MAX_LEN];
+
+    ina_normalise(fullname, fullname_normalised, INA_FULLNAME_MAX_LEN);
+
+    bool found;
+    unsigned int id =
+        ina_hmap_get(db->fullname_hmap, fullname_normalised, &found);
+
+    if (!found)
+    {
+        fprintf(stderr, "ERROR: key '%s' not found in hash map\n",
+                fullname_normalised);
+        return NULL;
+    }
+
+    return &db->players[id];
 }
 
 int parse_player_csv(InaPlayerDB *db, const char *csv_path)
@@ -216,11 +237,25 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
             return INA_ERROR;
         }
 
+
         if (!assign_to_player_by_col(&db->players[current_row],
                                      (InaPlayerDBColType)current_column,
                                      cell_content))
         {
             return INA_ERROR;
+        }
+
+        if ((InaPlayerDBColType)current_column ==
+            INA_PLAYERDB_COL_TYPE_FULLNAME)
+        {
+            char const *fullname_norm =
+                db->players[current_row].fullname_normalised;
+
+            if (!ina_hmap_add(db->fullname_hmap, fullname_norm, current_row))
+            {
+                fprintf(stderr, "ERROR: Failed to add '%s' to hash map\n",
+                        fullname_norm);
+            }
         }
 
         // increment counters
