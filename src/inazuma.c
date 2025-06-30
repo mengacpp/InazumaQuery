@@ -4,5 +4,5 @@
 
 void inazuma_hello()
 {
-    printf(INAZUMA_DATA_DIR "\n");
+    printf("Data directory: " INAZUMA_DATA_DIR "\n");
 }

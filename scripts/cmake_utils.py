@@ -21,6 +21,7 @@ specifications = CmakeSpecifications()
 def generate() -> int:
     if specifications.build_type != "Debug" and specifications.build_type != "Release":
        print(("{:8}Invalid build type '" + (specifications.build_type or "") + "'").format("[ERROR]"))
+       return 1
 
     command = ["cmake", "-B", specifications.build_dir, 
                                "-S", specifications.source_dir, 
@@ -41,5 +42,7 @@ def install() -> int:
     return utils.run_process(["cmake", "--install", specifications.build_dir + "/src", "--prefix", prefix])
 
 def test() -> int:
-    return utils.run_process(["ctest",
-                              "--test-dir", specifications.build_dir])
+
+    command = ["ctest", "--test-dir", specifications.build_dir, "--output-on-failure"]
+
+    return utils.run_process(command)

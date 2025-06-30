@@ -3,10 +3,11 @@ from utils import exit_if_one_fails as check
 
 if __name__ == "__main__":
 
-    specifications = inazuma.CmakeSpecifications(fresh_generation=True, build_type="Release", build_tests=False)
-
-    inazuma.specifications = specifications
-
+    inazuma.specifications = inazuma.CmakeSpecifications(
+        fresh_generation=True, 
+        build_type="Release", 
+        build_tests=False
+        )
 
     check([
         inazuma.generate(),
