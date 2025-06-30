@@ -3,8 +3,6 @@ cmake_minimum_required(VERSION 3.15)
 # 1. Make install dirs relocatable & follow distro conventions:
 include(GNUInstallDirs)
 
-project(inazuma LANGUAGES C VERSION 0.1)
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_C_STANDARD 99)
@@ -16,9 +14,11 @@ file(GLOB_RECURSE SOURCES *.c)
 
 add_library(inazuma SHARED ${HEADERS} ${SOURCES})
 
-target_compile_definitions(inazuma PRIVATE 
-    INAZUMA_EXPORTS 
-    INAZUMA_DATA_DIR="${CMAKE_INSTALL_FULL_DATADIR}/inazuma")
+target_compile_definitions(inazuma 
+    PUBLIC
+        INA_DATA_DIR="${CMAKE_INSTALL_FULL_DATADIR}/inazuma/data"    
+    PRIVATE 
+        INA_EXPORTS )
 target_include_directories(inazuma
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

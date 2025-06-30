@@ -1,0 +1,20 @@
+#ifndef INAZUMA_UTILS_H_
+#define INAZUMA_UTILS_H_
+
+#include "inazuma/core.h"
+#include <stddef.h>
+
+typedef struct InaList InaList;
+
+INA_API char *ina_read_file_content(char const *path_to_file);
+
+INA_API void ina_normalise(char const *str, char *result, size_t len);
+
+INA_API int ina_normalise_strcmp(char const *str1, char const *str2);
+
+INA_API void ina_retrieve_digits(char const *str, char *result, size_t len);
+
+INA_API int ina_string_to_int(char const *str, int base);
+
+
+#endif // INAZUMA_UTILS_H_

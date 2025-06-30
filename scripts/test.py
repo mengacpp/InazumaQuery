@@ -6,9 +6,14 @@ if __name__ == "__main__":
     inazuma.specifications = inazuma.CmakeSpecifications(
         fresh_generation=True
         )
+    
+    args = []
+
+    if len(sys.argv) > 1:
+        args = sys.argv[1:]
 
     check([
         inazuma.generate(),
         inazuma.compile_and_link(),
-        inazuma.test()
+        inazuma.test(args)
         ])

@@ -41,8 +41,10 @@ def install() -> int:
     prefix = specifications.install_prefix.replace("\\", "/")
     return utils.run_process(["cmake", "--install", specifications.build_dir + "/src", "--prefix", prefix])
 
-def test() -> int:
+def test(args= []) -> int:
 
-    command = ["ctest", "--test-dir", specifications.build_dir, "--output-on-failure"]
+    command = ["ctest", "--test-dir", specifications.build_dir]
 
-    return utils.run_process(command)
+    command = command + args
+
+    return utils.run_process(command, capture_output=False)

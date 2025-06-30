@@ -5,12 +5,12 @@ def print_list(items: list):
     for item in items:
         print(item, end=" ")
 
-def run_process(command: list) -> int:
+def run_process(command: list, capture_output = True) -> int:
     print("{:8}running".format("[INFO]"), end=" ")
     print_list(command)
     print()
 
-    result = subprocess.run(command, capture_output=True, text=True)
+    result = subprocess.run(command, capture_output, text=True)
     print(result.stdout)
 
     if result.returncode != 0:
@@ -20,7 +20,7 @@ def run_process(command: list) -> int:
 
     return result.returncode
 
-def run_processes(commands: list) -> int:
+def run_processes(commands: list, capture_output = True) -> int:
     for cmd in commands:
         result = run_process(cmd)
         if(result != 0):

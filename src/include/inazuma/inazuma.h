@@ -1,21 +1,23 @@
 #pragma once
 
-#if defined(_WIN32)
-#ifdef INAZUMA_EXPORTS
-#define INAZUMA_API __declspec(dllexport)
-#else
-#define INAZUMA_API __declspec(dllimport)
-#endif
-#else
-#define INAZUMA_API
-#endif
+#include <stddef.h>
+
+#include "inazuma/core.h"
+#include "inazuma/player.h"
+
+typedef struct InaPlayerDB InaPlayerDB;
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-    INAZUMA_API void inazuma_hello();
+    INA_API InaPlayerDB *ina_open_player_db(char const *csv_path);
+
+    INA_API InaPlayer *ina_get_players(InaPlayerDB const *db, size_t max_count,
+                                       size_t *count);
+
+    INA_API void ina_close_player_db(InaPlayerDB **db);
 
 #ifdef __cplusplus
 }

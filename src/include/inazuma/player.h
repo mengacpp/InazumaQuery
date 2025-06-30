@@ -1,30 +1,33 @@
 #ifndef __INAZUMA_PLAYER_H__
 #define __INAZUMA_PLAYER_H__
 
-#define IZM_FULLNAME_MAX_LEN 25
+#include "inazuma/core.h"
+
+#define INA_FULLNAME_MAX_LEN                                                   \
+    25 // seems to be 22 in ie3. no data for other databases
 
 #include <stdint.h>
 
 typedef enum
 {
-    POSITION_GK = 0,
-    POSITION_DF,
-    POSITION_MF,
-    POSITION_FW
-} InazumaPlayerPosition;
+    PLAYER_POSITION_GK = 0,
+    PLAYER_POSITION_DF,
+    PLAYER_POSITION_MF,
+    PLAYER_POSITION_FW
+} InaPlayerPosition;
 
 typedef enum
 {
-    GENDER_MALE = 0,
-    GENDER_FEMALE
-} InazumaPlayerGender;
+    PLAYER_GENDER_MALE = 0,
+    PLAYER_GENDER_FEMALE
+} InaPlayerGender;
 
 typedef enum
 {
-    SIZE_SMALL,
-    SIZE_MEDIUM,
-    SIZE_LARGE
-} InazumaPlayerSize;
+    PLAYER_SIZE_SMALL,
+    PLAYER_SIZE_MEDIUM,
+    PLAYER_SIZE_LARGE
+} InaPlayerSize;
 
 typedef enum
 {
@@ -32,20 +35,20 @@ typedef enum
     ELEMENT_AIR,
     ELEMENT_FIRE,
     ELEMENT_WOOD
-} InazumaPlayerElement;
+} InaPlayerElement;
 
 
 typedef struct
 {
-    char fullname[IZM_FULLNAME_MAX_LEN];
-    char fullname_normalised[IZM_FULLNAME_MAX_LEN];
-    char nickname[IZM_FULLNAME_MAX_LEN];
-    char nickname_normalised[IZM_FULLNAME_MAX_LEN];
+    char fullname[INA_FULLNAME_MAX_LEN];
+    char fullname_normalised[INA_FULLNAME_MAX_LEN];
+    char nickname[INA_FULLNAME_MAX_LEN];
+    char nickname_normalised[INA_FULLNAME_MAX_LEN];
 
-    InazumaPlayerPosition position;
-    InazumaPlayerGender gender;
-    InazumaPlayerSize size;
-    InazumaPlayerElement element;
+    InaPlayerPosition position;
+    InaPlayerGender gender;
+    InaPlayerSize size;
+    InaPlayerElement element;
 
     uint8_t lvl99_fp, lvl99_tp, lvl99_kick, lvl99_body, lvl99_control,
         lvl99_guard, lvl99_speed, lvl99_stamina, lvl99_guts;
@@ -60,23 +63,35 @@ typedef struct
 
     uint8_t total, max_total;
 
-    char move1_name[IZM_FULLNAME_MAX_LEN];
-    char move1_name_normalised[IZM_FULLNAME_MAX_LEN];
+    char move1_name[INA_FULLNAME_MAX_LEN];
+    char move1_name_normalised[INA_FULLNAME_MAX_LEN];
     uint8_t move1_learns_at;
 
-    char move2_name[IZM_FULLNAME_MAX_LEN];
-    char move2_name_normalised[IZM_FULLNAME_MAX_LEN];
+    char move2_name[INA_FULLNAME_MAX_LEN];
+    char move2_name_normalised[INA_FULLNAME_MAX_LEN];
     uint8_t move2_learns_at;
 
-    char move3_name[IZM_FULLNAME_MAX_LEN];
-    char move3_name_normalised[IZM_FULLNAME_MAX_LEN];
+    char move3_name[INA_FULLNAME_MAX_LEN];
+    char move3_name_normalised[INA_FULLNAME_MAX_LEN];
     uint8_t move3_learns_at;
 
-    char move4_name[IZM_FULLNAME_MAX_LEN];
-    char move4_name_normalised[IZM_FULLNAME_MAX_LEN];
+    char move4_name[INA_FULLNAME_MAX_LEN];
+    char move4_name_normalised[INA_FULLNAME_MAX_LEN];
     uint8_t move4_learns_at;
 
     uint16_t hex_id;
-} InazumaPlayerInfos;
+} InaPlayer;
+
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+    INA_API void ina_player_print(InaPlayer const *p);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __INAZUMA_PLAYER_H__
