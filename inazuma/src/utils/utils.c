@@ -1,4 +1,4 @@
-#include "inazuma/utils.h"
+#include "inazuma/utils/utils.h"
 
 #include <ctype.h>
 #include <errno.h>

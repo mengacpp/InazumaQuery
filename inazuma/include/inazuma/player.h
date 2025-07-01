@@ -82,6 +82,10 @@ typedef struct
     uint16_t hex_id;
 } InaPlayer;
 
+typedef enum InaPlayerAttributeType
+{
+    INVALID,
+} InaPlayerAttributeType;
 
 BEGIN_EXTERN_C
 

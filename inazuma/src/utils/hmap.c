@@ -73,7 +73,7 @@ int ina_hmap_add(InaHmap *hmap, char const *key, uint16_t value)
         if (strcmp(hmap->keys[h], key) == 0)
         {
             hmap->values[h] = value;
-            return INA_SUCCESS;
+            return 1;
         }
 
         h = (original_h + i * i) % hmap->count;
@@ -82,7 +82,7 @@ int ina_hmap_add(InaHmap *hmap, char const *key, uint16_t value)
         if (h == original_h)
         {
             ina_errno = INA_ERRT_HMAP_NOSPACE;
-            return INA_FAILURE;
+            return 0;
         }
     }
 
@@ -90,7 +90,7 @@ int ina_hmap_add(InaHmap *hmap, char const *key, uint16_t value)
     hmap->used[h] = true;
     hmap->values[h] = value;
 
-    return INA_SUCCESS;
+    return 1;
 }
 
 uint16_t ina_hmap_get(InaHmap *hmap, char const *key, bool *found)

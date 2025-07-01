@@ -39,7 +39,7 @@ def compile_and_link():
 def install() -> int:
 
     prefix = specifications.install_prefix.replace("\\", "/")
-    return utils.run_process(["cmake", "--install", specifications.build_dir + "/src", "--prefix", prefix])
+    return utils.run_process(["cmake", "--install", specifications.build_dir + "/inazuma", "--prefix", prefix])
 
 def test(args= []) -> int:
 

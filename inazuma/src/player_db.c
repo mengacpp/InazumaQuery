@@ -15,6 +15,11 @@
 #include "inazuma/utils/utils.h"
 
 
+// TODO this file really needs refactor
+//  this is a mess should break into smaller functions maybe / ensure better
+//  error checking
+
+
 #define INA_PLAYER_DB_MAX_PLAYERS 2500
 
 struct InaPlayerDB
@@ -22,7 +27,6 @@ struct InaPlayerDB
     InaPlayer *players;
     size_t player_count;
     InaHmap *fullname_hmap;
-    // uint16_t *nickname_index;
 };
 
 #define entry(x) INA_PLAYERDB_COL_TYPE_##x
@@ -191,7 +195,7 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
 {
     char *csv_content = ina_read_file_content(csv_path);
 
-    if (!csv_content) return INA_FAILURE;
+    if (!csv_content) return 0;
 
     char *current = csv_content;
 
@@ -221,7 +225,7 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
         if (current_column >= (size_t)INA_PLAYERDB_COL_TYPE_INVALID)
         {
             ina_errno = INA_ERRT_CSV_STRUCTURE_INVALID;
-            return INA_FAILURE;
+            return 0;
         }
 
 
@@ -229,7 +233,7 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
                                      (InaPlayerDBColType)current_column,
                                      cell_content))
         {
-            return INA_FAILURE;
+            return 0;
         }
 
         if ((InaPlayerDBColType)current_column ==
@@ -240,7 +244,7 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
 
             if (!ina_hmap_add(db->fullname_hmap, fullname_norm, current_row))
             {
-                return INA_FAILURE;
+                return 0;
             }
         }
 
@@ -262,7 +266,7 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
 
     free(csv_content);
 
-    return INA_SUCCESS;
+    return 1;
 }
 
 #define assign_stat_and_break(stat)                                            \
@@ -314,7 +318,7 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
         {
             fprintf(stderr, "ERROR: Invalid player position '%s'\n",
                     cell_content);
-            return INA_FAILURE;
+            return 0;
         }
 
         break;
@@ -331,7 +335,7 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
         else
         {
             ina_errno = INA_ERRT_CSV_CELL_INVALID;
-            return INA_FAILURE;
+            return 0;
         }
 
         break;
@@ -351,7 +355,7 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
         else
         {
             ina_errno = INA_ERRT_CSV_CELL_INVALID;
-            return INA_FAILURE;
+            return 0;
         }
 
         break;
@@ -374,7 +378,7 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
         else
         {
             ina_errno = INA_ERRT_CSV_CELL_INVALID;
-            return INA_FAILURE;
+            return 0;
         }
 
         break;
@@ -554,17 +558,17 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
     case INA_PLAYERDB_COL_TYPE_INVALID:
     {
         ina_errno = INA_ERRT_CSV_STRUCTURE_INVALID;
-        return INA_FAILURE;
+        return 0;
     }
     default:
     {
         INA_NOT_IMPLEMENTED;
         ina_errno = INA_ERRT_UNKNOWN;
-        return INA_FAILURE;
+        return 0;
     }
     }
 
-    return INA_SUCCESS;
+    return 1;
 }
 
 int get_stat_from_cell(char const *cell_content)

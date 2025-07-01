@@ -1,6 +1,10 @@
 #ifndef INAZUMA_CORE_CORE_H_
 #define INAZUMA_CORE_CORE_H_
 
+
+/*
+    Export / Import macro
+*/
 #if defined(_WIN32)
 #ifdef INA_EXPORTS
 #define INA_API __declspec(dllexport)
@@ -11,6 +15,9 @@
 #define INA_API
 #endif
 
+/*
+    Thread local macro
+*/
 #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
 #define INA_THREAD_LOCAL _Thread_local
 #elif defined(__GNUC__) || defined(__clang__)
@@ -19,9 +26,9 @@
 #error "Thread-local storage unsupported"
 #endif
 
-#define INA_SUCCESS 1
-#define INA_FAILURE 0
-
+/*
+    Extern "C" Macro
+*/
 #ifdef __cplusplus
 #define BEGIN_EXTERN_C                                                         \
     extern "C"                                                                 \
@@ -32,10 +39,16 @@
 #define END_EXTERN_C
 #endif
 
+/*
+    Database paths
+*/
 #define INA_DATA_PLAYER_IE3_DIR INA_DATA_DIR "/players/inazuma_eleven_3.csv"
 #define INA_DATA_PLAYER_IE2_DIR INA_DATA_DIR "/players/inazuma_eleven_2.csv"
 #define INA_DATA_PLAYER_IE_DIR INA_DATA_DIR "/players/inazuma_eleven.csv"
 
+/*
+    Util function
+*/
 #define INA_NOT_IMPLEMENTED                                                    \
     fprintf(stderr, "ERROR: function %s not implemented yet!\n", __func__);
 

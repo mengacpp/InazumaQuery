@@ -13,6 +13,7 @@ typedef enum InaErrorType
     err(PARAM_INVALID),
     err(HMAP_NOSPACE),
     err(HMAP_NOTFOUND),
+    err(LIST_OOB),
     err(STDERROR),
     err(UNKNOWN)
 } InaErrorType;
@@ -23,7 +24,7 @@ extern INA_THREAD_LOCAL int ina_stderrno;
 
 BEGIN_EXTERN_C
 
-INA_API char *ina_strerrno(InaErrorType errno);
+INA_API char *ina_strerrno(InaErrorType ina_errno);
 
 END_EXTERN_C
 

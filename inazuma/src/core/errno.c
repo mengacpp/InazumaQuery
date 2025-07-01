@@ -7,21 +7,23 @@ INA_THREAD_LOCAL int ina_stderrno = 0;
 
 #define ERRMSG(errt, msg) static char MSG_##errt[] = msg;
 
-ERRMSG(INA_ERRT_OK, "NO ERROR")
-ERRMSG(INA_ERRT_CSV_STRUCTURE_INVALID, "Invalid CSV Structure")
-ERRMSG(INA_ERRT_CSV_CELL_INVALID, "Invalid CSV Cell content")
-ERRMSG(INA_ERRT_PARAM_INVALID, "Invalid function parameter")
-ERRMSG(INA_ERRT_PARAM_NULL, "Null function parameter")
-ERRMSG(INA_ERRT_UNKNOWN, "Unknown error")
-ERRMSG(INA_ERRT_HMAP_NOSPACE, "No space to add a new key in hash map")
-ERRMSG(INA_ERRT_HMAP_NOTFOUND, "Key was not found in hash")
+ERRMSG(INA_ERRT_OK, "Success")
+ERRMSG(INA_ERRT_CSV_STRUCTURE_INVALID, "CSV parse error: invalid structure")
+ERRMSG(INA_ERRT_CSV_CELL_INVALID, "CSV parse error: invalid cell content")
+ERRMSG(INA_ERRT_PARAM_INVALID, "Invalid parameter")
+ERRMSG(INA_ERRT_PARAM_NULL, "Null pointer passed as parameter")
+ERRMSG(INA_ERRT_UNKNOWN, "An unknown error occurred")
+ERRMSG(INA_ERRT_HMAP_NOSPACE, "Hash map full: cannot add key")
+ERRMSG(INA_ERRT_HMAP_NOTFOUND, "Hash map lookup failed: key not found")
+ERRMSG(INA_ERRT_LIST_OOB, "List index out of bounds")
 
 #define case(errt)                                                             \
     case errt:                                                                 \
         return MSG_##errt;
-char *ina_strerrno(InaErrorType errno)
+
+char *ina_strerrno(InaErrorType ina_errno)
 {
-    switch (errno)
+    switch (ina_errno)
     {
     case INA_ERRT_STDERROR:
         return strerror(ina_stderrno);
@@ -33,5 +35,6 @@ char *ina_strerrno(InaErrorType errno)
     case(INA_ERRT_UNKNOWN) 
     case(INA_ERRT_HMAP_NOSPACE) 
     case(INA_ERRT_HMAP_NOTFOUND) 
+    case(INA_ERRT_LIST_OOB)
     }
 }

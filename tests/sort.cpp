@@ -1,62 +1,94 @@
 #include "inazuma/utils/sort.h"
+#include "inazuma/utils/list.h"
 #include <ctime>
 #include <iostream>
 #include <ostream>
 #include <stddef.h>
 
+#include <sstream>
 #include <stdlib.h>
 #include <time.h>
 
 #define N 2500
-int arr1[N];
-int arr2[N];
 
-void shuffle(int *a, size_t n)
+// Call once, e.g. at start of main()
+static inline void init_rand(void)
 {
-    for (size_t i = n - 1; i > 0; --i)
-    {
-        size_t j = rand() % (i + 1);
-        int tmp = a[i];
-        a[i] = a[j];
-        a[j] = tmp;
-    }
+    srand((unsigned)time(NULL));
 }
 
-#define lengthof(arr) sizeof(arr) / sizeof(*arr)
 
-int sort(int arr[], size_t len, int insertion_treshold, bool heapsort)
+// Returns a pseudo-random int in [0 .. max-1].
+// Behavior is undefined if max <= 0.
+static inline int rand_max(int max)
 {
-    std::cout << "start: " << /* print_array(arr, len) << */ "\n" << std::flush;
+    return rand() % max;
+}
+
+int extract(void *e)
+{
+    return *(int *)e;
+}
+
+void set(void *e, int v)
+{
+    *(int *)e = v;
+}
+
+std::string print_list(InaList *ls)
+{
+    std::stringstream ss;
+
+    ss << "[";
+
+    for (size_t i = 0; i < ina_list_count(ls); ++i)
+    {
+        int r = extract(ina_list_at(ls, i));
+
+        ss << r;
+
+        if (i < ina_list_count(ls) - 1)
+        {
+            ss << ", ";
+        }
+    }
+
+    ss << "]";
+
+    return ss.str();
+}
+
+
+void sort(InaList *ls, InaListElementKeyExtractorFn extract_fn,
+          InaListElementKeySetterFn set_fn)
+{
+    std::cout << "start:\n";
+    std::cout << print_list(ls) << "\n" << std::flush;
 
     clock_t start = clock();
-    __ina_sort(arr, len, insertion_treshold, heapsort);
+    ina_sort(ls, extract_fn, set_fn);
     clock_t end = clock();
 
-    // std::cout << "result: " << print_array(arr, len) << "\n";
+    std::cout << "result:\n" << print_list(ls) << "\n";
     double cpu_secs = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Time taken to sort (with treshold at %i): %.6f seconds\n",
-           insertion_treshold, cpu_secs);
+    printf("Time taken to sort: %.6f seconds\n", cpu_secs);
 
     std::cout << std::flush;
-
-    return 1;
 };
 
 int main()
 {
-    srand((unsigned)time(NULL));
-    for (int i = 0; i < N; i++)
-        arr1[i] = i + 1;
-    shuffle(arr1, N);
+    init_rand();
 
-    srand((unsigned)time(NULL));
-    for (int i = 0; i < N; i++)
-        arr2[i] = i + 1;
-    shuffle(arr2, N);
+    InaList *ls = ina_list_create(sizeof(int));
 
-    if (!sort(arr1, lengthof(arr1), 32, true)) return 1;
+    for (int i = 0; i < N; ++i)
+    {
+        int j = rand_max(N);
 
-    if (!sort(arr1, lengthof(arr1), 32, true)) return 1;
+        ina_list_add(ls, &j);
+    }
 
+    sort(ls, extract, set);
     return 0;
 }

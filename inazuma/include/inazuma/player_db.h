@@ -8,6 +8,24 @@
 
 typedef struct InaPlayerDB InaPlayerDB;
 
+typedef struct InaPlayerDBSort
+{
+    InaPlayerAttributeType target_attribute;
+} InaPlayerDBSort;
+
+typedef struct InaPlayerDBFilter
+{
+} InaPlayerDBFilter;
+
+// SORT:
+// attribute
+// ascending / descending
+
+// FILTER
+// attribute
+// Equal / Greater / Less
+// Treshold
+
 BEGIN_EXTERN_C
 
 INA_API InaPlayerDB *ina_open_player_db(char const *csv_path);
