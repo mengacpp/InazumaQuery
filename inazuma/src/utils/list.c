@@ -37,6 +37,7 @@ InaList *ina_list_create(size_t e_size)
     ls->e_count = 0;
 
     ls->buf_used = 0;
+    ls->buf_size = 0;
 
     if (!ensure_space(ls))
     {
@@ -58,9 +59,10 @@ int ensure_space(InaList *ls)
 
     if (buf_free >= ls->e_size) return 1;
 
-    size_t new_size = ls->buf_size == 0
-                          ? ls->e_size * LIST_GROW_FACTOR
-                          : ls->buf_size * (1.0f / LIST_GROW_FACTOR);
+    size_t new_size =
+        ls->buf_size == 0
+            ? ls->e_size * LIST_GROW_FACTOR
+            : ls->buf_size + ls->buf_size * (1.0f / LIST_GROW_FACTOR);
 
 
     // realloc work just as malloc if ls->buf is NULL
@@ -142,4 +144,11 @@ size_t ina_list_count(InaList const *ls)
     }
 
     return ls->e_count;
+}
+
+size_t ina_list_sizeof_element(InaList const *ls)
+{
+    if (!ls) return 0;
+
+    return ls->e_size;
 }

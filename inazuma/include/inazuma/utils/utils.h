@@ -4,9 +4,7 @@
 #include "inazuma/core/core.h"
 #include <stddef.h>
 
-typedef struct InaList InaList;
-
-BEGIN_EXTERN_C
+INA_BEGIN_EXTERN_C
 
 INA_API char *ina_read_file_content(char const *path_to_file);
 
@@ -18,6 +16,6 @@ INA_API void ina_retrieve_digits(char const *str, char *result, size_t len);
 
 INA_API int ina_string_to_int(char const *str, int base);
 
-END_EXTERN_C
+INA_END_EXTERN_C
 
 #endif // INAZUMA_UTILS_UTILS_H_

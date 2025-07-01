@@ -1,6 +1,7 @@
 #include "inazuma/core/errno.h"
 #include "inazuma/inazuma.h" // IWYU pragma: keep
 #include "inazuma/player.h"
+#include "inazuma/player_db.h"
 
 #include <cstddef>
 #include <ctime>
@@ -14,7 +15,7 @@ std::string names[] = {"Mark Evans", "Adora Shivers", "Dee Tarrant",
 int main()
 {
     bool error = false;
-    InaPlayerDB *db = ina_open_player_db(INA_DATA_PLAYER_IE3_DIR);
+    InaPlayerDB *db = ina_player_db_open(INA_DATA_PLAYER_IE3_DIR);
 
     if (!db)
     {
@@ -28,7 +29,7 @@ int main()
     for (size_t i = 0; i < 1000; ++i)
     {
         char const *name = names[i % arrayLength].c_str();
-        InaPlayer const *p = ina_get_player_by_fullname(db, name);
+        InaPlayer const *p = ina_player_db_get_by_fullname(db, name);
 
         if (!p)
         {
@@ -40,7 +41,7 @@ int main()
     }
     clock_t end = clock();
 
-    ina_close_player_db(&db);
+    ina_player_db_close(&db);
 
     double cpu_secs = (double)(end - start) / CLOCKS_PER_SEC;
     printf("Time taken to find 1000 players: %.6f seconds\n", cpu_secs);

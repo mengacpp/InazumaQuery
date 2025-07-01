@@ -1,13 +1,14 @@
-#include <cstdint>
 #include <iostream>
 #include <stddef.h>
 
 #include "inazuma/inazuma.h" // IWYU pragma: keep
 #include "inazuma/player.h"
+#include "inazuma/player_db.h"
+#include "inazuma/utils/list.h"
 
 int main()
 {
-    InaPlayerDB *ie3_db = ina_open_player_db(INA_DATA_PLAYER_IE3_DIR);
+    InaPlayerDB *ie3_db = ina_player_db_open(INA_DATA_PLAYER_IE3_DIR);
 
     if (!ie3_db)
     {
@@ -15,17 +16,16 @@ int main()
         return 1;
     }
 
-    uint16_t count = 0;
-    InaPlayer *players = ina_get_players(ie3_db, 10, &count);
+    InaList *players = ina_player_db_get(ie3_db, 10);
 
-    for (size_t i = 0; i < count; ++i)
+    for (size_t i = 0; i < ina_list_count(players); ++i)
     {
-        ina_player_print(&players[i]);
+        ina_player_print((InaPlayer *)ina_list_at(players, i));
     }
 
-    free(players);
+    ina_list_destroy(&players);
 
-    ina_close_player_db(&ie3_db);
+    ina_player_db_close(&ie3_db);
 
     return 0;
 }

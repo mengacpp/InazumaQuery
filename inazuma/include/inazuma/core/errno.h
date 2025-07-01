@@ -22,10 +22,10 @@ typedef enum InaErrorType
 extern INA_THREAD_LOCAL InaErrorType ina_errno;
 extern INA_THREAD_LOCAL int ina_stderrno;
 
-BEGIN_EXTERN_C
+INA_BEGIN_EXTERN_C
 
 INA_API char *ina_strerrno(InaErrorType ina_errno);
 
-END_EXTERN_C
+INA_END_EXTERN_C
 
 #endif // INAZUMA_CORE_ERRNO_H_

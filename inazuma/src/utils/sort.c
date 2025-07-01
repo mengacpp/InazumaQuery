@@ -32,11 +32,16 @@ void insertion_sort(InaList const *ls, ExtractorFn extract, SetterFn set,
 void heap_sort(InaList const *ls, ExtractorFn extract, SetterFn set);
 
 void __ina_sort(InaList const *ls, ExtractorFn extract, SetterFn set,
-                int insertion_th, bool heapsort)
+                InaSortDir sort_dir, int insertion_th, bool heapsort)
 {
     bool heapsorted;
     quick_sort(ls, extract, set, 0, ina_list_count(ls), insertion_th, heapsort,
                0, &heapsorted);
+
+    if (sort_dir == INA_SORT_DIR_DESCENDING)
+    {
+        __ina_reverse(ls, extract, set);
+    }
 }
 
 void quick_sort(InaList const *ls, ExtractorFn extract, SetterFn set, int start,
@@ -119,7 +124,19 @@ void insertion_sort(InaList const *ls, ExtractorFn extract, SetterFn set,
     }
 }
 
+INA_API void __ina_reverse(InaList const *ls, ExtractorFn extract, SetterFn set)
+{
+    size_t len = ina_list_count(ls);
+    size_t last = len - 1;
+    size_t half = len / 2;
 
+    for (size_t i = 0; i < half; ++i)
+    {
+        int temp = extract(LS(i));
+        set(LS(i), extract(LS(last - i)));
+        set(LS(last - i), temp);
+    }
+}
 void heap_sort(InaList const *ls, ExtractorFn extract, SetterFn set)
 {
     INA_NOT_IMPLEMENTED;

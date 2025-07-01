@@ -82,16 +82,81 @@ typedef struct
     uint16_t hex_id;
 } InaPlayer;
 
-typedef enum InaPlayerAttributeType
+#define entry(x) INA_PLAYER_ATTRIBUTE_##x
+typedef enum InaPlayerAttribute
 {
-    INVALID,
-} InaPlayerAttributeType;
+    entry(FULLNAME) = 0,
+    entry(NICKNAME),
+    entry(POSITION),
+    entry(GENDER),
+    entry(SIZE),
+    entry(ELEMENT),
 
-BEGIN_EXTERN_C
+    entry(LVL1_FP),
+    entry(LVL1_TP),
+    entry(LVL1_KICK),
+    entry(LVL1_BODY),
+    entry(LVL1_CONTROL), //
+    entry(LVL1_GUARD),
+    entry(LVL1_SPEED),
+    entry(LVL1_STAMINA),
+    entry(LVL1_GUTS),
+
+
+    entry(LVL99_FP),
+    entry(FP_MAXES_AT),
+
+    entry(LVL99_TP),
+    entry(TP_MAXES_AT),
+
+    entry(LVL99_KICK),
+    entry(KICK_MAXES_AT), //
+
+    entry(LVL99_BODY),
+    entry(BODY_MAXES_AT),
+
+    entry(LVL99_CONTROL),
+    entry(CONTROL_MAXES_AT),
+
+    entry(LVL99_GUARD),
+    entry(GUARD_MAXES_AT),
+
+    entry(LVL99_SPEED),
+    entry(SPEED_MAXES_AT),
+
+    entry(LVL99_STAMINA),
+    entry(STAMINA_MAXES_AT), //
+
+    entry(LVL99_GUTS),
+    entry(GUTS_MAXES_AT),
+
+    entry(FREEDOM),
+    entry(TOTAL),
+    entry(MAX_TOTAL),
+
+
+    entry(MOVE1),
+    entry(MOVE1_LEARNS_AT),
+
+    entry(MOVE2),
+    entry(MOVE2_LEARNS_AT),
+
+    entry(MOVE3), //
+    entry(MOVE3_LEARNS_AT),
+
+    entry(MOVE4),
+    entry(MOVE4_LEARNS_AT),
+
+    entry(PLAYER_HEX_ID),
+    entry(COUNT)
+} InaPlayerAttribute;
+#undef entry
+
+INA_BEGIN_EXTERN_C
 
 INA_API void ina_player_print(InaPlayer const *p);
 
-END_EXTERN_C
+INA_END_EXTERN_C
 
 
 #endif // INAZUMA_PLAYER_H_

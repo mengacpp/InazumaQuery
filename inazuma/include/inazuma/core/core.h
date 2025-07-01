@@ -30,13 +30,13 @@
     Extern "C" Macro
 */
 #ifdef __cplusplus
-#define BEGIN_EXTERN_C                                                         \
+#define INA_BEGIN_EXTERN_C                                                     \
     extern "C"                                                                 \
     {
-#define END_EXTERN_C }
+#define INA_END_EXTERN_C }
 #else
-#define BEGIN_EXTERN_C
-#define END_EXTERN_C
+#define INA_BEGIN_EXTERN_C
+#define INA_END_EXTERN_C
 #endif
 
 /*

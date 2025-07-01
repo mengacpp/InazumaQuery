@@ -6,7 +6,7 @@
 
 typedef struct InaList InaList;
 
-BEGIN_EXTERN_C
+INA_BEGIN_EXTERN_C
 
 INA_API InaList *ina_list_create(size_t e_size);
 
@@ -17,7 +17,8 @@ INA_API void *ina_list_at(InaList const *ls, size_t id);
 INA_API void ina_list_destroy(InaList **ls);
 
 INA_API size_t ina_list_count(InaList const *ls);
+INA_API size_t ina_list_sizeof_element(InaList const *ls);
 
-END_EXTERN_C
+INA_END_EXTERN_C
 
 #endif // INAZUMA_UTILS_LIST_H_

@@ -1,4 +1,5 @@
-#include "inazuma/utils/sort.h"
+#include "inazuma/utils/filter.h"
+#include "inazuma/core/errno.h"
 #include "inazuma/utils/list.h"
 #include <ctime>
 #include <iostream>
@@ -6,36 +7,27 @@
 #include <stddef.h>
 
 #include <sstream>
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 #define N 2500
 
-// Call once, e.g. at start of main()
-static inline void init_rand(void)
-{
-    srand((unsigned)time(NULL));
-}
+static std::stringstream ss;
 
-
-// Returns a pseudo-random int in [0 .. max-1].
-// Behavior is undefined if max <= 0.
-static inline int rand_max(int max)
-{
-    return rand() % max;
-}
-
-int extract(void const *e)
+int extract(void *e)
 {
     return *(int *)e;
 }
 
-void set(void const *e, int v)
+bool rule(void const *e)
 {
-    *(int *)e = v;
+    int v = *(int *)e;
+    return (v % 7 == 0);
 }
 
-std::string print_list(InaList *ls)
+
+std::string print_list(InaList const *ls)
 {
     std::stringstream ss;
 
@@ -59,37 +51,42 @@ std::string print_list(InaList *ls)
 }
 
 
-void sort(InaList *ls, InaListElementKeyExtractorFn extract_fn,
-          InaListElementKeySetterFn set_fn)
+void filter(InaList *ls, InaFilterRuleFn rule_fn)
 {
     std::cout << "start:\n";
     std::cout << print_list(ls) << "\n" << std::flush;
 
     clock_t start = clock();
-    ina_sort(ls, extract_fn, set_fn, INA_SORT_DIR_DESCENDING);
+    InaList *result = ina_filter(ls, rule_fn);
     clock_t end = clock();
 
-    std::cout << "result:\n" << print_list(ls) << "\n";
+    if (!result)
+    {
+        ss << ina_strerrno(ina_errno) << "\n";
+    }
+
+    std::cout << "result:\n" << print_list(result) << "\n";
     double cpu_secs = (double)(end - start) / CLOCKS_PER_SEC;
     printf("Time taken to sort: %.6f seconds\n", cpu_secs);
+
+    ina_list_destroy(&result);
 
     std::cout << std::flush;
 };
 
 int main()
 {
-    init_rand();
-
     InaList *ls = ina_list_create(sizeof(int));
 
     for (int i = 0; i < N; ++i)
     {
-        int j = rand_max(N);
-
-        ina_list_add(ls, &j);
+        if (!ina_list_add(ls, &i)) ss << ina_strerrno(ina_errno) << "\n";
     }
-    sort(ls, extract, set);
+
+    filter(ls, rule);
 
     ina_list_destroy(&ls);
+
+    std::cout << ss.str() << "\n";
     return 0;
 }

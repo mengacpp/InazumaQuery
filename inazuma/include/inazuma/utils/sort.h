@@ -9,21 +9,36 @@
 #include "inazuma/utils/list.h"
 
 
-typedef int (*InaListElementKeyExtractorFn)(void *);
-typedef void (*InaListElementKeySetterFn)(void *, int);
+typedef int (*InaListElementKeyExtractorFn)(void const *);
+typedef void (*InaListElementKeySetterFn)(void const *, int);
+
+typedef enum InaSortDir
+{
+    INA_SORT_DIR_ASCENDING,
+    INA_SORT_DIR_DESCENDING,
+} InaSortDir;
 
 
-BEGIN_EXTERN_C
+INA_BEGIN_EXTERN_C
 
-#define ina_sort(list, extract_key, set_key)                                   \
-    __ina_sort(list, extract_key, set_key, 32, true);
+#define ina_sort(list, extract_key_fn, set_key_fn, sort_dir)                   \
+    __ina_sort(list, extract_key_fn, set_key_fn, sort_dir, 32, true);
+
+
+#define ina_reverse(list, extract_key_fn, set_key_fn)                          \
+    __ina_reverse(list, extract_key_fn, set_key_fn)
 
 INA_API void __ina_sort(InaList const *list,
                         InaListElementKeyExtractorFn extract_key_fn,
-                        InaListElementKeySetterFn set_key_fn, int insertion_th,
-                        bool heapsort);
+                        InaListElementKeySetterFn set_key_fn,
+                        InaSortDir sort_dir, int insertion_th, bool heapsort);
 
-END_EXTERN_C
+
+INA_API void __ina_reverse(InaList const *list,
+                           InaListElementKeyExtractorFn extract_key_fn,
+                           InaListElementKeySetterFn set_key_fn);
+
+INA_END_EXTERN_C
 
 
 #endif // INAZUMA_UTILS_SORT_H_
