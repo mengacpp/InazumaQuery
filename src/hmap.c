@@ -1,11 +1,15 @@
 #include "inazuma/hmap.h"
 
+#include <errno.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "inazuma/core.h"
+#include "inazuma/errno.h"
 
 struct InaHmap
 {
@@ -33,7 +37,8 @@ InaHmap *ina_hmap_create(size_t count)
     InaHmap *hmap = malloc(sizeof(*hmap));
     if (!hmap)
     {
-        perror("ERROR: malloc failed");
+        ina_stderrno = errno;
+        ina_errno = INA_ERRT_STDERROR;
         return NULL;
     }
 
@@ -45,7 +50,8 @@ InaHmap *ina_hmap_create(size_t count)
     if (!hmap->values || !hmap->used)
     {
         ina_hmap_destroy(&hmap);
-        perror("ERROR: malloc failed");
+        ina_stderrno = errno;
+        ina_errno = INA_ERRT_STDERROR;
         return NULL;
     }
 
@@ -68,7 +74,7 @@ int ina_hmap_add(InaHmap *hmap, char const *key, uint16_t value)
         if (strcmp(hmap->keys[h], key) == 0)
         {
             hmap->values[h] = value;
-            return INA_OK;
+            return INA_SUCCESS;
         }
 
         h = (original_h + i * i) % hmap->count;
@@ -76,8 +82,8 @@ int ina_hmap_add(InaHmap *hmap, char const *key, uint16_t value)
 
         if (h == original_h)
         {
-            fprintf(stderr, "ERROR: not enough space in hash map\n");
-            return INA_ERROR;
+            ina_errno = INA_ERRT_HMAP_NOSPACE;
+            return INA_FAILURE;
         }
     }
 
@@ -85,7 +91,7 @@ int ina_hmap_add(InaHmap *hmap, char const *key, uint16_t value)
     hmap->used[h] = true;
     hmap->values[h] = value;
 
-    return INA_OK;
+    return INA_SUCCESS;
 }
 
 uint16_t ina_hmap_get(InaHmap *hmap, char const *key, bool *found)
@@ -112,6 +118,7 @@ uint16_t ina_hmap_get(InaHmap *hmap, char const *key, bool *found)
     }
 
     *found = false;
+    ina_errno = INA_ERRT_HMAP_NOTFOUND;
     return 0;
 }
 
@@ -128,6 +135,5 @@ void ina_hmap_destroy(InaHmap **hmap)
     }
 
     *hmap = NULL;
-
     return;
 }

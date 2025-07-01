@@ -8,14 +8,16 @@
 #include <string.h>
 #include <wctype.h>
 
+#include "inazuma/errno.h"
+
 
 char *ina_read_file_content(const char *path_to_file)
 {
     FILE *fp = fopen(path_to_file, "r");
     if (!fp)
     {
-        fprintf(stderr, "ERROR: %s: Failed to open file: %s\n", path_to_file,
-                strerror(errno));
+        ina_errno = INA_ERRT_STDERROR;
+        ina_stderrno = errno;
         return NULL;
     }
 
@@ -26,8 +28,8 @@ char *ina_read_file_content(const char *path_to_file)
 
     if (bytes_read == -1)
     {
-        fprintf(stderr, "ERROR: %s: Failed to read file\n", path_to_file);
         free(buffer);
+        ina_errno = INA_ERRT_UNKNOWN;
         return NULL;
     }
 

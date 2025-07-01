@@ -7,10 +7,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "inazuma/core.h"
 #include "inazuma/hmap.h"
 #include "inazuma/player.h"
 #include "inazuma/utils.h"
 
+#include "inazuma/errno.h"
 
 #define INA_PLAYER_DB_MAX_PLAYERS 2500
 
@@ -95,22 +97,23 @@ typedef enum InaPlayerDBColType
 int parse_player_csv(InaPlayerDB *db, const char *csv_path);
 int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
                             char const *cell_content);
-int get_stat_from_cell(char const *cell_content, int *ok);
+int get_stat_from_cell(char const *cell_content);
 
 InaPlayerDB *ina_open_player_db(const char *csv_path)
 {
     InaPlayerDB *db = malloc(sizeof(*db));
     if (!db)
     {
-        perror("ERROR: malloc failed");
-        ina_close_player_db(&db);
+        ina_stderrno = errno;
+        ina_errno = INA_ERRT_STDERROR;
         return NULL;
     }
 
     db->players = malloc(INA_PLAYER_DB_MAX_PLAYERS * sizeof(*db->players));
     if (!db->players)
     {
-        perror("ERROR: malloc failed");
+        ina_stderrno = errno;
+        ina_errno = INA_ERRT_STDERROR;
         ina_close_player_db(&db);
         return NULL;
     }
@@ -123,16 +126,6 @@ InaPlayerDB *ina_open_player_db(const char *csv_path)
         ina_close_player_db(&db);
         return NULL;
     }
-
-    // db->nickname_index =
-    //     malloc(INA_PLAYER_DB_MAX_PLAYERS * sizeof(*db->nickname_index));
-    // if (!db->nickname_index)
-    // {
-    //     perror("ERROR: malloc failed");
-    //     ina_close_player_db(&db);
-    //     return NULL;
-    // }
-
 
     if (!parse_player_csv(db, csv_path))
     {
@@ -149,7 +142,6 @@ void ina_close_player_db(InaPlayerDB **db)
 
     free((*db)->players);
     ina_hmap_destroy(&(*db)->fullname_hmap);
-    // free((*db)->nickname_index);
 
     free(*db);
 
@@ -162,7 +154,7 @@ InaPlayer *ina_get_players(InaPlayerDB const *db, size_t max_count,
     if (db == NULL)
     {
         *count = 0;
-        fprintf(stderr, "ERROR: Trying to get players from a NULL Database\n");
+        ina_errno = INA_ERRT_PARAM_NULL;
         return NULL;
     }
 
@@ -191,8 +183,6 @@ InaPlayer *ina_get_player_by_fullname(InaPlayerDB const *db,
 
     if (!found)
     {
-        fprintf(stderr, "ERROR: key '%s' not found in hash map\n",
-                fullname_normalised);
         return NULL;
     }
 
@@ -203,7 +193,7 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
 {
     char *csv_content = ina_read_file_content(csv_path);
 
-    if (!csv_content) return INA_ERROR;
+    if (!csv_content) return INA_FAILURE;
 
     char *current = csv_content;
 
@@ -232,9 +222,8 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
 
         if (current_column >= (size_t)INA_PLAYERDB_COL_TYPE_INVALID)
         {
-            fprintf(stderr, "ERROR: Unexpected column at %zu:%zu\n",
-                    current_column, current_row);
-            return INA_ERROR;
+            ina_errno = INA_ERRT_CSV_STRUCTURE_INVALID;
+            return INA_FAILURE;
         }
 
 
@@ -242,7 +231,7 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
                                      (InaPlayerDBColType)current_column,
                                      cell_content))
         {
-            return INA_ERROR;
+            return INA_FAILURE;
         }
 
         if ((InaPlayerDBColType)current_column ==
@@ -253,8 +242,7 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
 
             if (!ina_hmap_add(db->fullname_hmap, fullname_norm, current_row))
             {
-                fprintf(stderr, "ERROR: Failed to add '%s' to hash map\n",
-                        fullname_norm);
+                return INA_FAILURE;
             }
         }
 
@@ -276,16 +264,13 @@ int parse_player_csv(InaPlayerDB *db, const char *csv_path)
 
     free(csv_content);
 
-    return INA_OK;
+    return INA_SUCCESS;
 }
 
 #define assign_stat_and_break(stat)                                            \
     do                                                                         \
     {                                                                          \
-        int ok;                                                                \
-        player->stat = get_stat_from_cell(cell_content, &ok);                  \
-                                                                               \
-        if (!ok) return INA_ERROR;                                             \
+        player->stat = get_stat_from_cell(cell_content);                       \
                                                                                \
         break;                                                                 \
     } while (0)
@@ -331,7 +316,7 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
         {
             fprintf(stderr, "ERROR: Invalid player position '%s'\n",
                     cell_content);
-            return INA_ERROR;
+            return INA_FAILURE;
         }
 
         break;
@@ -347,9 +332,8 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
             player->gender = PLAYER_GENDER_FEMALE;
         else
         {
-            fprintf(stderr, "ERROR: Invalid player gender '%s'\n",
-                    cell_content);
-            return INA_ERROR;
+            ina_errno = INA_ERRT_CSV_CELL_INVALID;
+            return INA_FAILURE;
         }
 
         break;
@@ -368,8 +352,8 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
             player->size = PLAYER_SIZE_LARGE;
         else
         {
-            fprintf(stderr, "ERROR: Invalid player size '%s'\n", cell_content);
-            return INA_ERROR;
+            ina_errno = INA_ERRT_CSV_CELL_INVALID;
+            return INA_FAILURE;
         }
 
         break;
@@ -391,8 +375,8 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
             player->element = ELEMENT_WOOD;
         else
         {
-            fprintf(stderr, "ERROR: Invalid element '%s'\n", cell_content);
-            return INA_ERROR;
+            ina_errno = INA_ERRT_CSV_CELL_INVALID;
+            return INA_FAILURE;
         }
 
         break;
@@ -564,38 +548,32 @@ int assign_to_player_by_col(InaPlayer *player, InaPlayerDBColType col,
     }
     case INA_PLAYERDB_COL_TYPE_PLAYER_HEX_ID:
     {
-        int ok;
         int id = ina_string_to_int(cell_content, 16);
-
-        if (!ok) return INA_ERROR;
 
         player->hex_id = id;
         break;
     }
     case INA_PLAYERDB_COL_TYPE_INVALID:
     {
-        fprintf(stderr,
-                "ERROR: trying to assign from invalid column '%i' with value "
-                "'%s'\n",
-                (int)col, cell_content);
-        return INA_ERROR;
+        ina_errno = INA_ERRT_CSV_STRUCTURE_INVALID;
+        return INA_FAILURE;
     }
     default:
     {
         INA_NOT_IMPLEMENTED;
-        return INA_ERROR;
+        ina_errno = INA_ERRT_UNKNOWN;
+        return INA_FAILURE;
     }
     }
 
-    return INA_OK;
+    return INA_SUCCESS;
 }
 
-int get_stat_from_cell(char const *cell_content, int *ok)
+int get_stat_from_cell(char const *cell_content)
 {
     if (ina_normalise_strcmp("event", cell_content) == 0)
     {
-        *ok = INA_OK;
-        return 0;
+        return -1;
     }
 
     int stat = 0;
@@ -603,17 +581,20 @@ int get_stat_from_cell(char const *cell_content, int *ok)
     char only_digits[strlen(cell_content) + 1];
 
     ina_retrieve_digits(cell_content, only_digits, strlen(cell_content) + 1);
+
+    if (strlen(only_digits) < 1)
+    {
+        ina_errno = INA_ERRT_CSV_CELL_INVALID;
+        return -2;
+    }
+
     stat = ina_string_to_int(only_digits, 10);
 
     if (stat < 0)
     {
-        fprintf(stderr,
-                "ERROR: Invalid statistic. '%s' (%i) must be positive\n",
-                cell_content, stat);
-        *ok = INA_ERROR;
-        return 1;
+        ina_errno = INA_ERRT_CSV_CELL_INVALID;
+        return -2;
     }
 
-    *ok = INA_OK;
     return stat;
 }

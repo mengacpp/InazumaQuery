@@ -1,4 +1,5 @@
 #include "inazuma/core.h"
+#include "inazuma/errno.h"
 #include "inazuma/inazuma.h"
 #include "inazuma/player.h"
 
@@ -13,7 +14,12 @@ int main()
     bool error = false;
     InaPlayerDB *db = ina_open_player_db(INA_DATA_PLAYER_IE3_DIR);
 
-    if (!db) return 1;
+    if (!db)
+    {
+        std::cout << "Error when reading db '" << INA_DATA_PLAYER_IE3_DIR
+                  << "': " << ina_strerrno(ina_errno);
+        return 1;
+    }
 
     for (auto name : names)
     {
@@ -21,7 +27,8 @@ int main()
 
         if (!p)
         {
-            std::cerr << "player " << name << " not found\n";
+            std::cerr << "player " << name
+                      << " not found: " << ina_strerrno(ina_errno) << "\n";
             error = true;
             break;
         }

@@ -11,8 +11,16 @@
 #define INA_API
 #endif
 
-#define INA_OK 1
-#define INA_ERROR 0
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
+#define INA_THREAD_LOCAL _Thread_local
+#elif defined(__GNUC__) || defined(__clang__)
+#define INA_THREAD_LOCAL __thread
+#else
+#error "Thread-local storage unsupported"
+#endif
+
+#define INA_SUCCESS 1
+#define INA_FAILURE 0
 
 #define INA_DATA_PLAYER_IE3_DIR INA_DATA_DIR "/players/inazuma_eleven_3.csv"
 #define INA_DATA_PLAYER_IE2_DIR INA_DATA_DIR "/players/inazuma_eleven_2.csv"
