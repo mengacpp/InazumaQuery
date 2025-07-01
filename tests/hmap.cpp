@@ -1,4 +1,4 @@
-#include "inazuma/hmap.h"
+#include "inazuma/utils/hmap.h"
 
 #include <iostream>
 int main()

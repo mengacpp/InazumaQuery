@@ -10,7 +10,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
 file(GLOB_RECURSE HEADERS include/*.h)
-file(GLOB_RECURSE SOURCES *.c)
+file(GLOB_RECURSE SOURCES src/*.c)
 
 add_library(inazuma SHARED ${HEADERS} ${SOURCES})
 

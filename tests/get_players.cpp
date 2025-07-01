@@ -1,7 +1,8 @@
+#include <cstdint>
 #include <iostream>
 #include <stddef.h>
 
-#include "inazuma/inazuma.h"
+#include "inazuma/inazuma.h" // IWYU pragma: keep
 #include "inazuma/player.h"
 
 int main()
@@ -14,7 +15,7 @@ int main()
         return 1;
     }
 
-    size_t count = 0;
+    uint16_t count = 0;
     InaPlayer *players = ina_get_players(ie3_db, 10, &count);
 
     for (size_t i = 0; i < count; ++i)

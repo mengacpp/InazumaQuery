@@ -1,7 +1,7 @@
-#ifndef __INAZUMA_PLAYER_H__
-#define __INAZUMA_PLAYER_H__
+#ifndef INAZUMA_PLAYER_H_
+#define INAZUMA_PLAYER_H_
 
-#include "inazuma/core.h"
+#include "inazuma/core/core.h"
 
 #define INA_FULLNAME_MAX_LEN                                                   \
     25 // seems to be 22 in ie3. no data for other databases
@@ -83,15 +83,11 @@ typedef struct
 } InaPlayer;
 
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+BEGIN_EXTERN_C
 
-    INA_API void ina_player_print(InaPlayer const *p);
+INA_API void ina_player_print(InaPlayer const *p);
 
-#ifdef __cplusplus
-}
-#endif
+END_EXTERN_C
 
-#endif // __INAZUMA_PLAYER_H__
+
+#endif // INAZUMA_PLAYER_H_

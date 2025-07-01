@@ -1,6 +1,5 @@
-#include "inazuma/core.h"
-#include "inazuma/errno.h"
-#include "inazuma/inazuma.h"
+#include "inazuma/core/errno.h"
+#include "inazuma/inazuma.h" // IWYU pragma: keep
 #include "inazuma/player.h"
 
 #include <cstddef>

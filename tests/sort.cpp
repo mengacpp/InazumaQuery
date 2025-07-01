@@ -1,4 +1,4 @@
-#include "inazuma/sort.h"
+#include "inazuma/utils/sort.h"
 #include <ctime>
 #include <iostream>
 #include <ostream>

@@ -1,4 +1,4 @@
-#include "inazuma/inazuma.h"
+#include "inazuma/player_db.h"
 
 #include <errno.h>
 #include <stddef.h>
@@ -7,12 +7,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "inazuma/core.h"
-#include "inazuma/hmap.h"
-#include "inazuma/player.h"
-#include "inazuma/utils.h"
+#include "inazuma/core/errno.h"
 
-#include "inazuma/errno.h"
+#include "inazuma/player.h"
+
+#include "inazuma/utils/hmap.h"
+#include "inazuma/utils/utils.h"
+
 
 #define INA_PLAYER_DB_MAX_PLAYERS 2500
 
@@ -148,8 +149,8 @@ void ina_close_player_db(InaPlayerDB **db)
     *db = NULL;
 }
 
-InaPlayer *ina_get_players(InaPlayerDB const *db, size_t max_count,
-                           size_t *count)
+InaPlayer *ina_get_players(InaPlayerDB const *db, uint16_t max_count,
+                           uint16_t *count)
 {
     if (db == NULL)
     {

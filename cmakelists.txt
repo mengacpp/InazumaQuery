@@ -4,7 +4,7 @@ project(inazuma LANGUAGES C VERSION 0.1)
 
 option(BUILD_TESTS "Enable building of tests" ON)
 
-add_subdirectory(src)
+add_subdirectory(inazuma)
 
 if(BUILD_TESTS)
   enable_testing()

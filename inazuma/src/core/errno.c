@@ -1,4 +1,4 @@
-#include "inazuma/errno.h"
+#include "inazuma/core/errno.h"
 
 #include <string.h>
 

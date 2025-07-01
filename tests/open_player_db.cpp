@@ -4,7 +4,7 @@
 #include <cstring>
 #include <iostream>
 
-#include "inazuma/inazuma.h"
+#include "inazuma/inazuma.h" // IWYU pragma: keep
 
 int main()
 {

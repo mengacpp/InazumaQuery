@@ -1,5 +1,5 @@
-#ifndef INAZUMA_CORE_H_
-#define INAZUMA_CORE_H_
+#ifndef INAZUMA_CORE_CORE_H_
+#define INAZUMA_CORE_CORE_H_
 
 #if defined(_WIN32)
 #ifdef INA_EXPORTS
@@ -39,4 +39,4 @@
 #define INA_NOT_IMPLEMENTED                                                    \
     fprintf(stderr, "ERROR: function %s not implemented yet!\n", __func__);
 
-#endif // INAZUMA_CORE_H_
+#endif // INAZUMA_CORE_CORE_H_

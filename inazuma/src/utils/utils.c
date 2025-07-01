@@ -8,7 +8,7 @@
 #include <string.h>
 #include <wctype.h>
 
-#include "inazuma/errno.h"
+#include "inazuma/core/errno.h"
 
 
 char *ina_read_file_content(const char *path_to_file)

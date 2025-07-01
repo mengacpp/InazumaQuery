@@ -1,10 +1,10 @@
-#ifndef INAZUMA_SORT_H_
-#define INAZUMA_SORT_H_
+#ifndef INAZUMA_UTILS_SORT_H_
+#define INAZUMA_UTILS_SORT_H_
 
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "inazuma/core.h"
+#include "inazuma/core/core.h"
 
 
 BEGIN_EXTERN_C
@@ -16,4 +16,4 @@ INA_API void __ina_sort(int arr[], int len, int insertion_th, bool heapsort);
 END_EXTERN_C
 
 
-#endif // INAZUMA_SORT_H_
+#endif // INAZUMA_UTILS_SORT_H_

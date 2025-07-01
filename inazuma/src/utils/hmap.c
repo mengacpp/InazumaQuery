@@ -1,4 +1,4 @@
-#include "inazuma/hmap.h"
+#include "inazuma/utils/hmap.h"
 
 #include <errno.h>
 #include <stdbool.h>
@@ -8,8 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "inazuma/core.h"
-#include "inazuma/errno.h"
+#include "inazuma/core/errno.h"
 
 struct InaHmap
 {

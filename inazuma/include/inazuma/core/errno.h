@@ -1,7 +1,7 @@
-#ifndef INAZUMA_ERROR_H_
-#define INAZUMA_ERROR_H_
+#ifndef INAZUMA_CORE_ERRNO_H_
+#define INAZUMA_CORE_ERRNO_H_
 
-#include "inazuma/core.h"
+#include "inazuma/core/core.h"
 
 #define err(x) INA_ERRT_##x
 typedef enum InaErrorType
@@ -21,13 +21,10 @@ typedef enum InaErrorType
 extern INA_THREAD_LOCAL InaErrorType ina_errno;
 extern INA_THREAD_LOCAL int ina_stderrno;
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-    INA_API char *ina_strerrno(InaErrorType errno);
-#ifdef __cplusplus
-}
-#endif
+BEGIN_EXTERN_C
 
-#endif // INAZUMA_ERROR_H_
+INA_API char *ina_strerrno(InaErrorType errno);
+
+END_EXTERN_C
+
+#endif // INAZUMA_CORE_ERRNO_H_
