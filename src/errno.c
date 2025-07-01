@@ -14,7 +14,7 @@ ERRMSG(INA_ERRT_PARAM_INVALID, "Invalid function parameter")
 ERRMSG(INA_ERRT_PARAM_NULL, "Null function parameter")
 ERRMSG(INA_ERRT_UNKNOWN, "Unknown error")
 ERRMSG(INA_ERRT_HMAP_NOSPACE, "No space to add a new key in hash map")
-ERRMSG(INA_ERRT_HMAP_NOTFOUND, "Key was not found in hash map")
+ERRMSG(INA_ERRT_HMAP_NOTFOUND, "Key was not found in hash")
 
 #define case(errt)                                                             \
     case errt:                                                                 \

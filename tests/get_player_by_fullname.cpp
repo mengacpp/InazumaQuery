@@ -3,8 +3,11 @@
 #include "inazuma/inazuma.h"
 #include "inazuma/player.h"
 
+#include <cstddef>
+#include <ctime>
 #include <iostream>
 #include <string>
+#include <time.h>
 
 std::string names[] = {"Mark Evans", "Adora Shivers", "Dee Tarrant",
                        "Sonny Wukong", "Kay Emcee"};
@@ -21,9 +24,12 @@ int main()
         return 1;
     }
 
-    for (auto name : names)
+    size_t arrayLength = sizeof names / sizeof names[0];
+    clock_t start = clock();
+    for (size_t i = 0; i < 1000; ++i)
     {
-        InaPlayer *p = ina_get_player_by_fullname(db, name.c_str());
+        char const *name = names[i % arrayLength].c_str();
+        InaPlayer const *p = ina_get_player_by_fullname(db, name);
 
         if (!p)
         {
@@ -33,8 +39,12 @@ int main()
             break;
         }
     }
+    clock_t end = clock();
 
     ina_close_player_db(&db);
+
+    double cpu_secs = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Time taken to find 1000 players: %.6f seconds\n", cpu_secs);
 
     return error ? 1 : 0;
 }

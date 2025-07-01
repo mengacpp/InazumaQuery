@@ -22,6 +22,16 @@
 #define INA_SUCCESS 1
 #define INA_FAILURE 0
 
+#ifdef __cplusplus
+#define BEGIN_EXTERN_C                                                         \
+    extern "C"                                                                 \
+    {
+#define END_EXTERN_C }
+#else
+#define BEGIN_EXTERN_C
+#define END_EXTERN_C
+#endif
+
 #define INA_DATA_PLAYER_IE3_DIR INA_DATA_DIR "/players/inazuma_eleven_3.csv"
 #define INA_DATA_PLAYER_IE2_DIR INA_DATA_DIR "/players/inazuma_eleven_2.csv"
 #define INA_DATA_PLAYER_IE_DIR INA_DATA_DIR "/players/inazuma_eleven.csv"

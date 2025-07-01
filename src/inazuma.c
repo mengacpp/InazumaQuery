@@ -170,8 +170,8 @@ InaPlayer *ina_get_players(InaPlayerDB const *db, size_t max_count,
     return result;
 }
 
-InaPlayer *ina_get_player_by_fullname(InaPlayerDB const *db,
-                                      char const *fullname)
+InaPlayer const *ina_get_player_by_fullname(InaPlayerDB const *db,
+                                            char const *fullname)
 {
     char fullname_normalised[INA_FULLNAME_MAX_LEN];
 
@@ -181,10 +181,7 @@ InaPlayer *ina_get_player_by_fullname(InaPlayerDB const *db,
     unsigned int id =
         ina_hmap_get(db->fullname_hmap, fullname_normalised, &found);
 
-    if (!found)
-    {
-        return NULL;
-    }
+    if (!found) return NULL;
 
     return &db->players[id];
 }
