@@ -25,9 +25,9 @@ static inline int rand_max(int max)
     return rand() % max;
 }
 
-int extract(void const *e)
+int compare(void const *e, void const *e2)
 {
-    return *(int *)e;
+    return (*(int *)e) - (*(int *)e2);
 }
 
 void set(void *e, void const *v)
@@ -43,7 +43,7 @@ std::string print_list(InaList *ls)
 
     for (size_t i = 0; i < ina_list_count(ls); ++i)
     {
-        int r = extract(ina_list_at(ls, i));
+        int r = *(int *)ina_list_at(ls, i);
 
         ss << r;
 
@@ -59,14 +59,14 @@ std::string print_list(InaList *ls)
 }
 
 
-void sort(InaList *ls, InaListElementGetComparatorFn extract_fn,
+void sort(InaList *ls, InaListElementCompareFn compare_fn,
           InaListElementSetFn set_fn)
 {
     std::cout << "start:\n";
     std::cout << print_list(ls) << "\n" << std::flush;
 
     clock_t start = clock();
-    ina_sort(ls, extract_fn, set_fn, INA_SORT_DIR_DESCENDING);
+    ina_sort(ls, compare_fn, set_fn);
     clock_t end = clock();
 
     std::cout << "result:\n" << print_list(ls) << "\n";
@@ -88,7 +88,7 @@ int main()
 
         ina_list_add(ls, &j);
     }
-    sort(ls, extract, set);
+    sort(ls, compare, set);
 
     ina_list_destroy(&ls);
     return 0;

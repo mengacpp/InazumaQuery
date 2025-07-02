@@ -27,14 +27,14 @@
 
 #define INA_PLAYER_DB_MAX_PLAYERS 2500
 
-INA_API inline bool ina_no_filtering(InaPlayer const *e)
+bool ina_no_filtering(InaPlayer const *e)
 {
     return true;
 };
 
-INA_API inline int ina_no_sorting(InaPlayer const *e)
+int ina_no_sorting(InaPlayer const *e, InaPlayer const *e2)
 {
-    return e->hex_id;
+    return e->hex_id - e2->hex_id;
 };
 
 
@@ -97,16 +97,16 @@ void ina_player_db_close(InaPlayerDB **db)
 
 
 static InaPlayerFilterFn g_filter_fn;
-static InaPlayerGetComparatorFn g_get_comparator_fn;
+static InaPlayerCompareFn g_compare_fn;
 
 bool filter_wrapper(void const *e)
 {
     return g_filter_fn((void const *)e);
 }
 
-int get_comparator_wrapper(void const *e)
+int compare_wrapper(void const *e, void const *e2)
 {
-    return g_get_comparator_fn((void const *)e);
+    return g_compare_fn((InaPlayer const *)e, (InaPlayer const *)e2);
 }
 
 void set(void *e, void const *e2)
@@ -121,31 +121,31 @@ void set(void *e, void const *e2)
 
 INA_API InaList *ina_player_db_get(InaPlayerDB const *db, uint16_t max_count,
                                    InaPlayerFilterFn filter_fn,
-                                   InaPlayerGetComparatorFn get_comparator_fn,
-                                   InaSortDir sort_dir)
+                                   InaPlayerCompareFn compare_fn)
 {
-    if (!get_comparator_fn)
-        g_get_comparator_fn = ina_no_sorting;
+    if (!compare_fn)
+        g_compare_fn = ina_no_sorting;
     else
-        g_get_comparator_fn = get_comparator_fn;
+        g_compare_fn = compare_fn;
 
     if (!filter_fn)
         g_filter_fn = ina_no_filtering;
     else
         g_filter_fn = filter_fn;
 
-    InaList *result = ina_list_create(sizeof(InaPlayer));
     if (!db)
     {
         ina_errno = INA_ERRT_PARAM_NULL;
         return NULL;
     }
 
+    InaList *result = ina_list_create(sizeof(InaPlayer));
+
     if (max_count == 0) max_count = ina_list_count(db->players);
 
     InaList *filtered = ina_filter(db->players, filter_wrapper);
 
-    ina_sort(filtered, get_comparator_wrapper, set, sort_dir);
+    ina_sort(filtered, compare_wrapper, set);
 
     size_t count = max_count > ina_list_count(filtered)
                        ? ina_list_count(filtered)

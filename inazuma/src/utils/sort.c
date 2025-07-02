@@ -11,44 +11,35 @@
 // switch to insertion sort when under this treshold
 // if recursion depth > 2·log₂(n)⌋ switch to heap sort
 
-// right now, for a 2500 (~ players in ie3) ls of ints, times are:
+// right now, for a 2500 (~ players in ie3) list of ints, times are:
 // ~0.00015 seconds in avg conditions
 // ~0.003 seconds in worst conditions
 
 // TODO: IMPLEMENT HEAPSORT
 // should allow worst conditions mitigation
 
-typedef InaListElementGetComparatorFn ExtractorFn;
+typedef InaListElementCompareFn CompareFn;
 typedef InaListElementSetFn SetterFn;
 
 #define INSERTION_SORT_TRESHOLD 32
 #define LS(at) ina_list_at(ls, at)
 
-void hoare_partition(InaList const *ls, ExtractorFn extract, SetterFn set,
+void hoare_partition(InaList const *ls, CompareFn compare, SetterFn set,
                      int start, int end, int *division);
-void quick_sort(InaList const *ls, ExtractorFn extract, SetterFn set, int start,
-                int end, int insertion_th, bool heapsort, int depth,
-                bool *heapsorted);
-void insertion_sort(InaList const *ls, ExtractorFn extract, SetterFn set,
+void quick_sort(InaList const *ls, CompareFn compare, SetterFn set, int start,
+                int end, int depth, bool *heapsorted);
+void insertion_sort(InaList const *ls, CompareFn compare, SetterFn set,
                     int start, int end);
-void heap_sort(InaList const *ls, ExtractorFn extract, SetterFn set);
+void heap_sort(InaList const *ls, CompareFn compare, SetterFn set);
 
-void __ina_sort(InaList const *ls, ExtractorFn extract, SetterFn set,
-                InaSortDir sort_dir, int insertion_th, bool heapsort)
+void ina_sort(InaList const *ls, CompareFn compare, SetterFn set)
 {
     bool heapsorted;
-    quick_sort(ls, extract, set, 0, ina_list_count(ls), insertion_th, heapsort,
-               0, &heapsorted);
-
-    if (sort_dir == INA_SORT_DIR_DESCENDING)
-    {
-        __ina_reverse(ls, extract, set);
-    }
+    quick_sort(ls, compare, set, 0, ina_list_count(ls), 0, &heapsorted);
 }
 
-void quick_sort(InaList const *ls, ExtractorFn extract, SetterFn set, int start,
-                int end, int insertion_th, bool heapsort, int depth,
-                bool *heapsorted)
+void quick_sort(InaList const *ls, CompareFn compare, SetterFn set, int start,
+                int end, int depth, bool *heapsorted)
 {
     if (end - start < 2) return;
 
@@ -59,29 +50,27 @@ void quick_sort(InaList const *ls, ExtractorFn extract, SetterFn set, int start,
     //      return;
     //  }
 
-    if (end - start <= insertion_th)
+    if (end - start <= INSERTION_SORT_TRESHOLD)
     {
-        insertion_sort(ls, extract, set, start, end);
+        insertion_sort(ls, compare, set, start, end);
 
         return;
     }
     int div;
 
-    hoare_partition(ls, extract, set, start, end, &div);
+    hoare_partition(ls, compare, set, start, end, &div);
 
-    quick_sort(ls, extract, set, start, div + 1, insertion_th, heapsort,
-               depth + 1, heapsorted);
+    quick_sort(ls, compare, set, start, div + 1, depth + 1, heapsorted);
 
     if (*heapsorted) return;
 
-    quick_sort(ls, extract, set, div + 1, end, insertion_th, heapsort,
-               depth + 1, heapsorted);
+    quick_sort(ls, compare, set, div + 1, end, depth + 1, heapsorted);
 }
 
-void hoare_partition(InaList const *ls, ExtractorFn extract, SetterFn set,
+void hoare_partition(InaList const *ls, CompareFn compare, SetterFn set,
                      int start, int end, int *div)
 {
-    int piv = extract(LS(start));
+    void *piv = LS(start);
     int i = (int)start - 1;
     int j = (int)end;
 
@@ -90,12 +79,12 @@ void hoare_partition(InaList const *ls, ExtractorFn extract, SetterFn set,
         do
         {
             i++;
-        } while (extract(LS(i)) < piv);
+        } while (compare(LS(i), piv) < 0);
 
         do
         {
             j--;
-        } while (extract(LS(j)) > piv);
+        } while (compare(LS(j), piv) > 0);
 
         if (i >= j)
         {
@@ -111,13 +100,13 @@ void hoare_partition(InaList const *ls, ExtractorFn extract, SetterFn set,
     }
 }
 
-void insertion_sort(InaList const *ls, ExtractorFn extract, SetterFn set,
+void insertion_sort(InaList const *ls, CompareFn compare, SetterFn set,
                     int start, int end)
 {
     for (int i = start + 1; i < end; i++)
     {
         int j = i;
-        while (j > start && extract(LS(j - 1)) > extract(LS(j)))
+        while (j > start && compare(LS(j - 1), LS(j)) > 0)
         {
             void *temp = malloc(ina_list_sizeof_element(ls));
             memcpy(temp, LS(j), ina_list_sizeof_element(ls));
@@ -129,7 +118,7 @@ void insertion_sort(InaList const *ls, ExtractorFn extract, SetterFn set,
     }
 }
 
-INA_API void __ina_reverse(InaList const *ls, ExtractorFn extract, SetterFn set)
+INA_API void ina_reverse(InaList const *ls, CompareFn compare, SetterFn set)
 {
     size_t len = ina_list_count(ls);
     size_t last = len - 1;
@@ -144,7 +133,7 @@ INA_API void __ina_reverse(InaList const *ls, ExtractorFn extract, SetterFn set)
         set(LS(last - i), temp);
     }
 }
-void heap_sort(InaList const *ls, ExtractorFn extract, SetterFn set)
+void heap_sort(InaList const *ls, CompareFn compare, SetterFn set)
 {
     INA_NOT_IMPLEMENTED;
 }

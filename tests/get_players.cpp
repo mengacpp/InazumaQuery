@@ -6,11 +6,15 @@
 #include "inazuma/player.h"
 #include "inazuma/player_db.h"
 #include "inazuma/utils/list.h"
-#include "inazuma/utils/sort.h"
 
-int get_comparator(InaPlayer const *p)
+int compare(InaPlayer const *p, InaPlayer const *p2)
 {
-    return p->lvl99_tp;
+    return p2->freedom - p->freedom;
+}
+
+bool filter(InaPlayer const *p)
+{
+    return p->freedom > 90;
 }
 
 int main()
@@ -23,8 +27,7 @@ int main()
         return 1;
     }
     clock_t start = clock();
-    InaList *players = ina_player_db_get_unfiltered(ie3_db, 10, get_comparator,
-                                                    INA_SORT_DIR_DESCENDING);
+    InaList *players = ina_player_db_get(ie3_db, 0, filter, compare);
     clock_t end = clock();
 
     if (!players)
