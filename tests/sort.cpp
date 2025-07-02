@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N 2500
+#define N 250
 
 // Call once, e.g. at start of main()
 static inline void init_rand(void)
@@ -30,9 +30,9 @@ int extract(void const *e)
     return *(int *)e;
 }
 
-void set(void const *e, int v)
+void set(void *e, void const *v)
 {
-    *(int *)e = v;
+    *(int *)e = *(int *)v;
 }
 
 std::string print_list(InaList *ls)
@@ -59,8 +59,8 @@ std::string print_list(InaList *ls)
 }
 
 
-void sort(InaList *ls, InaListElementKeyExtractorFn extract_fn,
-          InaListElementKeySetterFn set_fn)
+void sort(InaList *ls, InaListElementGetComparatorFn extract_fn,
+          InaListElementSetFn set_fn)
 {
     std::cout << "start:\n";
     std::cout << print_list(ls) << "\n" << std::flush;

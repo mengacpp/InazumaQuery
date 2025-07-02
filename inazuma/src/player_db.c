@@ -11,8 +11,10 @@
 
 #include "inazuma/player.h"
 
+#include "inazuma/utils/filter.h"
 #include "inazuma/utils/hmap.h"
 #include "inazuma/utils/list.h"
+#include "inazuma/utils/sort.h"
 #include "inazuma/utils/utils.h"
 
 
@@ -24,6 +26,17 @@
 
 
 #define INA_PLAYER_DB_MAX_PLAYERS 2500
+
+INA_API inline bool ina_no_filtering(InaPlayer const *e)
+{
+    return true;
+};
+
+INA_API inline int ina_no_sorting(InaPlayer const *e)
+{
+    return e->hex_id;
+};
+
 
 struct InaPlayerDB
 {
@@ -82,25 +95,71 @@ void ina_player_db_close(InaPlayerDB **db)
     *db = NULL;
 }
 
-InaList *ina_player_db_get(InaPlayerDB const *db, uint16_t max_count)
+
+static InaPlayerFilterFn g_filter_fn;
+static InaPlayerGetComparatorFn g_get_comparator_fn;
+
+bool filter_wrapper(void const *e)
 {
+    return g_filter_fn((void const *)e);
+}
+
+int get_comparator_wrapper(void const *e)
+{
+    return g_get_comparator_fn((void const *)e);
+}
+
+void set(void *e, void const *e2)
+{
+    InaPlayer *player = e;
+
+    InaPlayer const *player2 = e2;
+
+    memcpy(player, player2, sizeof(InaPlayer));
+}
+
+
+INA_API InaList *ina_player_db_get(InaPlayerDB const *db, uint16_t max_count,
+                                   InaPlayerFilterFn filter_fn,
+                                   InaPlayerGetComparatorFn get_comparator_fn,
+                                   InaSortDir sort_dir)
+{
+    if (!get_comparator_fn)
+        g_get_comparator_fn = ina_no_sorting;
+    else
+        g_get_comparator_fn = get_comparator_fn;
+
+    if (!filter_fn)
+        g_filter_fn = ina_no_filtering;
+    else
+        g_filter_fn = filter_fn;
+
     InaList *result = ina_list_create(sizeof(InaPlayer));
-    if (db == NULL)
+    if (!db)
     {
         ina_errno = INA_ERRT_PARAM_NULL;
         return NULL;
     }
 
-    size_t count = max_count > ina_list_count(db->players)
-                       ? ina_list_count(db->players)
+    if (max_count == 0) max_count = ina_list_count(db->players);
+
+    InaList *filtered = ina_filter(db->players, filter_wrapper);
+
+    ina_sort(filtered, get_comparator_wrapper, set, sort_dir);
+
+    size_t count = max_count > ina_list_count(filtered)
+                       ? ina_list_count(filtered)
                        : max_count;
 
-
+    // TODO implement algorithm to copy this in an efficent way
     for (size_t i = 0; i < count; ++i)
     {
-        InaPlayer *p = ina_list_at(db->players, i);
+        InaPlayer *p = ina_list_at(filtered, i);
         ina_list_add(result, p);
     }
+
+    ina_list_destroy(&filtered);
+    printf("filtering\n");
 
     return result;
 }

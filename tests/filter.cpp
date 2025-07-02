@@ -51,7 +51,7 @@ std::string print_list(InaList const *ls)
 }
 
 
-void filter(InaList *ls, InaFilterRuleFn rule_fn)
+void filter(InaList *ls, InaFilterFn rule_fn)
 {
     std::cout << "start:\n";
     std::cout << print_list(ls) << "\n" << std::flush;

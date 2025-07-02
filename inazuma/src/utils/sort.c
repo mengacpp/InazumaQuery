@@ -4,6 +4,8 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // use quick sort as long as subarray > 16 / 32
 // switch to insertion sort when under this treshold
@@ -16,8 +18,8 @@
 // TODO: IMPLEMENT HEAPSORT
 // should allow worst conditions mitigation
 
-typedef InaListElementKeyExtractorFn ExtractorFn;
-typedef InaListElementKeySetterFn SetterFn;
+typedef InaListElementGetComparatorFn ExtractorFn;
+typedef InaListElementSetFn SetterFn;
 
 #define INSERTION_SORT_TRESHOLD 32
 #define LS(at) ina_list_at(ls, at)
@@ -101,9 +103,10 @@ void hoare_partition(InaList const *ls, ExtractorFn extract, SetterFn set,
             break;
         }
 
-        int temp = extract(LS(i));
+        void *temp = malloc(ina_list_sizeof_element(ls));
+        memcpy(temp, LS(i), ina_list_sizeof_element(ls));
 
-        set(LS(i), extract(LS(j)));
+        set(LS(i), LS(j));
         set(LS(j), temp);
     }
 }
@@ -116,9 +119,11 @@ void insertion_sort(InaList const *ls, ExtractorFn extract, SetterFn set,
         int j = i;
         while (j > start && extract(LS(j - 1)) > extract(LS(j)))
         {
-            int tmp = extract(LS(j));
-            set(LS(j), extract(LS(j - 1)));
-            set(LS(j - 1), tmp);
+            void *temp = malloc(ina_list_sizeof_element(ls));
+            memcpy(temp, LS(j), ina_list_sizeof_element(ls));
+
+            set(LS(j), LS(j - 1));
+            set(LS(j - 1), temp);
             j--;
         }
     }
@@ -132,8 +137,10 @@ INA_API void __ina_reverse(InaList const *ls, ExtractorFn extract, SetterFn set)
 
     for (size_t i = 0; i < half; ++i)
     {
-        int temp = extract(LS(i));
-        set(LS(i), extract(LS(last - i)));
+        void *temp = malloc(ina_list_sizeof_element(ls));
+        memcpy(temp, LS(i), ina_list_sizeof_element(ls));
+
+        set(LS(i), LS(last - i));
         set(LS(last - i), temp);
     }
 }

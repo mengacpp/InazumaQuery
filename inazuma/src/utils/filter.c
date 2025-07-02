@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-InaList *__ina_filter(InaList *ls, InaFilterRuleFn rule_fn)
+InaList *__ina_filter(InaList *ls, InaFilterFn filter_fn)
 {
     if (!ls)
     {
@@ -20,7 +20,7 @@ InaList *__ina_filter(InaList *ls, InaFilterRuleFn rule_fn)
 
         void *e = ina_list_at(ls, i);
 
-        if (rule_fn(e))
+        if (filter_fn(e))
         {
             fflush(stdout);
             if (!ina_list_add(result, e))

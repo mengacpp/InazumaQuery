@@ -9,8 +9,8 @@
 #include "inazuma/utils/list.h"
 
 
-typedef int (*InaListElementKeyExtractorFn)(void const *);
-typedef void (*InaListElementKeySetterFn)(void const *, int);
+typedef int (*InaListElementGetComparatorFn)(void const *);
+typedef void (*InaListElementSetFn)(void *, void const *);
 
 typedef enum InaSortDir
 {
@@ -29,14 +29,14 @@ INA_BEGIN_EXTERN_C
     __ina_reverse(list, extract_key_fn, set_key_fn)
 
 INA_API void __ina_sort(InaList const *list,
-                        InaListElementKeyExtractorFn extract_key_fn,
-                        InaListElementKeySetterFn set_key_fn,
-                        InaSortDir sort_dir, int insertion_th, bool heapsort);
+                        InaListElementGetComparatorFn extract_key_fn,
+                        InaListElementSetFn set_key_fn, InaSortDir sort_dir,
+                        int insertion_th, bool heapsort);
 
 
 INA_API void __ina_reverse(InaList const *list,
-                           InaListElementKeyExtractorFn extract_key_fn,
-                           InaListElementKeySetterFn set_key_fn);
+                           InaListElementGetComparatorFn extract_key_fn,
+                           InaListElementSetFn set_key_fn);
 
 INA_END_EXTERN_C
 
