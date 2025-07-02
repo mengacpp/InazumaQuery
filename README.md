@@ -7,12 +7,13 @@ A C API for querying and comparing Inazuma Eleven player stats.
 Currently available features:
 
 - Open the Inazuma Eleven 1, 2, and 3 player databases, or import your own
-- Filter and sort players to get the one you are looking for.
-- Get player information using their full name.
+- Filter and sort players to get the ones you are looking for.
 
 Features I’m working on, planned features, and known bugs:
 
-- Fix nickname encoding in IE3 and IE1 stats to improve accuracy. As of now, some players (affecting fewer than 5% of players) are subject to small decryption bugs.
+- Fix nickname encoding in IE3 and IE1 stats to improve accuracy. As of now, some players (less than 5% I'd say) are subject to small decryption bugs. Planning on reverse engineering the source code myself.
+- Adding additional informations about players (team, recruitment method, recruitment location ...)
+- Create built in compare function to sort players by 'skills' rather than stats. (e.g. sorting by general ability in shooting rather than by kick statistic).  
 
 ## Example
 

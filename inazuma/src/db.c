@@ -200,6 +200,7 @@ int parse_player_csv(ina_db_t *db, const char *csv_path)
             ina_player_t p;
             ina_list_add(db->players, &p);
         }
+
         size_t cell_len = 0;
         char *start_ptr = current;
 
@@ -572,17 +573,12 @@ int get_stat_from_cell(char const *cell_content)
 
     int stat = 0;
 
-    char only_digits[strlen(cell_content) + 1];
-
-    ina_retrieve_digits(cell_content, only_digits, strlen(cell_content) + 1);
-
-    if (strlen(only_digits) < 1)
+    if (strlen(cell_content) < 1)
     {
-        ina_errno = INA_ERRT_CSV_CELL_INVALID;
-        return -2;
+        return 0;
     }
 
-    stat = ina_string_to_int(only_digits, 10);
+    stat = ina_string_to_int(cell_content, 10);
 
     if (stat < 0)
     {
