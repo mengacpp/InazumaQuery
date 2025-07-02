@@ -2,6 +2,7 @@
 
 #include <errno.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -9,10 +10,10 @@
 
 #define LIST_GROW_FACTOR 3.0f
 
-int ensure_space(InaList *ls);
+int ensure_space(ina_list_t *ls);
 
 
-struct InaList
+struct ina_list_t
 {
     void *buf;
     size_t buf_size;
@@ -22,14 +23,14 @@ struct InaList
     size_t e_count;
 };
 
-InaList *ina_list_create(size_t e_size)
+ina_list_t *ina_list_create(size_t e_size)
 {
-    InaList *ls = malloc(sizeof(*ls));
+    ina_list_t *ls = malloc(sizeof(*ls));
 
     if (!ls)
     {
         ina_stderrno = errno;
-        ina_errno = INA_ERRT_STDERROR;
+        ina_errno = INA_ERRT_STD;
         return NULL;
     }
 
@@ -47,7 +48,7 @@ InaList *ina_list_create(size_t e_size)
     return ls;
 }
 
-int ensure_space(InaList *ls)
+int ensure_space(ina_list_t *ls)
 {
     if (!ls)
     {
@@ -71,7 +72,7 @@ int ensure_space(InaList *ls)
     if (!temp)
     {
         ina_stderrno = errno;
-        ina_errno = INA_ERRT_STDERROR;
+        ina_errno = INA_ERRT_STD;
         return 0;
     }
 
@@ -83,7 +84,7 @@ int ensure_space(InaList *ls)
     return 1;
 }
 
-int ina_list_add(InaList *ls, void *e)
+int ina_list_add(ina_list_t *ls, void *e)
 {
     if (!ls)
     {
@@ -103,7 +104,7 @@ int ina_list_add(InaList *ls, void *e)
     return 1;
 }
 
-void *ina_list_at(InaList const *ls, size_t id)
+void *ina_list_at(ina_list_t const *ls, size_t id)
 {
     if (!ls)
     {
@@ -123,7 +124,7 @@ void *ina_list_at(InaList const *ls, size_t id)
 }
 
 
-void ina_list_destroy(InaList **ls)
+void ina_list_destroy(ina_list_t **ls)
 {
     if (!ls) return;
     if (!(*ls)) return;
@@ -136,7 +137,7 @@ void ina_list_destroy(InaList **ls)
     return;
 }
 
-size_t ina_list_count(InaList const *ls)
+size_t ina_list_count(ina_list_t const *ls)
 {
     if (!ls)
     {
@@ -146,9 +147,30 @@ size_t ina_list_count(InaList const *ls)
     return ls->e_count;
 }
 
-size_t ina_list_sizeof_element(InaList const *ls)
+size_t ina_list_sizeof_element(ina_list_t const *ls)
 {
     if (!ls) return 0;
 
     return ls->e_size;
+}
+
+INA_API void ina_list_fprint(ina_list_t const *ls, FILE *out,
+                             ina_list_elem_printer_t elem_printer,
+                             char const *sep)
+{
+    fprintf(out, "[");
+
+    for (size_t i = 0; i < ina_list_count(ls); ++i)
+    {
+        fflush(out);
+        elem_printer(out, ina_list_at(ls, i));
+        fflush(out);
+
+        if (i < ina_list_count(ls) - 1)
+        {
+            fprintf(out, "%s", sep);
+        }
+    }
+
+    fprintf(out, "]");
 }

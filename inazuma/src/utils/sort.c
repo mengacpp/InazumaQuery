@@ -18,27 +18,27 @@
 // TODO: IMPLEMENT HEAPSORT
 // should allow worst conditions mitigation
 
-typedef InaListElementCompareFn CompareFn;
-typedef InaListElementSetFn SetterFn;
+typedef ina_list_cmp_fn_t cmp_fn;
+typedef ina_list_set_fn_t set_fn;
 
 #define INSERTION_SORT_TRESHOLD 32
 #define LS(at) ina_list_at(ls, at)
 
-void hoare_partition(InaList const *ls, CompareFn compare, SetterFn set,
+void hoare_partition(ina_list_t const *ls, cmp_fn compare, set_fn set,
                      int start, int end, int *division);
-void quick_sort(InaList const *ls, CompareFn compare, SetterFn set, int start,
+void quick_sort(ina_list_t const *ls, cmp_fn compare, set_fn set, int start,
                 int end, int depth, bool *heapsorted);
-void insertion_sort(InaList const *ls, CompareFn compare, SetterFn set,
-                    int start, int end);
-void heap_sort(InaList const *ls, CompareFn compare, SetterFn set);
+void insertion_sort(ina_list_t const *ls, cmp_fn compare, set_fn set, int start,
+                    int end);
+void heap_sort(ina_list_t const *ls, cmp_fn compare, set_fn set);
 
-void ina_sort(InaList const *ls, CompareFn compare, SetterFn set)
+void ina_sort(ina_list_t const *ls, cmp_fn compare, set_fn set)
 {
     bool heapsorted;
     quick_sort(ls, compare, set, 0, ina_list_count(ls), 0, &heapsorted);
 }
 
-void quick_sort(InaList const *ls, CompareFn compare, SetterFn set, int start,
+void quick_sort(ina_list_t const *ls, cmp_fn compare, set_fn set, int start,
                 int end, int depth, bool *heapsorted)
 {
     if (end - start < 2) return;
@@ -67,7 +67,7 @@ void quick_sort(InaList const *ls, CompareFn compare, SetterFn set, int start,
     quick_sort(ls, compare, set, div + 1, end, depth + 1, heapsorted);
 }
 
-void hoare_partition(InaList const *ls, CompareFn compare, SetterFn set,
+void hoare_partition(ina_list_t const *ls, cmp_fn compare, set_fn set,
                      int start, int end, int *div)
 {
     void *piv = LS(start);
@@ -100,8 +100,8 @@ void hoare_partition(InaList const *ls, CompareFn compare, SetterFn set,
     }
 }
 
-void insertion_sort(InaList const *ls, CompareFn compare, SetterFn set,
-                    int start, int end)
+void insertion_sort(ina_list_t const *ls, cmp_fn compare, set_fn set, int start,
+                    int end)
 {
     for (int i = start + 1; i < end; i++)
     {
@@ -118,7 +118,7 @@ void insertion_sort(InaList const *ls, CompareFn compare, SetterFn set,
     }
 }
 
-INA_API void ina_reverse(InaList const *ls, CompareFn compare, SetterFn set)
+INA_API void ina_reverse(ina_list_t const *ls, set_fn set)
 {
     size_t len = ina_list_count(ls);
     size_t last = len - 1;
@@ -133,7 +133,7 @@ INA_API void ina_reverse(InaList const *ls, CompareFn compare, SetterFn set)
         set(LS(last - i), temp);
     }
 }
-void heap_sort(InaList const *ls, CompareFn compare, SetterFn set)
+void heap_sort(ina_list_t const *ls, cmp_fn compare, set_fn set)
 {
     INA_NOT_IMPLEMENTED;
 }

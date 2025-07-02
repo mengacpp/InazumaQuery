@@ -16,7 +16,7 @@ char *ina_read_file_content(const char *path_to_file)
     FILE *fp = fopen(path_to_file, "r");
     if (!fp)
     {
-        ina_errno = INA_ERRT_STDERROR;
+        ina_errno = INA_ERRT_STD;
         ina_stderrno = errno;
         return NULL;
     }

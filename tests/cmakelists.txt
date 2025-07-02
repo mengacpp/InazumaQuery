@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 
 # collect all .cpp test sources in this dir
 file(GLOB TEST_SOURCES CONFIGURE_DEPENDS
-  ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/*.c
 )
 
 foreach(TEST_SRC IN LISTS TEST_SOURCES)

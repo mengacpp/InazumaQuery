@@ -8,11 +8,9 @@
 
 INA_BEGIN_EXTERN_C
 
-typedef bool (*InaFilterFn)(void const *);
+typedef bool (*ina_filter_fn_t)(void const *);
 
-#define ina_filter(ls, rule_fn) __ina_filter(ls, rule_fn)
-
-INA_API InaList *__ina_filter(InaList *ls, InaFilterFn filter_fn);
+INA_API ina_list_t *ina_filter(ina_list_t *ls, ina_filter_fn_t filter_fn);
 
 INA_END_EXTERN_C
 

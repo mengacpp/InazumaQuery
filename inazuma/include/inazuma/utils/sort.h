@@ -9,19 +9,18 @@
 #include "inazuma/utils/list.h"
 
 
-typedef int (*InaListElementCompareFn)(void const *, void const *);
-typedef void (*InaListElementSetFn)(void *, void const *);
+typedef int (*ina_list_cmp_fn_t)(void const *a, void const *b);
+typedef void (*ina_list_set_fn_t)(void *dst, void const *src);
 
 
 INA_BEGIN_EXTERN_C
 
-INA_API void ina_sort(InaList const *list, InaListElementCompareFn compare_fn,
-                      InaListElementSetFn set_fn);
+INA_API void ina_sort(ina_list_t const *list, ina_list_cmp_fn_t compare_fn,
+                      ina_list_set_fn_t set_fn);
 
 
-INA_API void ina_reverse(InaList const *list,
-                         InaListElementCompareFn compare_fn,
-                         InaListElementSetFn set_fn);
+// TODO delete this function, it's not used anymore
+INA_API void ina_reverse(ina_list_t const *list, ina_list_set_fn_t set_fn);
 
 INA_END_EXTERN_C
 

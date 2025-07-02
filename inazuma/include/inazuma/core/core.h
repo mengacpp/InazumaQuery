@@ -42,9 +42,9 @@
 /*
     Database paths
 */
-#define INA_DATA_PLAYER_IE3_DIR INA_DATA_DIR "/players/inazuma_eleven_3.csv"
-#define INA_DATA_PLAYER_IE2_DIR INA_DATA_DIR "/players/inazuma_eleven_2.csv"
-#define INA_DATA_PLAYER_IE_DIR INA_DATA_DIR "/players/inazuma_eleven.csv"
+#define INA_IE3_CSV INA_DATA_DIR "/players/inazuma_eleven_3.csv"
+#define INA_IE2_CSV INA_DATA_DIR "/players/inazuma_eleven_2.csv"
+#define INA_IE_CSV INA_DATA_DIR "/players/inazuma_eleven.csv"
 
 /*
     Util function

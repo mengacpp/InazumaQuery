@@ -8,6 +8,7 @@ INA_BEGIN_EXTERN_C
 
 INA_API char *ina_read_file_content(char const *path_to_file);
 
+// TODO improve names for these functions
 INA_API void ina_normalise(char const *str, char *result, size_t len);
 
 INA_API int ina_normalise_strcmp(char const *str1, char const *str2);

@@ -1,4 +1,4 @@
-#include "inazuma/utils/hmap.h"
+#include "inazuma/utils/hash_map.h"
 
 #include <errno.h>
 #include <stdbool.h>
@@ -10,7 +10,7 @@
 
 #include "inazuma/core/errno.h"
 
-struct InaHmap
+struct ina_hash_map_t
 {
     char **keys;
     uint16_t *values;
@@ -31,13 +31,13 @@ unsigned int JSHash(const char *str, unsigned int length)
     return hash;
 }
 
-InaHmap *ina_hmap_create(size_t count)
+ina_hash_map_t *ina_hash_map_create(size_t count)
 {
-    InaHmap *hmap = malloc(sizeof(*hmap));
+    ina_hash_map_t *hmap = malloc(sizeof(*hmap));
     if (!hmap)
     {
         ina_stderrno = errno;
-        ina_errno = INA_ERRT_STDERROR;
+        ina_errno = INA_ERRT_STD;
         return NULL;
     }
 
@@ -48,9 +48,9 @@ InaHmap *ina_hmap_create(size_t count)
 
     if (!hmap->values || !hmap->used)
     {
-        ina_hmap_destroy(&hmap);
+        ina_hash_map_destroy(&hmap);
         ina_stderrno = errno;
-        ina_errno = INA_ERRT_STDERROR;
+        ina_errno = INA_ERRT_STD;
         return NULL;
     }
 
@@ -62,7 +62,7 @@ InaHmap *ina_hmap_create(size_t count)
     return hmap;
 }
 
-int ina_hmap_add(InaHmap *hmap, char const *key, uint16_t value)
+int ina_hash_map_add(ina_hash_map_t *hmap, char const *key, uint16_t value)
 {
     unsigned int h = JSHash(key, strlen(key)) % hmap->count;
 
@@ -81,7 +81,7 @@ int ina_hmap_add(InaHmap *hmap, char const *key, uint16_t value)
 
         if (h == original_h)
         {
-            ina_errno = INA_ERRT_HMAP_NOSPACE;
+            ina_errno = INA_ERRT_HASH_MAP_NOSPACE;
             return 0;
         }
     }
@@ -93,7 +93,7 @@ int ina_hmap_add(InaHmap *hmap, char const *key, uint16_t value)
     return 1;
 }
 
-uint16_t ina_hmap_get(InaHmap *hmap, char const *key, bool *found)
+uint16_t ina_hash_map_get(ina_hash_map_t *hmap, char const *key, bool *found)
 {
     unsigned int h = JSHash(key, strlen(key)) % hmap->count;
 
@@ -117,11 +117,11 @@ uint16_t ina_hmap_get(InaHmap *hmap, char const *key, bool *found)
     }
 
     *found = false;
-    ina_errno = INA_ERRT_HMAP_NOTFOUND;
+    ina_errno = INA_ERRT_HASH_MAP_NOTFOUND;
     return 0;
 }
 
-void ina_hmap_destroy(InaHmap **hmap)
+void ina_hash_map_destroy(ina_hash_map_t **hmap)
 {
     if (!(*hmap)) return;
 

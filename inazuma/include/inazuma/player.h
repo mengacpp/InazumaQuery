@@ -2,6 +2,7 @@
 #define INAZUMA_PLAYER_H_
 
 #include "inazuma/core/core.h"
+#include <stdio.h>
 
 #define INA_FULLNAME_MAX_LEN                                                   \
     25 // seems to be 22 in ie3. no data for other databases
@@ -14,20 +15,20 @@ typedef enum
     PLAYER_POSITION_DF,
     PLAYER_POSITION_MF,
     PLAYER_POSITION_FW
-} InaPlayerPosition;
+} ina_player_pos_t;
 
 typedef enum
 {
     PLAYER_GENDER_MALE = 0,
     PLAYER_GENDER_FEMALE
-} InaPlayerGender;
+} ina_player_gender_t;
 
 typedef enum
 {
     PLAYER_SIZE_SMALL,
     PLAYER_SIZE_MEDIUM,
     PLAYER_SIZE_LARGE
-} InaPlayerSize;
+} ina_player_size_t;
 
 typedef enum
 {
@@ -35,7 +36,7 @@ typedef enum
     ELEMENT_AIR,
     ELEMENT_FIRE,
     ELEMENT_WOOD
-} InaPlayerElement;
+} ina_player_element_t;
 
 
 typedef struct
@@ -45,10 +46,10 @@ typedef struct
     char nickname[INA_FULLNAME_MAX_LEN];
     char nickname_normalised[INA_FULLNAME_MAX_LEN];
 
-    InaPlayerPosition position;
-    InaPlayerGender gender;
-    InaPlayerSize size;
-    InaPlayerElement element;
+    ina_player_pos_t position;
+    ina_player_gender_t gender;
+    ina_player_size_t size;
+    ina_player_element_t element;
 
     uint8_t lvl99_fp, lvl99_tp, lvl99_kick, lvl99_body, lvl99_control,
         lvl99_guard, lvl99_speed, lvl99_stamina, lvl99_guts;
@@ -80,10 +81,11 @@ typedef struct
     uint8_t move4_learns_at;
 
     uint16_t hex_id;
-} InaPlayer;
+} ina_player_t;
 
+// TODO delete this enum. it is not needed
 #define entry(x) INA_PLAYER_ATTRIBUTE_##x
-typedef enum InaPlayerAttribute
+typedef enum ina_player_attribute_t
 {
     entry(FULLNAME) = 0,
     entry(NICKNAME),
@@ -149,12 +151,13 @@ typedef enum InaPlayerAttribute
 
     entry(PLAYER_HEX_ID),
     entry(COUNT)
-} InaPlayerAttribute;
+} ina_player_attribute_t;
 #undef entry
 
 INA_BEGIN_EXTERN_C
 
-INA_API void ina_player_print(InaPlayer const *p);
+INA_API void ina_player_list_printer(FILE *out, void const *p);
+INA_API void ina_player_fprint(FILE *out, ina_player_t const *p);
 
 INA_END_EXTERN_C
 
