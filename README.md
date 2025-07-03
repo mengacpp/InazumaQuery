@@ -1,4 +1,4 @@
-> ![CAUTION]
+> [!CAUTION]
 > This library it's still in early development phase (pre-alpha). Bugs have to be expected even during the installation phase.
 <div align="center">
   <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Inazuma_Eleven_3games_logo.png" alt="Inazuma Eleven logo">
