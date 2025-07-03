@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Inazuma_Eleven_3games_logo.png" alt="Inazuma Eleven logo">
+</div>
+
 # InazumaQuery
 
 A C API for querying and comparing Inazuma Eleven player stats.
