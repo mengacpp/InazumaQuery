@@ -1,10 +1,10 @@
-#include "inazuma/utils/filter.h"
+#include "InazumaQuery/utils/filter.h"
 
 #include <stddef.h>
 #include <stdio.h>
 
-#include "inazuma/core/errno.h"
-#include "inazuma/utils/list.h"
+#include "InazumaQuery/core/errno.h"
+#include "InazumaQuery/utils/list.h"
 
 ina_list_t *ina_filter(ina_list_t *ls, ina_filter_fn_t filter_fn)
 {

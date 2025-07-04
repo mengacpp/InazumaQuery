@@ -14,8 +14,6 @@ A C API for querying and comparing Inazuma Eleven player stats.
   - [Supported platform](#supported-platform)
   - [Dependencies](#dependencies)
   - [Installation](#installation)
-    - [Install using Python scripts](#install-using-python-scripts)
-    - [Install using plain CMake](#install-using-plain-cmake)
   - [Credits](#credits)
 
 ## Features
@@ -40,8 +38,6 @@ A C API for querying and comparing Inazuma Eleven player stats.
 
 Using the API is straight forward: make sure you have all the required [dependencies](#dependencies), and then follow the [installation instructions](#installation).
 
-
-
 I've provided some [examples](https://github.com/mengacpp/InazumaQuery/tree/main/examples) on how to use the library and i'll create a small wiki as soon as the API is in a more stable status and the first official version is released.
 
 ## Supported platform
@@ -61,41 +57,7 @@ The library does not depend on any external libraries. However, to install it on
 
 ## Installation
 
-> [!WARNING]
-> The API is still in beta; there may be bugs during installation. As of now, I recommend not to install it in system paths if you don't know what you're doing.
-
-You can install InazumaQuery on your device using CMake. To make the process easier, I've also created some python scripts you can use. However, if you want you can still go with the plain CMake installation. **The process is the same on every platform**.
-
-> [!NOTE]
-> In most cases, you can avoid installing the library in your system and just include it in your project folder
-
-The API gets built as a shared library to allow compatibility with Python projects even though this hasn't been tested.
-
-### Install using Python scripts
-
-Follow this step-by-step guide to install InazumaQuery on your device in 2 simple steps. Make sure you have [required dependencies](#dependencies) installed on your device.
-
-1. **Clone the repostory on your device**
-
-    You can clone this repository on your device using git:
-
-    ```terminal
-    git clone https://github.com/mengacpp/InazumaQuery.git
-    ```
-
-2. **Install the library**
-
-    Install the library on your device by running the `scripts/install.py` script. You can specify the install directory by passing it as an argument, or use the default one by passing nothing.
-
-    ```terminal
-    python scripts/install.py your/installation/path
-    ```
-
-    In the [Scripts](https://github.com/mengacpp/InazumaQuery/tree/main/scripts) folder you'll find more useful scripts like `test.py` and `build_release.py`.
-
-### Install using plain CMake
-
-If you don't have python installed on your device, or you don't want to use it, you can follow these steps:
+You can use CMake to build and install InazumaQuery on your device. **The process is the same on every platform**.
 
 1. **Clone the repostory on your device**
 
@@ -105,21 +67,40 @@ If you don't have python installed on your device, or you don't want to use it, 
     git clone https://github.com/mengacpp/InazumaQuery.git
     ```
 
-2. **Generate and build the project**
+2. **Test the project**
 
-    Use CMake to build the project:
+    If you want, you can skip this step and install the library right away.
+
+    You can tell cmake to build the tests by setting the `INA_BUILD_TEST` option to `ON`. Run:
 
     ```terminal
-    cmake -B build -S . 
-    cmake --build build
+    mkdir build
+    cmake -B build -S . -DINA_BUILD_TEST=ON -DCMAKE_BUILD_TYPE=Debug
     ```
 
-3. **Install the library on your device**
-
-    You can use CMake to install the API after you've built it. Specify the installation path using the `--prefix` option, or you can use the default one.
+    Now, navigate to the `build` directory and run:
 
     ```terminal
-    cmake --install build/inazuma --prefix your/installation/path
+    cmake --build .
+    ctest
+    ```
+
+    If you don't see any error message, you are good to go. I'd recommend deleting the `build` directory before going to the next step.
+
+3. **Build and install the library on your device**
+
+    Generate the cmake project using the `CMAKE_BUILD_TYPE` option set to `Release`. The library gets build as shared by default, but you can build it as static by setting the `INA_BUILD_SHARED` option to false.
+
+    ```terminal
+    cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DINA_BUILD_SHARED=OFF
+    ```
+
+    Now, build and install the library. If you want, you can specify the install directory using the `--prefix` option when running `cmake --install`.
+
+    ```terminal
+    cd build
+    cmake --build .
+    cmake --install InazumaQuery --prefix your_installation_path
     ```
 
 ## Credits

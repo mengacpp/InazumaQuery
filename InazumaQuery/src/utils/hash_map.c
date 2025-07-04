@@ -1,4 +1,4 @@
-#include "inazuma/utils/hash_map.h"
+#include "InazumaQuery/utils/hash_map.h"
 
 #include <errno.h>
 #include <stdbool.h>
@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "inazuma/core/errno.h"
+#include "InazumaQuery/core/errno.h"
 
 struct ina_hash_map_t
 {

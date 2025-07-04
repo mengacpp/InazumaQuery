@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(inazuma_tests LANGUAGES CXX)
+project(InazumaQuery_tests LANGUAGES CXX)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -21,7 +21,7 @@ foreach(TEST_SRC IN LISTS TEST_SOURCES)
   # each .cpp → its own executable
   add_executable(${TEST_NAME} ${TEST_SRC})
   target_link_libraries(${TEST_NAME}
-    PRIVATE inazuma GTest::gtest_main
+    PRIVATE InazumaQuery GTest::gtest_main
   )
 
   # register it as a CTest test

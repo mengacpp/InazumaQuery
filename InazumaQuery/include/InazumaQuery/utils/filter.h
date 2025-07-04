@@ -3,8 +3,8 @@
 
 #include <stdbool.h>
 
-#include "inazuma/core/core.h"
-#include "inazuma/utils/list.h"
+#include "InazumaQuery/core/core.h"
+#include "InazumaQuery/utils/list.h"
 
 INA_BEGIN_EXTERN_C
 

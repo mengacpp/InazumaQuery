@@ -4,9 +4,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "inazuma/core/core.h"
+#include "InazumaQuery/core/core.h"
 
-#include "inazuma/utils/list.h"
+#include "InazumaQuery/utils/list.h"
 
 
 typedef int (*ina_list_cmp_fn_t)(void const *a, void const *b);

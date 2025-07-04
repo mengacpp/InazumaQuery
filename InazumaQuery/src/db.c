@@ -1,4 +1,4 @@
-#include "inazuma/db.h"
+#include "InazumaQuery/db.h"
 
 #include <errno.h>
 #include <stddef.h>
@@ -7,15 +7,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "inazuma/core/errno.h"
+#include "InazumaQuery/core/errno.h"
 
-#include "inazuma/player.h"
+#include "InazumaQuery/player.h"
 
-#include "inazuma/utils/filter.h"
-#include "inazuma/utils/hash_map.h"
-#include "inazuma/utils/list.h"
-#include "inazuma/utils/sort.h"
-#include "inazuma/utils/utils.h"
+#include "InazumaQuery/utils/filter.h"
+#include "InazumaQuery/utils/hash_map.h"
+#include "InazumaQuery/utils/list.h"
+#include "InazumaQuery/utils/sort.h"
+#include "InazumaQuery/utils/utils.h"
 
 
 // TODO this file really needs refactor

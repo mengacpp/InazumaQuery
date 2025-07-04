@@ -1,6 +1,6 @@
-#include "inazuma/inazuma.h" // IWYU pragma: keep
-#include "inazuma/player.h"
-#include "inazuma/utils/list.h"
+#include "InazumaQuery/inazuma.h" // IWYU pragma: keep
+#include "InazumaQuery/player.h"
+#include "InazumaQuery/utils/list.h"
 
 #include <ctype.h>
 #include <stddef.h>

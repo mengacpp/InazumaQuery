@@ -1,4 +1,4 @@
-#include "inazuma/utils/utils.h"
+#include "InazumaQuery/utils/utils.h"
 
 #include <ctype.h>
 #include <errno.h>
@@ -8,7 +8,7 @@
 #include <string.h>
 #include <wctype.h>
 
-#include "inazuma/core/errno.h"
+#include "InazumaQuery/core/errno.h"
 
 
 char *ina_read_file_content(const char *path_to_file)

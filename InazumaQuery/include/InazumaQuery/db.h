@@ -3,12 +3,12 @@
 
 #include <stdint.h>
 
-#include "inazuma/core/core.h"
+#include "InazumaQuery/core/core.h"
 
-#include "inazuma/player.h"
+#include "InazumaQuery/player.h"
 
-#include "inazuma/utils/list.h"
-#include "inazuma/utils/sort.h" // IWYU pragma: keep
+#include "InazumaQuery/utils/list.h"
+#include "InazumaQuery/utils/sort.h" // IWYU pragma: keep
 
 typedef struct ina_db_t ina_db_t;
 

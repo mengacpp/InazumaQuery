@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "inazuma/core/errno.h"
-#include "inazuma/utils/list.h"
+#include "InazumaQuery/core/errno.h"
+#include "InazumaQuery/utils/list.h"
 
 void print_int(FILE *f, void const *i_ptr)
 {

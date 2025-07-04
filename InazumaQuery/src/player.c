@@ -1,4 +1,4 @@
-#include "inazuma/player.h"
+#include "InazumaQuery/player.h"
 #include <stdio.h>
 
 

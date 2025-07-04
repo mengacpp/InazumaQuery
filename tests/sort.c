@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "inazuma/utils/list.h"
-#include "inazuma/utils/sort.h"
+#include "InazumaQuery/utils/list.h"
+#include "InazumaQuery/utils/sort.h"
 
 #define N 250
 

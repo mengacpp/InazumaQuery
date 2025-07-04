@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "inazuma/core/errno.h"
-#include "inazuma/utils/filter.h"
-#include "inazuma/utils/list.h"
+#include "InazumaQuery/core/errno.h"
+#include "InazumaQuery/utils/filter.h"
+#include "InazumaQuery/utils/list.h"
 
 
 #define N 2500

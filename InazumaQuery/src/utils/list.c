@@ -1,4 +1,4 @@
-#include "inazuma/utils/list.h"
+#include "InazumaQuery/utils/list.h"
 
 #include <errno.h>
 #include <stddef.h>
@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "inazuma/core/errno.h"
+#include "InazumaQuery/core/errno.h"
 
 #define LIST_GROW_FACTOR 3.0f
 

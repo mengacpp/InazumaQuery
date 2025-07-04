@@ -1,5 +1,5 @@
-#include "inazuma/core/errno.h"
-#include "inazuma/inazuma.h" // IWYU pragma: keep
+#include "InazumaQuery/core/errno.h"
+#include "InazumaQuery/inazuma.h" // IWYU pragma: keep
 
 #include "stdio.h"
 #include <stdio.h>

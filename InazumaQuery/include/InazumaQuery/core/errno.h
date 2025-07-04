@@ -1,7 +1,7 @@
 #ifndef INAZUMA_CORE_ERRNO_H_
 #define INAZUMA_CORE_ERRNO_H_
 
-#include "inazuma/core/core.h"
+#include "InazumaQuery/core/core.h"
 
 #define err(x) INA_ERRT_##x
 typedef enum ina_errt_t

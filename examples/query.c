@@ -1,4 +1,4 @@
-#include "inazuma/inazuma.h" // IWYU pragma: keep
+#include "InazumaQuery/inazuma.h" // IWYU pragma: keep
 
 
 // error handlings is omitted in this example to make it easier to read

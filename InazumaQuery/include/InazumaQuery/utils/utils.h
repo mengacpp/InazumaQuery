@@ -1,7 +1,7 @@
 #ifndef INAZUMA_UTILS_UTILS_H_
 #define INAZUMA_UTILS_UTILS_H_
 
-#include "inazuma/core/core.h"
+#include "InazumaQuery/core/core.h"
 #include <stddef.h>
 
 INA_BEGIN_EXTERN_C

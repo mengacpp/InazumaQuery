@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "inazuma/core/core.h"
+#include "InazumaQuery/core/core.h"
 
 // TODO make hash map work with ina_list_t abstraction as well.
 // already did this with sorting and filtering algorithms, should do it

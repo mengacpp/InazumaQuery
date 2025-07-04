@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "inazuma/utils/hash_map.h"
+#include "InazumaQuery/utils/hash_map.h"
 
 int main()
 {

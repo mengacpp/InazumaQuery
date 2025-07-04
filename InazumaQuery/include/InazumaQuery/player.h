@@ -1,7 +1,7 @@
 #ifndef INAZUMA_PLAYER_H_
 #define INAZUMA_PLAYER_H_
 
-#include "inazuma/core/core.h"
+#include "InazumaQuery/core/core.h"
 #include <stdio.h>
 
 #define INA_FULLNAME_MAX_LEN                                                   \

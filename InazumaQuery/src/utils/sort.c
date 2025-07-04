@@ -1,6 +1,6 @@
-#include "inazuma/utils/sort.h"
-#include "inazuma/core/core.h"
-#include "inazuma/utils/list.h"
+#include "InazumaQuery/utils/sort.h"
+#include "InazumaQuery/core/core.h"
+#include "InazumaQuery/utils/list.h"
 
 #include <stddef.h>
 #include <stdio.h>

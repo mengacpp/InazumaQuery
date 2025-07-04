@@ -1,6 +1,6 @@
-#include "inazuma/inazuma.h" // IWYU pragma: keep
-#include "inazuma/player.h"
-#include "inazuma/utils/list.h"
+#include "InazumaQuery/inazuma.h" // IWYU pragma: keep
+#include "InazumaQuery/player.h"
+#include "InazumaQuery/utils/list.h"
 
 #include <ctype.h>
 #include <stddef.h>
@@ -42,7 +42,8 @@ void print_name(FILE *f, void const *e)
 
 int main()
 {
-    ina_db_t *ie3_db = ina_db_create_from_csv(INA_IE3_CSV);
+    ina_db_t *ie3_db =
+        ina_db_create_from_csv(INA_DEBUG_DATA_DIR "/players/ie3.csv");
 
 
     clock_t start = clock();
