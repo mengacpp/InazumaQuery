@@ -66,6 +66,7 @@ ina_db_t *ina_db_create_from_csv(const char *csv_path)
         return NULL;
     }
 
+    // TODO fix this to make it dynamically allocated
     db->fullname_hmap = ina_hash_map_create(INA_PLAYER_DB_MAX_PLAYERS);
 
     if (!db->fullname_hmap)
@@ -95,7 +96,6 @@ void ina_db_close(ina_db_t **db)
     *db = NULL;
 }
 
-
 static ina_player_filter_fn_t g_filter_fn;
 static ina_player_compare_fn g_compare_fn;
 
@@ -118,7 +118,8 @@ void set(void *e, void const *e2)
     memcpy(player, player2, sizeof(ina_player_t));
 }
 
-
+// TODO maybe create a list of pointers instead of players? not sure if its good
+// tho may risk that the user modify the database
 INA_API ina_list_t *ina_db_query(ina_db_t const *db, uint16_t max_count,
                                  ina_player_filter_fn_t filter_fn,
                                  ina_player_compare_fn compare_fn)

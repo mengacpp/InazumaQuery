@@ -13,7 +13,7 @@
 
 char *ina_read_file_content(const char *path_to_file)
 {
-    FILE *fp = fopen(path_to_file, "r");
+    FILE *fp = fopen(path_to_file, "rb");
     if (!fp)
     {
         ina_errno = INA_ERRT_STD;
@@ -21,21 +21,48 @@ char *ina_read_file_content(const char *path_to_file)
         return NULL;
     }
 
-    char *buffer = NULL;
-    size_t len;
-    ssize_t bytes_read = getdelim(&buffer, &len, '\0', fp);
-    fclose(fp);
-
-    if (bytes_read == -1)
+    if (fseek(fp, 0, SEEK_END) != 0)
     {
-        free(buffer);
-        ina_errno = INA_ERRT_UNKNOWN;
+        fclose(fp);
+        ina_errno = INA_ERRT_STD;
+        ina_stderrno = errno;
         return NULL;
     }
 
+    long filesize = ftell(fp);
+    if (filesize < 0)
+    {
+        fclose(fp);
+        ina_errno = INA_ERRT_STD;
+        ina_stderrno = errno;
+        return NULL;
+    }
+
+    rewind(fp);
+
+    char *buffer = (char *)malloc((size_t)filesize + 1);
+    if (!buffer)
+    {
+        fclose(fp);
+        ina_errno = INA_ERRT_STD;
+        ina_stderrno = ENOMEM;
+        return NULL;
+    }
+
+    size_t bytes_read = fread(buffer, 1, (size_t)filesize, fp);
+    fclose(fp);
+
+    if (bytes_read != (size_t)filesize)
+    {
+        free(buffer);
+        ina_errno = INA_ERRT_STD;
+        ina_stderrno = errno;
+        return NULL;
+    }
+
+    buffer[bytes_read] = '\0';
     return buffer;
 }
-
 
 void ina_normalise(char const *str, char *result, size_t len)
 {
