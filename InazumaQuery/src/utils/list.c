@@ -10,7 +10,7 @@
 
 #define LIST_GROW_FACTOR 3.0f
 
-int ensure_space(ina_list_t *ls);
+int ensure_space(ina_list_t *ls, size_t count);
 
 
 struct ina_list_t
@@ -40,15 +40,10 @@ ina_list_t *ina_list_create(size_t e_size)
     ls->buf_used = 0;
     ls->buf_size = 0;
 
-    if (!ensure_space(ls))
-    {
-        return NULL;
-    }
-
     return ls;
 }
 
-int ensure_space(ina_list_t *ls)
+int ensure_space(ina_list_t *ls, size_t count)
 {
     if (!ls)
     {
@@ -56,15 +51,21 @@ int ensure_space(ina_list_t *ls)
         return 0;
     }
 
-    size_t buf_free = ls->buf_size - ls->buf_used;
+    size_t required = ls->e_size * count;
+    size_t new_size = ls->buf_size;
 
-    if (buf_free >= ls->e_size) return 1;
-
-    size_t new_size =
-        ls->buf_size == 0
-            ? ls->e_size * LIST_GROW_FACTOR
-            : ls->buf_size + ls->buf_size * (1.0f / LIST_GROW_FACTOR);
-
+    while (new_size - ls->buf_used < required)
+    {
+        if (new_size == 0)
+        {
+            new_size += ls->e_size * LIST_GROW_FACTOR;
+        }
+        else
+        {
+            new_size += new_size * (1.0f / LIST_GROW_FACTOR);
+        }
+    }
+    if (new_size == ls->buf_size) return 1;
 
     // realloc work just as malloc if ls->buf is NULL
     void *temp = realloc(ls->buf, new_size);
@@ -77,10 +78,7 @@ int ensure_space(ina_list_t *ls)
     }
 
     ls->buf = temp;
-
     ls->buf_size = new_size;
-
-
     return 1;
 }
 
@@ -92,7 +90,7 @@ int ina_list_add(ina_list_t *ls, void *e)
         return 0;
     }
 
-    if (!ensure_space(ls)) return 0;
+    if (!ensure_space(ls, 1)) return 0;
 
     void *pos = ls->buf + (ls->e_count * ls->e_size);
 
@@ -123,6 +121,40 @@ void *ina_list_at(ina_list_t const *ls, size_t id)
     return e;
 }
 
+bool ina_list_copy(ina_list_t *dst, ina_list_t const *src, size_t offset,
+                   size_t max_count)
+{
+    if (!dst || !src)
+    {
+        ina_errno = INA_ERRT_PARAM_NULL;
+        return false;
+    }
+
+    if (offset >= ina_list_count(src) ||
+        ina_list_sizeof_element(dst) != ina_list_sizeof_element(src))
+    {
+        ina_errno = INA_ERRT_PARAM_INVALID;
+        return false;
+    }
+
+    size_t src_count = ina_list_count(src);
+    size_t avail = src_count - offset;
+    size_t count = avail < max_count ? avail : max_count;
+
+    if (!ensure_space(dst, count))
+    {
+        return false;
+    }
+
+    memcpy(dst->buf + dst->buf_used,
+           src->buf + (offset * ina_list_sizeof_element(src)),
+           count * ina_list_sizeof_element(src));
+
+    dst->e_count += count;
+    dst->buf_used += src->e_size * count;
+
+    return true;
+}
 
 void ina_list_destroy(ina_list_t **ls)
 {

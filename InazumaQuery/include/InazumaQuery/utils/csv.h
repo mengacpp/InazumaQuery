@@ -8,6 +8,9 @@
 
 typedef struct ina_csv_t ina_csv_t;
 
+// TODO create a csv export function
+// may be useful
+
 INA_BEGIN_EXTERN_C
 
 INA_API ina_csv_t *ina_csv_create(char const *path);

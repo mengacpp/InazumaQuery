@@ -11,6 +11,8 @@
 // already did this with sorting and filtering algorithms, should do it
 // here for consistency and it may be useful in the future
 
+// TODO make hash map dynamic and not of a fixed size
+// just like with ina_list_t. Avoid allocating too much memory
 
 typedef struct ina_hash_map_t ina_hash_map_t;
 

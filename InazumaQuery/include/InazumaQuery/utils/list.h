@@ -2,6 +2,7 @@
 #define INAZUMA_UTILS_LIST_H_
 
 #include "InazumaQuery/core/core.h"
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 
@@ -21,7 +22,9 @@ INA_API void ina_list_destroy(ina_list_t **ls);
 
 INA_API size_t ina_list_count(ina_list_t const *ls);
 
-// TODO find better name for this function
+INA_API bool ina_list_copy(ina_list_t *dst, ina_list_t const *src,
+                           size_t offset, size_t max_count);
+
 INA_API size_t ina_list_sizeof_element(ina_list_t const *ls);
 
 INA_API void ina_list_fprint(ina_list_t const *ls, FILE *out,

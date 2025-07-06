@@ -29,7 +29,7 @@ ina_csv_t *ina_csv_create(char const *path)
         return NULL;
     }
 
-    char *content = ina_read_file_content(path);
+    char *content = ina_file_readall(path);
     if (!content)
     {
         ina_csv_destroy(&csv);

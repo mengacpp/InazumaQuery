@@ -15,7 +15,7 @@
 // ~0.00015 seconds in avg conditions
 // ~0.003 seconds in worst conditions
 
-// TODO: IMPLEMENT HEAPSORT
+// TODO: Implement heapsort
 // should allow worst conditions mitigation
 
 typedef ina_list_cmp_fn_t cmp_fn;
@@ -118,21 +118,6 @@ void insertion_sort(ina_list_t const *ls, cmp_fn compare, set_fn set, int start,
     }
 }
 
-INA_API void ina_reverse(ina_list_t const *ls, set_fn set)
-{
-    size_t len = ina_list_count(ls);
-    size_t last = len - 1;
-    size_t half = len / 2;
-
-    for (size_t i = 0; i < half; ++i)
-    {
-        void *temp = malloc(ina_list_sizeof_element(ls));
-        memcpy(temp, LS(i), ina_list_sizeof_element(ls));
-
-        set(LS(i), LS(last - i));
-        set(LS(last - i), temp);
-    }
-}
 void heap_sort(ina_list_t const *ls, cmp_fn compare, set_fn set)
 {
     INA_NOT_IMPLEMENTED;

@@ -18,14 +18,6 @@
 #include "InazumaQuery/utils/sort.h"
 #include "InazumaQuery/utils/utils.h"
 
-
-// TODO this file really needs refactor
-// this is a mess, should break into smaller functions maybe / ensure better
-// error checking
-// csv files should be parsed into an intermediate state easier to parse
-// (subdivide it in cols and cels)
-
-
 #define INA_PLAYER_DB_MAX_PLAYERS 2500
 
 bool ina_db_accept_all(ina_player_t const *e)
@@ -45,7 +37,7 @@ struct ina_db_t
     ina_hash_map_t *fullname_hmap;
 };
 
-int assign_to_player_by_col(ina_player_t *player, ina_player_attribute_t col,
+int assign_to_player_by_col(ina_player_t *player, size_t col,
                             char const *cell_content);
 int get_stat_from_cell(char const *cell_content);
 
@@ -66,7 +58,6 @@ ina_db_t *ina_db_create_from_csv(const char *csv_path)
         return NULL;
     }
 
-    // TODO fix this to make it dynamically allocated
     db->fullname_hmap = ina_hash_map_create(INA_PLAYER_DB_MAX_PLAYERS);
 
     if (!db->fullname_hmap)
@@ -97,6 +88,8 @@ ina_db_t *ina_db_create_from_csv(const char *csv_path)
         ina_hash_map_add(db->fullname_hmap, p.fullname_normalised,
                          ina_list_count(db->players) - 1);
     }
+
+    ina_csv_destroy(&csv);
 
     return db;
 }
@@ -135,45 +128,35 @@ void set(void *e, void const *e2)
     memcpy(player, player2, sizeof(ina_player_t));
 }
 
-// TODO maybe create a list of pointers instead of players? not sure if its good
-// tho may risk that the user modify the database
+// TODO return a list of pointers instead of a list of players
+// this will avoid copying all that memory
 INA_API ina_list_t *ina_db_query(ina_db_t const *db, uint16_t max_count,
                                  ina_player_filter_fn_t filter_fn,
                                  ina_player_compare_fn compare_fn)
 {
-    if (!compare_fn)
-        g_compare_fn = ina_db_default_compare;
-    else
-        g_compare_fn = compare_fn;
-
-    if (!filter_fn)
-        g_filter_fn = ina_db_accept_all;
-    else
-        g_filter_fn = filter_fn;
-
     if (!db)
     {
         ina_errno = INA_ERRT_PARAM_NULL;
         return NULL;
     }
 
-    ina_list_t *result = ina_list_create(sizeof(ina_player_t));
-
-    if (max_count == 0) max_count = ina_list_count(db->players);
+    g_compare_fn = compare_fn ? compare_fn : ina_db_default_compare;
+    g_filter_fn = filter_fn ? filter_fn : ina_db_accept_all;
 
     ina_list_t *filtered = ina_filter(db->players, filter_wrapper);
-
     ina_sort(filtered, compare_wrapper, set);
 
+    if (max_count == 0) max_count = ina_list_count(db->players);
     size_t count = max_count > ina_list_count(filtered)
                        ? ina_list_count(filtered)
                        : max_count;
 
-    // TODO implement algorithm to copy this in an efficent way
-    for (size_t i = 0; i < count; ++i)
+    ina_list_t *result = ina_list_create(sizeof(ina_player_t));
+    if (!ina_list_copy(result, filtered, 0, count))
     {
-        ina_player_t *p = ina_list_at(filtered, i);
-        ina_list_add(result, p);
+        ina_list_destroy(&filtered);
+        ina_list_destroy(&result);
+        return NULL;
     }
 
     ina_list_destroy(&filtered);
@@ -186,7 +169,7 @@ ina_player_t const *ina_db_query_fullname(ina_db_t const *db,
 {
     char fullname_normalised[INA_FULLNAME_MAX_LEN];
 
-    ina_normalise(fullname, fullname_normalised, INA_FULLNAME_MAX_LEN);
+    ina_normalise_string(fullname, fullname_normalised, INA_FULLNAME_MAX_LEN);
 
     bool found;
     unsigned int id =
@@ -197,42 +180,41 @@ ina_player_t const *ina_db_query_fullname(ina_db_t const *db,
     return ina_list_at(db->players, id);
 }
 
-#define assign_stat_and_break(stat)                                            \
+#define ASSIGN_AND_BREAK(stat)                                                 \
     do                                                                         \
     {                                                                          \
-        player->stat = get_stat_from_cell(cell_content);                       \
-                                                                               \
+        player->stat = strtol(cell_content, NULL, 10);                         \
         break;                                                                 \
     } while (0)
 
-int assign_to_player_by_col(ina_player_t *player, ina_player_attribute_t col,
+int assign_to_player_by_col(ina_player_t *player, size_t col,
                             char const *cell_content)
 {
     switch (col)
     {
-    case INA_PLAYER_ATTRIBUTE_FULLNAME:
+    case 0:
     {
         strncpy(player->fullname, cell_content, INA_FULLNAME_MAX_LEN);
 
-        ina_normalise(player->fullname, player->fullname_normalised,
-                      INA_FULLNAME_MAX_LEN);
+        ina_normalise_string(player->fullname, player->fullname_normalised,
+                             INA_FULLNAME_MAX_LEN);
 
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_NICKNAME:
+    case 1:
     {
         strncpy(player->nickname, cell_content, INA_FULLNAME_MAX_LEN);
 
-        ina_normalise(player->nickname, player->nickname_normalised,
-                      INA_FULLNAME_MAX_LEN);
+        ina_normalise_string(player->nickname, player->nickname_normalised,
+                             INA_FULLNAME_MAX_LEN);
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_POSITION:
+    case 2:
     {
-        int is_gk = ina_normalise_strcmp("GK", cell_content) == 0;
-        int is_df = ina_normalise_strcmp("DF", cell_content) == 0;
-        int is_mf = ina_normalise_strcmp("MF", cell_content) == 0;
-        int is_fw = ina_normalise_strcmp("FW", cell_content) == 0;
+        int is_gk = ina_strcmp_normalised("GK", cell_content) == 0;
+        int is_df = ina_strcmp_normalised("DF", cell_content) == 0;
+        int is_mf = ina_strcmp_normalised("MF", cell_content) == 0;
+        int is_fw = ina_strcmp_normalised("FW", cell_content) == 0;
 
         if (is_gk)
             player->position = PLAYER_POSITION_GK;
@@ -251,10 +233,10 @@ int assign_to_player_by_col(ina_player_t *player, ina_player_attribute_t col,
 
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_GENDER:
+    case 3:
     {
-        int is_male = ina_normalise_strcmp("male", cell_content) == 0;
-        int is_female = ina_normalise_strcmp("female", cell_content) == 0;
+        int is_male = ina_strcmp_normalised("male", cell_content) == 0;
+        int is_female = ina_strcmp_normalised("female", cell_content) == 0;
 
         if (is_male)
             player->gender = PLAYER_GENDER_MALE;
@@ -268,11 +250,11 @@ int assign_to_player_by_col(ina_player_t *player, ina_player_attribute_t col,
 
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_SIZE:
+    case 4:
     {
-        int is_small = ina_normalise_strcmp("small", cell_content) == 0;
-        int is_medium = ina_normalise_strcmp("medium", cell_content) == 0;
-        int is_large = ina_normalise_strcmp("large", cell_content) == 0;
+        int is_small = ina_strcmp_normalised("small", cell_content) == 0;
+        int is_medium = ina_strcmp_normalised("medium", cell_content) == 0;
+        int is_large = ina_strcmp_normalised("large", cell_content) == 0;
 
         if (is_small)
             player->size = PLAYER_SIZE_SMALL;
@@ -288,12 +270,12 @@ int assign_to_player_by_col(ina_player_t *player, ina_player_attribute_t col,
 
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_ELEMENT:
+    case 5:
     {
-        int is_air = ina_normalise_strcmp("air", cell_content) == 0;
-        int is_earth = ina_normalise_strcmp("earth", cell_content) == 0;
-        int is_fire = ina_normalise_strcmp("fire", cell_content) == 0;
-        int is_wood = ina_normalise_strcmp("wood", cell_content) == 0;
+        int is_air = ina_strcmp_normalised("air", cell_content) == 0;
+        int is_earth = ina_strcmp_normalised("earth", cell_content) == 0;
+        int is_fire = ina_strcmp_normalised("fire", cell_content) == 0;
+        int is_wood = ina_strcmp_normalised("wood", cell_content) == 0;
 
         if (is_air)
             player->element = ELEMENT_AIR;
@@ -311,215 +293,184 @@ int assign_to_player_by_col(ina_player_t *player, ina_player_attribute_t col,
 
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_LVL1_FP:
+    case 6:
     {
-        assign_stat_and_break(lvl1_fp);
+        ASSIGN_AND_BREAK(lvl1_fp);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL1_TP:
+    case 7:
     {
-        assign_stat_and_break(lvl1_tp);
+        ASSIGN_AND_BREAK(lvl1_tp);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL1_KICK:
+    case 8:
     {
-        assign_stat_and_break(lvl1_kick);
+        ASSIGN_AND_BREAK(lvl1_kick);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL1_BODY:
+    case 9:
     {
-        assign_stat_and_break(lvl1_body);
+        ASSIGN_AND_BREAK(lvl1_body);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL1_CONTROL:
+    case 10:
     {
-        assign_stat_and_break(lvl1_control);
+        ASSIGN_AND_BREAK(lvl1_control);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL1_GUARD:
+    case 11:
     {
-        assign_stat_and_break(lvl1_guard);
+        ASSIGN_AND_BREAK(lvl1_guard);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL1_SPEED:
+    case 12:
     {
-        assign_stat_and_break(lvl1_speed);
+        ASSIGN_AND_BREAK(lvl1_speed);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL1_STAMINA:
+    case 13:
     {
-        assign_stat_and_break(lvl1_stamina);
+        ASSIGN_AND_BREAK(lvl1_stamina);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL1_GUTS:
+    case 14:
     {
-        assign_stat_and_break(lvl1_guts);
+        ASSIGN_AND_BREAK(lvl1_guts);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL99_FP:
+    case 15:
     {
-        assign_stat_and_break(lvl99_fp);
+        ASSIGN_AND_BREAK(lvl99_fp);
     }
-    case INA_PLAYER_ATTRIBUTE_FP_MAXES_AT:
+    case 16:
     {
-        assign_stat_and_break(fp_maxes_at);
+        ASSIGN_AND_BREAK(fp_maxes_at);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL99_TP:
+    case 17:
     {
-        assign_stat_and_break(lvl99_tp);
+        ASSIGN_AND_BREAK(lvl99_tp);
     }
-    case INA_PLAYER_ATTRIBUTE_TP_MAXES_AT:
+    case 18:
     {
-        assign_stat_and_break(tp_maxes_at);
+        ASSIGN_AND_BREAK(tp_maxes_at);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL99_KICK:
+    case 19:
     {
-        assign_stat_and_break(lvl99_kick);
+        ASSIGN_AND_BREAK(lvl99_kick);
     }
-    case INA_PLAYER_ATTRIBUTE_KICK_MAXES_AT:
+    case 20:
     {
-        assign_stat_and_break(kick_maxes_at);
+        ASSIGN_AND_BREAK(kick_maxes_at);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL99_BODY:
+    case 21:
     {
-        assign_stat_and_break(lvl99_body);
+        ASSIGN_AND_BREAK(lvl99_body);
     }
-    case INA_PLAYER_ATTRIBUTE_BODY_MAXES_AT:
+    case 22:
     {
-        assign_stat_and_break(body_maxes_at);
+        ASSIGN_AND_BREAK(body_maxes_at);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL99_CONTROL:
+    case 23:
     {
-        assign_stat_and_break(lvl99_control);
+        ASSIGN_AND_BREAK(lvl99_control);
     }
-    case INA_PLAYER_ATTRIBUTE_CONTROL_MAXES_AT:
+    case 24:
     {
-        assign_stat_and_break(control_maxes_at);
+        ASSIGN_AND_BREAK(control_maxes_at);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL99_GUARD:
+    case 25:
     {
-        assign_stat_and_break(lvl99_guard);
+        ASSIGN_AND_BREAK(lvl99_guard);
     }
-    case INA_PLAYER_ATTRIBUTE_GUARD_MAXES_AT:
+    case 26:
     {
-        assign_stat_and_break(guard_maxes_at);
+        ASSIGN_AND_BREAK(guard_maxes_at);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL99_SPEED:
+    case 27:
     {
-        assign_stat_and_break(lvl99_speed);
+        ASSIGN_AND_BREAK(lvl99_speed);
     }
-    case INA_PLAYER_ATTRIBUTE_SPEED_MAXES_AT:
+    case 28:
     {
-        assign_stat_and_break(speed_maxes_at);
+        ASSIGN_AND_BREAK(speed_maxes_at);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL99_STAMINA:
+    case 29:
     {
-        assign_stat_and_break(lvl99_stamina);
+        ASSIGN_AND_BREAK(lvl99_stamina);
     }
-    case INA_PLAYER_ATTRIBUTE_STAMINA_MAXES_AT:
+    case 30:
     {
-        assign_stat_and_break(stamina_maxes_at);
+        ASSIGN_AND_BREAK(stamina_maxes_at);
     }
-    case INA_PLAYER_ATTRIBUTE_LVL99_GUTS:
+    case 31:
     {
-        assign_stat_and_break(lvl99_guts);
+        ASSIGN_AND_BREAK(lvl99_guts);
     }
-    case INA_PLAYER_ATTRIBUTE_GUTS_MAXES_AT:
+    case 32:
     {
-        assign_stat_and_break(guts_maxes_at);
+        ASSIGN_AND_BREAK(guts_maxes_at);
     }
-    case INA_PLAYER_ATTRIBUTE_FREEDOM:
+    case 33:
     {
-        assign_stat_and_break(freedom);
+        ASSIGN_AND_BREAK(freedom);
     }
-    case INA_PLAYER_ATTRIBUTE_TOTAL:
+    case 34:
     {
-        assign_stat_and_break(total);
+        ASSIGN_AND_BREAK(total);
     }
-    case INA_PLAYER_ATTRIBUTE_MAX_TOTAL:
+    case 35:
     {
-        assign_stat_and_break(max_total);
+        ASSIGN_AND_BREAK(max_total);
     }
-    case INA_PLAYER_ATTRIBUTE_MOVE1:
+    case 36:
     {
         strncpy(player->move1_name, cell_content, INA_FULLNAME_MAX_LEN);
-        ina_normalise(player->move1_name, player->move1_name_normalised,
-                      INA_FULLNAME_MAX_LEN);
+        ina_normalise_string(player->move1_name, player->move1_name_normalised,
+                             INA_FULLNAME_MAX_LEN);
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_MOVE1_LEARNS_AT:
+    case 37:
     {
-        assign_stat_and_break(move1_learns_at);
+        ASSIGN_AND_BREAK(move1_learns_at);
     }
-    case INA_PLAYER_ATTRIBUTE_MOVE2:
+    case 38:
     {
         strncpy(player->move2_name, cell_content, INA_FULLNAME_MAX_LEN);
-        ina_normalise(player->move2_name, player->move2_name_normalised,
-                      INA_FULLNAME_MAX_LEN);
+        ina_normalise_string(player->move2_name, player->move2_name_normalised,
+                             INA_FULLNAME_MAX_LEN);
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_MOVE2_LEARNS_AT:
+    case 39:
     {
-        assign_stat_and_break(move2_learns_at);
+        ASSIGN_AND_BREAK(move2_learns_at);
     }
-    case INA_PLAYER_ATTRIBUTE_MOVE3:
+    case 40:
     {
         strncpy(player->move3_name, cell_content, INA_FULLNAME_MAX_LEN);
-        ina_normalise(player->move3_name, player->move3_name_normalised,
-                      INA_FULLNAME_MAX_LEN);
+        ina_normalise_string(player->move3_name, player->move3_name_normalised,
+                             INA_FULLNAME_MAX_LEN);
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_MOVE3_LEARNS_AT:
+    case 41:
     {
-        assign_stat_and_break(move3_learns_at);
+        ASSIGN_AND_BREAK(move3_learns_at);
     }
-    case INA_PLAYER_ATTRIBUTE_MOVE4:
+    case 42:
     {
         strncpy(player->move4_name, cell_content, INA_FULLNAME_MAX_LEN);
-        ina_normalise(player->move4_name, player->move4_name_normalised,
-                      INA_FULLNAME_MAX_LEN);
+        ina_normalise_string(player->move4_name, player->move4_name_normalised,
+                             INA_FULLNAME_MAX_LEN);
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_MOVE4_LEARNS_AT:
+    case 43:
     {
-        assign_stat_and_break(move4_learns_at);
+        ASSIGN_AND_BREAK(move4_learns_at);
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_PLAYER_HEX_ID:
+    case 44:
     {
-        int id = ina_string_to_int(cell_content, 16);
+        int id = strtol(cell_content, NULL, 16);
 
         player->hex_id = id;
         break;
     }
-    case INA_PLAYER_ATTRIBUTE_COUNT:
-    {
-        ina_errno = INA_ERRT_CSV_STRUCTURE_INVALID;
-        return 0;
-    }
     default:
     {
-        INA_NOT_IMPLEMENTED;
         ina_errno = INA_ERRT_UNKNOWN;
         return 0;
     }
     }
 
     return 1;
-}
-
-int get_stat_from_cell(char const *cell_content)
-{
-    if (ina_normalise_strcmp("event", cell_content) == 0)
-    {
-        return -1;
-    }
-
-    int stat = 0;
-
-    if (strlen(cell_content) < 1)
-    {
-        return 0;
-    }
-
-    stat = ina_string_to_int(cell_content, 10);
-
-    if (stat < 0)
-    {
-        ina_errno = INA_ERRT_CSV_CELL_INVALID;
-        return -2;
-    }
-
-    return stat;
 }
