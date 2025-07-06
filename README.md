@@ -1,6 +1,8 @@
 # InazumaQuery
 
-A C API for querying and comparing Inazuma Eleven player stats.
+InazumaQuery is a C API for querying and comparing Inazuma Eleven player stats.
+
+I'Ve created this project because i couldn't find an easy tool to find players to create the 'perfect' Inazuma Eleven team: with this library, it's easier than ever.
 
 > [!CAUTION]
 > This library it's still in early development phase (pre-alpha). Bugs have to be expected.
@@ -19,9 +21,8 @@ A C API for querying and comparing Inazuma Eleven player stats.
 
 **Currently available features:**
 
-- Builtin databases for IE1 , IE2 and IE3 located in the [`data/`](https://github.com/mengacpp/InazumaQuery/tree/main/data) folder.
-- Filter and sort players to get the ones you are looking for
-- Look for players using their full name
+- Filter and sort players using their data and easily get the ones you are looking for
+- Use the provided databases for IE1 , IE2 and IE3 located in the [`data/`](https://github.com/mengacpp/InazumaQuery/tree/main/data) folder
 
 **Planned features:**
 
@@ -44,7 +45,7 @@ Every platform is theroetically supported, as there are no platform specific dep
 
 ## Getting started
 
-Using the API is straight forward: setup your project to link to this library, and start using it.
+Using the API is straight forward: [setup your project](#project-setup) to link to this library, and start using it.
 
 You can learn how to use the API by reading the [examples](https://github.com/mengacpp/InazumaQuery/tree/main/examples) and the articles on the [wiki](https://github.com/mengacpp/InazumaQuery/wiki).
 
@@ -55,7 +56,7 @@ You can link to this library by adding it as a subdirectory in your `CMakeLists.
 > [!NOTE]
 > Theoretically you can just copy and paste the `InazumaQuery/` folder in your source directory and compile it as is, but i wouldn't recommend it since i haven't tested this method.
 
-First of, create a git submodule in a directory of your project. I'd recommend placing it a folder named `vendor/` or `third_party/`:
+First of, create a git submodule in a directory of your project. I'd recommend placing it in a folder named `vendor/` or `third_party/`:
 
 ```shell
 git submodule add --depth 1 https://github.com/mengacpp/InazumaQuery.git vendor/InazumaQuery
