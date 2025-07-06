@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
 
-# 1. Make install dirs relocatable & follow distro conventions:
-include(GNUInstallDirs)
-
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
@@ -16,77 +13,15 @@ else()
     add_library(InazumaQuery STATIC ${SOURCES})
 endif()
 
-target_compile_definitions(InazumaQuery 
-    PUBLIC
-        INA_DATA_DIR="${CMAKE_INSTALL_FULL_DATADIR}/InazumaQuery/data"    
-    PRIVATE 
-        INA_EXPORTS )
+target_compile_definitions(InazumaQuery PRIVATE INA_EXPORTS)
 target_include_directories(InazumaQuery
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_compile_definitions(InazumaQuery PUBLIC INA_DEBUG_DATA_DIR="${INA_DEBUG_DATA_DIR}" INA_DEBUG)
-endif()
-
-# 2. Install the library target
-install(
-  TARGETS InazumaQuery
-  EXPORT InazumaQueryTargets
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}    # .a on UNIX
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}    # .so/.dylib 
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}    # .exe on Windows
-  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-# 3. Install public headers
-install(
-  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/InazumaQuery
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-  FILES_MATCHING PATTERN "*.h"
-)
-
-# 4. Export a config file so users can find_package(InazumaQuery)
-install(
-  EXPORT InazumaQueryTargets
-  NAMESPACE InazumaQuery::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/InazumaQuery
-)
-
-# 5. write a version file
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-  "${CMAKE_CURRENT_BINARY_DIR}/InazumaQuery-config-version.cmake"
-  VERSION ${PROJECT_VERSION}
-  COMPATIBILITY AnyNewerVersion
-)
-
-# config
-
-include(CMakePackageConfigHelpers)
-
-configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/InazumaQuery-config.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/InazumaQuery-config.cmake"
-  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/InazumaQuery
-)
-
-write_basic_package_version_file(
-  "${CMAKE_CURRENT_BINARY_DIR}/InazumaQuery-config-version.cmake"
-  VERSION ${PROJECT_VERSION}
-  COMPATIBILITY AnyNewerVersion
-)
-
-install(
-  FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/InazumaQuery-config.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/InazumaQuery-config-version.cmake"
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/InazumaQuery
-)
-
-install(
-  DIRECTORY ${CMAKE_SOURCE_DIR}/data
-  DESTINATION ${CMAKE_INSTALL_DATADIR}/InazumaQuery
+target_compile_definitions(InazumaQuery
+    PUBLIC
+        $<$<CONFIG:Debug>:INA_DEBUG_DATA_DIR=\"${INA_DEBUG_DATA_DIR}\">
+        $<$<CONFIG:Debug>:INA_DEBUG>
+    PRIVATE 
+        INA_EXPORTS
 )

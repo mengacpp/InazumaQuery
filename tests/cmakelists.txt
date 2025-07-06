@@ -9,26 +9,21 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-# collect all .cpp test sources in this dir
 file(GLOB TEST_SOURCES CONFIGURE_DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/*.c
 )
 
 foreach(TEST_SRC IN LISTS TEST_SOURCES)
-  # get filename without extension, e.g. “my_test”
   get_filename_component(TEST_NAME ${TEST_SRC} NAME_WE)
 
-  # each .cpp → its own executable
   add_executable(${TEST_NAME} ${TEST_SRC})
   target_link_libraries(${TEST_NAME}
     PRIVATE InazumaQuery GTest::gtest_main
   )
 
-  # register it as a CTest test
   add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
 
-  # propagate DYLD_LIBRARY_PATH so your dylib is found
   set_tests_properties(${TEST_NAME} PROPERTIES
-    ENVIRONMENT "DYLD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib"
+    ENVIRONMENT "DYLD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/InazumaQuery"
   )
 endforeach()

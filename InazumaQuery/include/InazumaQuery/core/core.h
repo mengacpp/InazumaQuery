@@ -40,13 +40,6 @@
 #endif
 
 /*
-    Database paths
-*/
-#define INA_IE3_CSV INA_DATA_DIR "/players/ie3.csv"
-#define INA_IE2_CSV INA_DATA_DIR "/players/ie2.csv"
-#define INA_IE_CSV INA_DATA_DIR "/players/ie.csv"
-
-/*
     Util function
 */
 #define INA_NOT_IMPLEMENTED                                                    \

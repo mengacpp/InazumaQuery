@@ -1,107 +1,88 @@
 # InazumaQuery
 
-> [!CAUTION]
-> This library it's still in early development phase (pre-alpha). Bugs have to be expected even during the installation phase.
-
 A C API for querying and comparing Inazuma Eleven player stats.
+
+> [!CAUTION]
+> This library it's still in early development phase (pre-alpha). Bugs have to be expected.
 
 ## Table of contents
 
 - [InazumaQuery](#inazumaquery)
   - [Table of contents](#table-of-contents)
   - [Features](#features)
-  - [Getting started](#getting-started)
   - [Supported platform](#supported-platform)
-  - [Dependencies](#dependencies)
-  - [Installation](#installation)
+  - [Getting started](#getting-started)
+  - [Project setup](#project-setup)
   - [Credits](#credits)
 
 ## Features
 
 **Currently available features:**
 
-- Open the **Inazuma Eleven 1, 2, **and** 3 player databases** by default, or import your own
-- **Filter and sort** players to get the ones you are looking for
-- **Look for players** using their full name
+- Builtin databases for IE1 , IE2 and IE3 located in the [`data/`](https://github.com/mengacpp/InazumaQuery/tree/main/data) folder.
+- Filter and sort players to get the ones you are looking for
+- Look for players using their full name
 
-**Features I’m currently working on and planned features:**
+**Planned features:**
 
-- Create built in compare functions to sort players by 'skills' rather than stats. (e.g. sorting by general ability to shoot rather than by kick statistic).  
-- Adding secondary informations about players (team, recruitment method, recruitment location ..., move ids)
+- Create built in compare functions to sort players by 'skills' rather than by statistic (e.g. sorting by general ability to shoot rather than by kick statistic).  
+- Add secondary informations about players (team, recruitment method, recruitment location, skills)
+- Add moves database
+- Allow queries to accept an offset parameter for pagination.
 
 **Known bugs:**
 
 - Some nicknames in the IE3 database and stats in the IE1 database (less than 5% I'd say) are subject to small decryption bugs that might influece accuracy
 - Some players are duplicates, this is probably caused by the different versions of the same players depending on the game version
 
-## Getting started
-
-Using the API is straight forward: make sure you have all the required [dependencies](#dependencies), and then follow the [installation instructions](#installation).
-
-I've provided some [examples](https://github.com/mengacpp/InazumaQuery/tree/main/examples) on how to use the library and i'll create a small wiki as soon as the API is in a more stable status and the first official version is released.
-
 ## Supported platform
 
 Every platform is theroetically supported, as there are no platform specific dependencies, but only MacOS has been tested right now.
 
-> [!IMPORTANT]
+> [!NOTE]
 > I will create issue templates in the near future so that you can point out bugs you've found.
 
-## Dependencies
+## Getting started
 
-The library does not depend on any external libraries. However, to install it on your device you will need the following tools installed on your device:
+Using the API is straight forward: setup your project to link to this library, and start using it.
 
-- Git
-- CMake
-- Python (required only for a fast installation)
+You can learn how to use the API by reading the [examples](https://github.com/mengacpp/InazumaQuery/tree/main/examples) and the articles on the [wiki](https://github.com/mengacpp/InazumaQuery/wiki).
 
-## Installation
+## Project setup
 
-You can use CMake to build and install InazumaQuery on your device. **The process is the same on every platform**.
+You can link to this library by adding it as a subdirectory in your `CMakeLists.txt`.
 
-1. **Clone the repostory on your device**
+> [!NOTE]
+> Theoretically you can just copy and paste the `InazumaQuery/` folder in your source directory and compile it as is, but i wouldn't recommend it since i haven't tested this method.
 
-    You can clone this repostory on your device using git:
+First of, create a git submodule in a directory of your project. I'd recommend placing it a folder named `vendor/` or `third_party/`:
 
-    ```terminal
-    git clone https://github.com/mengacpp/InazumaQuery.git
-    ```
+```shell
+git submodule add --depth 1 https://github.com/mengacpp/InazumaQuery.git vendor/InazumaQuery
+```
 
-2. **Test the project**
+> [!TIP]
+> If you prefer, you can just clone the repostory. The `--depth 1` command makes sure that you clone just what you need.
 
-    If you want, you can skip this step and install the library right away.
+Now, in your `CMakeLists.txt`:
 
-    You can tell cmake to build the tests by setting the `INA_BUILD_TEST` option to `ON`. Run:
+```cmake
+# project(YourProject) ...
+add_subdirectory(vendor/InazumaQuery)
+target_link_libraries(YourProject PRIVATE InazumaQuery)
+```
 
-    ```terminal
-    mkdir build
-    cmake -B build -S . -DINA_BUILD_TEST=ON -DCMAKE_BUILD_TYPE=Debug
-    ```
+Before the `add_subdirectory()` call, there are some options that you can modify to customise the way the library gets built:
 
-    Now, navigate to the `build` directory and run:
+| Option name | Type | Default value | Description |
+|------------------|------|------|-----------------|
+| `INA_BUILD_SHARED` | `bool` | `TRUE` | Decide wether to build the library as static or shared. |
 
-    ```terminal
-    cmake --build .
-    ctest
-    ```
-
-    If you don't see any error message, you are good to go. I'd recommend deleting the `build` directory before going to the next step.
-
-3. **Build and install the library on your device**
-
-    Generate the cmake project using the `CMAKE_BUILD_TYPE` option set to `Release`. The library gets build as shared by default, but you can build it as static by setting the `INA_BUILD_SHARED` option to false.
-
-    ```terminal
-    cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DINA_BUILD_SHARED=OFF
-    ```
-
-    Now, build and install the library. If you want, you can specify the install directory using the `--prefix` option when running `cmake --install`.
-
-    ```terminal
-    cd build
-    cmake --build .
-    cmake --install InazumaQuery --prefix your_installation_path
-    ```
+```cmake
+set(INA_BUILD_SHARED FALSE) # Build a static library
+add_subdirectory(vendor/InazumaQuery)
+# ...
+```
 
 ## Credits
 

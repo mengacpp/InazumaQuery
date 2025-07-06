@@ -7,14 +7,15 @@
 
 int main()
 {
+    char const *csv_path = INA_DEBUG_DATA_DIR "/players/ie3.csv";
     clock_t start = clock();
-    ina_db_t *db =
-        ina_db_create_from_csv(INA_DEBUG_DATA_DIR "/players/ie3.csv");
+    ina_db_t *db = ina_db_create_from_csv(csv_path);
     clock_t end = clock();
 
     if (!db)
     {
-        fprintf(stderr, "Failed to open database: %s", ina_strerrno(ina_errno));
+        fprintf(stderr, "Failed to create database from file %s: %s", csv_path,
+                ina_strerrno(ina_errno));
         ina_db_close(&db);
         return 1;
     }

@@ -1,4 +1,6 @@
 import subprocess
+import os
+import shutil
 import sys
 from typing import List, Union, Optional
 
@@ -43,12 +45,13 @@ if __name__ == "__main__":
         sys.exit(1)
 
 
-    if(execute_command("cmake --build build -j8")):
+    if(execute_command("cmake --build build") != 0):
         sys.exit(1)
 
-    ctest_cmd = "ctest --test-dir build -j8"
+    ctest_cmd = "ctest --test-dir build"
     if sys.argv[1:]:
         ctest_cmd += " " + " ".join(sys.argv[1:])
 
-    if(execute_command(ctest_cmd)):
-        execute_command("ctest -j8 --test-dir build --rerun-failed --output-on-failure")
+    if(execute_command(ctest_cmd) != 0):
+        if(execute_command("ctest --test-dir build --rerun-failed --output-on-failure") != 0):
+            sys.exit(1)
