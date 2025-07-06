@@ -46,9 +46,9 @@ if __name__ == "__main__":
     if(execute_command("cmake --build build -j8")):
         sys.exit(1)
 
-    ctest_cmd = "ctest --test-dir build --rerun-failed --output-on-failure -j8"
+    ctest_cmd = "ctest --test-dir build -j8"
     if sys.argv[1:]:
         ctest_cmd += " " + " ".join(sys.argv[1:])
 
     if(execute_command(ctest_cmd)):
-        execute_command("ctest --test-dir build --rerun-failed --output-on-failure -j8")
+        execute_command("ctest -j8 --test-dir build --rerun-failed --output-on-failure")

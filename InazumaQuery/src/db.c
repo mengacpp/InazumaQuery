@@ -11,6 +11,7 @@
 
 #include "InazumaQuery/player.h"
 
+#include "InazumaQuery/utils/csv.h"
 #include "InazumaQuery/utils/filter.h"
 #include "InazumaQuery/utils/hash_map.h"
 #include "InazumaQuery/utils/list.h"
@@ -44,7 +45,6 @@ struct ina_db_t
     ina_hash_map_t *fullname_hmap;
 };
 
-int parse_player_csv(ina_db_t *db, const char *csv_path);
 int assign_to_player_by_col(ina_player_t *player, ina_player_attribute_t col,
                             char const *cell_content);
 int get_stat_from_cell(char const *cell_content);
@@ -75,10 +75,27 @@ ina_db_t *ina_db_create_from_csv(const char *csv_path)
         return NULL;
     }
 
-    if (!parse_player_csv(db, csv_path))
+    ina_csv_t *csv = ina_csv_create(csv_path);
+
+    if (!csv)
     {
         ina_db_close(&db);
         return NULL;
+    }
+
+    for (size_t row = 0; row < ina_csv_row_count(csv); ++row)
+    {
+        ina_player_t p;
+        for (size_t col = 0; col < 45; ++col)
+        {
+            char const *cell = ina_csv_get_cell(csv, row, col);
+
+            assign_to_player_by_col(&p, col, cell);
+        }
+
+        ina_list_add(db->players, &p);
+        ina_hash_map_add(db->fullname_hmap, p.fullname_normalised,
+                         ina_list_count(db->players) - 1);
     }
 
     return db;
@@ -178,89 +195,6 @@ ina_player_t const *ina_db_query_fullname(ina_db_t const *db,
     if (!found) return NULL;
 
     return ina_list_at(db->players, id);
-}
-
-int parse_player_csv(ina_db_t *db, const char *csv_path)
-{
-    char *csv_content = ina_read_file_content(csv_path);
-
-    if (!csv_content) return 0;
-
-    char *current = csv_content;
-
-    size_t content_len = strlen(csv_content);
-
-
-    size_t current_row = 0;
-    size_t current_column = 0;
-
-    for (size_t i = 0; i < content_len; ++i)
-    {
-        if (current_column == 0)
-        {
-            ina_player_t p;
-            ina_list_add(db->players, &p);
-        }
-
-        size_t cell_len = 0;
-        char *start_ptr = current;
-
-        while (i < content_len && *current != ',' && *current != '\n')
-        {
-            ++current;
-            ++cell_len;
-            ++i;
-        }
-
-        char cell_content[cell_len + 1];
-        memcpy(cell_content, start_ptr, cell_len);
-        cell_content[cell_len] = '\0';
-
-        if (current_column >= INA_PLAYER_ATTRIBUTE_COUNT)
-        {
-            ina_errno = INA_ERRT_CSV_STRUCTURE_INVALID;
-            return 0;
-        }
-
-
-        if (!assign_to_player_by_col(
-                (ina_player_t *)ina_list_at(db->players, current_row),
-                (ina_player_attribute_t)current_column, cell_content))
-        {
-            return 0;
-        }
-
-        if ((ina_player_attribute_t)current_column ==
-            INA_PLAYER_ATTRIBUTE_FULLNAME)
-        {
-            char const *fullname_norm =
-                ((ina_player_t *)ina_list_at(db->players, current_row))
-                    ->fullname_normalised;
-
-            if (!ina_hash_map_add(db->fullname_hmap, fullname_norm,
-                                  current_row))
-            {
-                return 0;
-            }
-        }
-
-        // increment counters
-
-        if (*current == ',')
-        {
-            current_column++;
-        }
-        if (*current == '\n')
-        {
-            current_column = 0;
-            current_row++;
-        }
-        current++;
-    }
-
-    free(csv_content);
-
-    return 1;
 }
 
 #define assign_stat_and_break(stat)                                            \

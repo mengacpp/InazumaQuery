@@ -1,5 +1,5 @@
-Mark Evans,Mark,GK,Male,Medium,Earth,47,94,13,16,25,25,18,26,30,125,99,135,59,53,99,53,69,49,99,80,69,52,99,69,99,79,99,22,435,457,Fist of Justice,1,God Catch,Event,Hammer of Fury,Event,Dimensional Hand,Event,0x01
-Nathan Swift,Nathan,DF,Male,Medium,Air,64,59,23,22,22,21,28,22,21,124,99,122,89,64,89,58,89,68,89,57,99,76,69,58,89,40,89,23,421,444,Flurry Dash,1,Wind God's Dance,15,Whirlwind Drop,Event,The Hurricane,45,0x02
+Mark Evans,Mark,GK,Male,Medium,Earth,47,94,13,16,25,25,18,26,30,125,99,135,59,53,99,53,69,49,99,80,69,52,99,69,99,79,99,22,435,457,Fist of Justice,1,God Catch,0,Hammer of Fury,0,Dimensional Hand,0,0x01
+Nathan Swift,Nathan,DF,Male,Medium,Air,64,59,23,22,22,21,28,22,21,124,99,122,89,64,89,58,89,68,89,57,99,76,69,58,89,40,89,23,421,444,Flurry Dash,1,Wind God's Dance,15,Whirlwind Drop,0,The Hurricane,45,0x02
 Jack Wallside,Jack,DF,Male,Large,Earth,59,48,18,21,18,26,19,21,21,113,89,116,59,40,69,53,59,62,59,66,69,49,99,65,69,54,89,35,389,424,The Wall,1,Mole Fake,12,Stone Wall,23,The Mountain,35,0x03
 Jim Wraith,Jim,DF,Male,Medium,Wood,43,33,7,14,11,11,12,13,8,113,59,127,59,58,59,53,59,75,59,63,59,53,59,62,59,60,99,17,424,441,Warp Drive,1,About Face,22,Shadow Stitch,34,Sub-Terfuge,60,0x04
 Tod Ironside,Tod,DF,Male,Small,Fire,59,43,23,18,9,22,17,24,19,118,89,114,89,54,89,55,89,53,99,56,89,59,89,56,89,65,89,19,398,417,Deceptor Dribble,1,Comet Shot,7,Defence Plus,20,Circus Block,42,0x05
@@ -7,8 +7,8 @@ Steve Grim,Steve,MF,Male,Medium,Air,43,51,13,9,11,11,10,7,11,120,59,120,59,60,99
 Tim Saunders,Timmy,MF,Male,Small,Wood,46,55,11,8,14,9,12,10,11,132,69,115,69,63,69,76,69,61,69,60,69,55,69,48,99,58,69,14,421,435,Gale Dash,1,Gyro Head,18,Kung Fu Fighting,35,Land Dragon,48,0x07
 Sam Kincaid,Sam,MF,Male,Medium,Fire,50,41,9,11,6,11,10,9,14,125,59,123,59,65,59,57,59,56,59,56,59,58,59,56,59,76,99,11,424,435,Grenade Shot,1,Bewildered,14,Fake Bomber,23,Dragon Tornado,37,0x08
 Maxwell Carson,Max,FW,Male,Medium,Air,61,73,21,22,28,22,26,19,19,125,99,127,69,51,89,56,69,72,69,64,69,60,59,56,99,57,59,22,416,438,Quick Draw,1,Speed Force,55,Illusion Ball,20,Dash Storm,38,0x09
-Axel Blaze,Axel,FW,Male,Medium,Fire,69,82,28,26,23,24,24,22,22,133,59,123,69,78,69,66,69,62,59,58,99,63,59,60,59,60,59,13,447,460,Fire Tornado,1,Fireball Storm,1,Fireball Screw,Event,Grand Fire,Event,0x0A
-Kevin Dragonfly,Kevin,FW,Male,Medium,Wood,61,88,27,25,20,22,19,24,18,122,59,124,89,79,69,60,59,49,89,53,89,51,99,64,59,70,69,20,426,446,Dragon Crash,1,Dragon Slayer,Event,Wyvern Crash,18,Wyvern Blizzard,32,0x0B
+Axel Blaze,Axel,FW,Male,Medium,Fire,69,82,28,26,23,24,24,22,22,133,59,123,69,78,69,66,69,62,59,58,99,63,59,60,59,60,59,13,447,460,Fire Tornado,1,Fireball Storm,1,Fireball Screw,0,Grand Fire,0,0x0A
+Kevin Dragonfly,Kevin,FW,Male,Medium,Wood,61,88,27,25,20,22,19,24,18,122,59,124,89,79,69,60,59,49,89,53,89,51,99,64,59,70,69,20,426,446,Dragon Crash,1,Dragon Slayer,0,Wyvern Crash,18,Wyvern Blizzard,32,0x0B
 William Glass,Willy,FW,Male,Medium,Wood,31,21,7,8,7,11,7,5,7,98,99,144,99,56,99,51,99,68,99,57,99,56,99,53,99,60,99,22,401,423,Jinx,1,Spectacle Crash,30,Trickery!,50,Chaos Break,75,0x0C
 Joseph King,King,GK,Male,Medium,Fire,60,96,15,11,13,16,13,14,14,129,59,129,59,55,59,53,69,69,59,75,59,55,59,64,99,60,69,13,431,444,Economy!,1,Critical!,1,Drill Smasher,10,Infinite Wall,1,0x15
 Peter Drent,Drent,DF,Male,Large,Earth,64,89,14,17,14,18,12,14,10,130,69,108,99,54,69,64,59,59,99,71,69,44,59,63,69,62,59,18,417,435,Supreme Spin,1,Earthquake,20,Reflect Buster,42,Ground Quake,64,0x16
@@ -19,7 +19,7 @@ Herman Waldon,Waldon,MF,Male,Medium,Air,69,72,16,10,15,12,16,16,14,120,59,121,69
 John Bloom,Bloom,MF,Male,Medium,Fire,60,74,12,13,12,11,17,11,14,117,59,124,59,51,99,71,69,67,69,52,89,68,59,54,59,62,59,9,425,434,Trickery!,1,Breakthrough 2,1,Wrath Shot,1,Breakthrough 3,52,0x1B
 Derek Swing,Swing,MF,Male,Small,Air,69,68,12,11,13,10,14,13,11,122,59,124,69,45,69,56,69,76,59,59,69,69,59,60,59,61,99,10,426,436,Trickery!,1,Bubble Gum,1,Clone Faker,32,Death Zone 2,75,0x1C
 Daniel Hatch,Hatch,FW,Male,Medium,Wood,66,76,20,11,14,15,14,17,16,111,59,121,59,60,59,55,59,68,99,68,59,52,59,61,59,64,59,4,428,432,Trickery!,1,Double Cyclone,10,Killer Slide,1,Double Wrath Shot,45,0x1D
-Jude Sharp,Jude,MF,Male,Medium,Air,70,75,28,29,25,27,23,25,23,123,69,126,69,63,69,59,69,79,69,52,69,68,69,56,69,68,99,17,445,462,Illusion Ball,1,Twin Boost,1,Emperor Penguin No. 3,Event,Field of Force,50,0x1E
+Jude Sharp,Jude,MF,Male,Medium,Air,70,75,28,29,25,27,23,25,23,123,69,126,69,63,69,59,69,79,69,52,69,68,69,56,69,68,99,17,445,462,Illusion Ball,1,Twin Boost,1,Emperor Penguin No. 3,0,Field of Force,50,0x1E
 David Samford,Samford,FW,Male,Medium,Wood,72,100,26,22,27,23,27,23,26,124,99,126,59,70,59,60,99,61,59,53,59,58,59,70,69,67,69,13,439,452,Offence Force,1,Gale Dash,1,Emperor Penguin No. 2,1,Space Penguin,70,0x1F
 Bob Carlton,Carlton,GK,Male,Large,Wood,44,54,11,12,11,14,13,11,11,108,59,130,69,58,69,55,69,63,59,62,69,65,59,62,59,55,99,8,420,428,Power Shield,1,Full Power Shield,24,Earthquake,35,Giant Spider,44,0x20
 Cliff Tomlinson,T'linson,FW,Male,Medium,Air,46,54,14,12,12,13,14,13,14,105,59,125,59,53,59,60,99,52,59,61,59,54,59,52,59,53,59,28,385,413,Grenade Shot,1,Killer Slide,28,Breakthrough,41,Twin Boost F,57,0x21
@@ -1156,7 +1156,7 @@ Pete Bogg,Bogg,MF,Male,Medium,Fire,43,66,18,17,11,16,17,15,16,111,59,109,89,60,8
 Gem Strata,Strata,DF,Male,Large,Fire,44,64,17,16,14,20,16,20,13,107,59,116,89,56,89,57,89,52,89,53,89,60,99,53,59,60,89,26,391,417,Moonsault,9,Ultra Moon,40,Land Dragon,52,Stone Prison,55,0x91F
 Horace Onlign,Onlign,FW,Male,Medium,Wood,51,35,14,14,17,16,14,17,15,105,59,118,89,55,89,63,89,52,89,52,89,60,89,58,59,60,99,12,400,412,Rolling Kick,1,Flurry Dash,1,Freeze Shot,25,Water Veil,57,0x920
 Shawn Froste,Froste,FW,Male,Medium,Air,56,66,20,15,14,11,18,16,13,120,59,120,69,68,69,59,69,64,59,46,99,77,69,60,59,50,69,29,424,453,Eternal Blizzard,1,Aurora Dribble,12,Dog Run,42,Northern Impact,60,0x921
-Shawn Froste,Froste,FW,Male,Medium,Air,67,76,26,24,26,24,30,27,23,120,59,120,69,61,69,59,69,72,99,59,69,77,69,62,59,57,69,7,447,454,Eternal Blizzard,1,Aurora Dribble,1,Snow Angel,Event,Legendary Wolf,1,0x922
+Shawn Froste,Froste,FW,Male,Medium,Air,67,76,26,24,26,24,30,27,23,120,59,120,69,61,69,59,69,72,99,59,69,77,69,62,59,57,69,7,447,454,Eternal Blizzard,1,Aurora Dribble,1,Snow Angel,0,Legendary Wolf,1,0x922
 Crane Kik,Kik,GK,Male,Medium,Wood,36,68,19,14,17,16,15,14,17,116,69,138,69,58,69,71,69,53,69,62,69,58,99,57,69,69,69,17,428,445,Never Give Up,1,Flame Breath,1,Clone Block,20,Fist of Justice,55,0x925
 Parry Waxon,Waxon,DF,Male,Medium,Air,52,76,14,19,17,17,17,16,14,115,69,110,69,60,69,60,69,68,69,60,69,62,69,54,69,56,99,12,420,432,Spider Web,1,Clone Defence,1,Afterimage,21,Divine Stamp,46,0x926
 Bri Spark,Sparky,DF,Male,Medium,Earth,45,70,17,19,17,17,17,15,17,106,69,107,69,56,69,53,99,59,69,52,69,57,69,63,69,48,69,33,388,421,Poison Fog,13,Kung Fu Fighting,20,Dark Whirlwind,29,Clone Faker,50,0x927
@@ -1190,7 +1190,7 @@ Zenn Wildhorse,Wildhrs.,FW,Male,Small,Air,48,54,16,16,17,14,17,13,14,106,59,104,
 Dawson Little,Little,DF,Male,Medium,Air,60,58,10,14,17,14,14,12,13,115,59,104,59,60,59,54,59,61,59,54,59,65,59,60,59,58,99,17,412,429,Quick Draw,1,Defence Scan,29,Zigzag Spark,36,Divine Stamp,46,0x946
 Cosimo Beck,Beck,MF,Male,Medium,Wood,62,64,20,14,20,13,12,10,11,117,59,110,59,59,59,52,59,63,59,60,59,61,99,52,59,68,59,10,415,425,Utter Gutsiness Bat,1,Utter Gutsiness Club,30,Matador Feint,38,Flash Upper,52,0x947
 Maston Color,Color,MF,Male,Large,Earth,55,60,10,18,14,10,19,13,20,119,59,118,59,68,59,56,59,52,99,64,59,53,59,66,59,48,59,15,407,422,Magic,1,Jinx,1,Super Sumo Stomp,31,Mole Shuffle,40,0x948
-Darren LaChance,LaChance,GK,Male,Medium,Wood,52,88,24,24,29,26,25,28,29,113,59,142,59,59,59,54,59,66,59,72,99,56,59,60,59,64,59,25,431,456,God Hand(W),1,Majin The Hand(W),1,Fiend Hand,Event,Mugen The Hand,1,0x94D
+Darren LaChance,LaChance,GK,Male,Medium,Wood,52,88,24,24,29,26,25,28,29,113,59,142,59,59,59,54,59,66,59,72,99,56,59,60,59,64,59,25,431,456,God Hand(W),1,Majin The Hand(W),1,Fiend Hand,0,Mugen The Hand,1,0x94D
 Drancis Fake,Fake,DF,Male,Medium,Air,62,54,15,20,14,16,19,16,12,108,59,116,59,55,59,56,99,60,59,55,59,60,59,60,59,60,59,10,406,416,Cool Up!,1,Circus Block,1,Big Fan,28,Paladin Strike,46,0x94E
 Mick Mishap,Mishap,DF,Male,Medium,Wood,58,51,18,20,13,15,13,20,17,116,59,107,59,60,59,60,99,53,59,60,59,59,59,66,59,60,59,6,418,424,Shooting Star,1,Horn Train,29,Gale Dash,33,Sub-Terfuge,55,0x94F
 Louis Leave,Leave,DF,Male,Large,Fire,67,51,20,14,16,16,11,20,16,112,59,105,59,61,59,63,59,58,99,68,59,54,59,64,59,52,59,6,420,426,Utter Gutsiness Club,1,Horn Train,1,Heat Tackle,35,Mad Express,61,0x950
@@ -1209,7 +1209,7 @@ Knowle Bathers,Bathers,GK,Male,Medium,Air,78,45,17,16,12,15,14,18,17,114,59,123,
 Rocky Black,Rocky,GK,Male,Large,Fire,70,60,18,20,14,18,15,20,19,104,59,125,59,58,59,68,59,52,99,76,59,50,59,59,59,64,59,10,427,437,Big Moves!,1,Table-Turner,1,Tsunami Wall,1,Barrier Reef,46,0x961
 Chad Taylor,Diver,DF,Male,Medium,Air,70,72,15,20,16,20,16,18,17,124,59,108,59,61,59,55,99,60,59,53,59,58,59,68,59,57,59,10,412,422,Coil Turn,1,Water Veil,33,Big Fan,38,Fake Bomber,43,0x962
 Victor Hills,Hills,DF,Male,Large,Earth,57,76,17,19,14,18,17,15,18,112,59,110,59,59,59,61,59,59,59,68,99,52,59,57,59,63,59,7,419,426,No Escape,1,Toughness Block,35,Tsunami Wall,42,Never Give Up,51,0x963
-Hurley Kane,Kane,DF,Male,Medium,Air,78,72,31,30,27,27,25,27,27,132,59,117,59,75,59,70,99,51,59,61,59,51,59,71,59,65,59,9,444,453,Everyone Move It!,1,Tsunami Boost,1,The Typhoon,Event,Whale Guard,28,0x964
+Hurley Kane,Kane,DF,Male,Medium,Air,78,72,31,30,27,27,25,27,27,132,59,117,59,75,59,70,99,51,59,61,59,51,59,71,59,65,59,9,444,453,Everyone Move It!,1,Tsunami Boost,1,The Typhoon,0,Whale Guard,28,0x964
 Hector Redding,Redding,DF,Male,Medium,Fire,55,66,12,15,16,19,16,20,18,105,59,117,59,62,59,57,59,63,99,54,59,56,59,62,59,56,59,11,410,421,Move It!,1,Heat Tackle,35,Rolling Slide,38,Capoeira Grab,55,0x965
 Mackenzie Fordline,Fordline,MF,Male,Medium,Air,55,45,13,13,20,20,17,17,20,117,59,112,59,60,59,57,59,53,59,56,59,61,99,53,59,60,59,26,400,426,Phantom Shot,1,Blade Attack,1,Whale Guard,37,Cyclone,42,0x966
 Cadence Soundtown,Soundt'n,MF,Male,Medium,Wood,78,76,14,20,19,18,17,13,16,113,59,121,59,61,59,56,59,62,59,62,59,60,59,63,59,60,99,14,424,438,Flame Dance,1,Bubble Gum,33,Echo Ball,40,Samba Strike,62,0x967
@@ -1260,7 +1260,7 @@ Mitch Blackston,Blackst.,FW,Male,Small,Fire,39,25,22,8,6,4,5,8,6,121,59,106,59,7
 Aurelia Dingle,Aurelia,MF,Female,Medium,Wood,41,24,5,7,8,8,6,5,5,108,99,142,99,64,99,62,99,72,99,63,99,54,99,47,99,42,99,27,404,431,Charm Up!,1,Lucky!,10,Recovery,25,Everyone Move It!,50,0x9A5
 Canon Evans,Canon,FW,Male,Medium,Air,43,84,12,17,14,17,9,15,20,132,59,115,59,60,59,59,59,64,59,69,99,60,59,62,59,67,59,14,441,455,Inazuma-1,1,Megaton Head,1,Circus Block,30,Legendary Wolf,45,0x9A6
 Syon Blaze,Syon,FW,Male,Medium,Fire,62,56,20,14,12,14,15,13,12,127,59,110,59,70,59,60,59,76,59,67,59,62,99,54,59,58,59,5,447,452,Heat Tackle,1,Inazuma Drop,1,Gale Dash,30,Grand Fire,45,0x9A7
-Thor Stoutberg,St'berg,MF,Male,Large,Air,77,75,29,29,24,30,24,23,23,124,59,137,59,56,59,80,59,53,59,62,59,50,59,71,59,68,99,20,440,460,Big Moves!,1,Thunder Beast,Event,Super Sumo Stomp,1,Stone Wall,25,0x9A8
+Thor Stoutberg,St'berg,MF,Male,Large,Air,77,75,29,29,24,30,24,23,23,124,59,137,59,56,59,80,59,53,59,62,59,50,59,71,59,68,99,20,440,460,Big Moves!,1,Thunder Beast,0,Super Sumo Stomp,1,Stone Wall,25,0x9A8
 Nelly Raimon,Nelly,FW,Female,Medium,Fire,46,21,8,5,5,4,6,4,7,118,89,131,69,68,89,64,89,65,89,52,89,44,99,49,89,62,89,21,404,425,Charm Up!,1,Bed Of Roses,1,Matador Feint,31,The Earth,75,0x9A9
 Celia Hills,Celia,MF,Female,Medium,Air,33,29,5,6,8,7,6,6,7,128,89,128,89,48,89,54,89,69,89,60,99,69,69,51,89,58,89,21,409,430,Lucky!,1,Illusion Ball,1,Field of Force,50,Death Zone 2,70,0x9AA
 Silvia Woods,Silvia,GK,Female,Medium,Earth,33,27,8,6,6,6,5,5,5,104,89,145,89,44,89,58,89,52,89,74,69,51,99,64,89,68,89,14,411,425,Never Give Up,1,God Hand(E),1,Pegasus Shot,35,Mugen The Hand,70,0x9AB
@@ -1705,12 +1705,12 @@ Bob Beelzy,Beelzy,GK,Male,Large,Fire,56,54,13,10,10,15,12,13,10,122,99,105,59,60
 Patt Howell,Howell,DF,Male,Medium,Wood,65,59,17,14,15,17,14,16,15,108,69,126,69,56,69,56,69,56,69,51,99,56,69,53,69,57,69,49,385,434,Dash Accelerator,10,Blade Attack,22,Run Ball Run,29,Legendary Wolf,55,0xB6F
 Ol Factory,Factory,GK,Male,Large,Earth,54,49,9,10,9,12,9,7,8,121,99,92,59,61,69,53,59,54,59,58,69,41,99,57,69,57,59,43,381,424,Wood Chopper,11,Wild Claw,23,Sumo Stomp,30,Flash Upper,39,0xB70
 Tom Skipper,Skipper,FW,Male,Medium,Air,69,72,23,21,19,12,13,5,14,130,99,95,99,65,99,63,99,67,99,58,99,53,99,51,99,67,99,31,424,455,Critical!,1,Emperor Penguin X,1,Tsunami Wall,1,The Earth,70,0xB71
-Austin Hobbes,Hobbes,FW,Male,Medium,Wood,91,77,27,21,21,24,27,28,26,120,59,130,59,72,59,56,59,60,59,55,99,60,59,56,59,57,59,42,416,458,Double Touch,1,Gladius Arch,Event,Tiger Drive,Event,Tiger Storm,Event,0xBB9
-Archer Hawkins,Hawkins,DF,Male,Medium,Air,88,54,29,26,17,26,21,22,22,125,59,124,59,78,59,54,59,52,99,58,59,52,59,48,59,74,59,39,416,455,Never Give Up,1,Vac Attack,Event,Breakthrough,30,Hawk Shot,40,0xBBA
+Austin Hobbes,Hobbes,FW,Male,Medium,Wood,91,77,27,21,21,24,27,28,26,120,59,130,59,72,59,56,59,60,59,55,99,60,59,56,59,57,59,42,416,458,Double Touch,1,Gladius Arch,0,Tiger Drive,0,Tiger Storm,0,0xBB9
+Archer Hawkins,Hawkins,DF,Male,Medium,Air,88,54,29,26,17,26,21,22,22,125,59,124,59,78,59,54,59,52,99,58,59,52,59,48,59,74,59,39,416,455,Never Give Up,1,Vac Attack,0,Breakthrough,30,Hawk Shot,40,0xBBA
 Isaac Glass,Isaac,FW,Male,Medium,Wood,75,97,28,23,26,17,20,21,15,104,99,142,99,57,99,64,99,72,99,36,99,52,99,37,99,39,99,68,357,425,No Element,1,Flurry Dash,1,Spectacle Crash,30,Sigma Zone,75,0xBBB
 Xavier Foster,Xavier,FW,Male,Medium,Fire,92,69,28,28,28,29,30,28,30,111,89,129,99,71,69,63,69,67,99,58,69,69,69,51,69,60,69,9,439,448,Meteor Blade,1,The Dawn,35,Photon Crash,5,Celestial Smash,40,0xBBC
-Caleb Stonewall,Stonew'l,MF,Male,Medium,Fire,66,57,30,30,29,26,30,28,29,126,59,130,59,59,59,78,69,66,59,58,59,65,99,53,69,64,69,9,443,452,Killer Slide,1,Emperor Penguin No. 3,50,Breakthrough 2,1,Field of Force,Event,0xBBD
-Jordan Greenway,Jordan,MF,Male,Medium,Wood,65,84,30,30,28,28,28,30,29,125,69,124,99,63,69,59,69,79,99,56,89,71,69,55,89,62,69,14,445,459,Astro Break,1,Lightning Sprint,38,Astro Gate,Event,Warp Drive,5,0xBBE
+Caleb Stonewall,Stonew'l,MF,Male,Medium,Fire,66,57,30,30,29,26,30,28,29,126,59,130,59,59,59,78,69,66,59,58,59,65,99,53,69,64,69,9,443,452,Killer Slide,1,Emperor Penguin No. 3,50,Breakthrough 2,1,Field of Force,0,0xBBD
+Jordan Greenway,Jordan,MF,Male,Medium,Wood,65,84,30,30,28,28,28,30,29,125,69,124,99,63,69,59,69,79,99,56,89,71,69,55,89,62,69,14,445,459,Astro Break,1,Lightning Sprint,38,Astro Gate,0,Warp Drive,5,0xBBE
 Dave Quagmire,Quagmire,MF,Male,Medium,Fire,68,91,21,19,18,20,21,19,18,124,59,128,99,75,59,68,59,61,59,63,99,59,59,57,59,48,59,16,431,447,Illusion Ball,1,Dash Storm,1,God Knows,1,Gungnir,1,0xBBF
 Camellia Travis,Cammy,DF,Female,Medium,Wood,40,40,5,6,20,6,5,5,5,109,69,137,59,40,99,50,69,60,59,72,89,58,59,48,59,58,59,46,386,432,Inazuma-1,1,Sleeping Dust,1,Snow Angel,30,Legendary Wolf,55,0xBC0
 Andy,Andy,DF,Male,Medium,Earth,50,15,10,10,10,10,10,10,10,126,99,120,89,54,59,52,89,48,59,48,89,58,99,52,59,60,89,68,372,440,Never Give Up,1,Critical!,15,Recovery,30,Power Element,50,0xBC1

@@ -26,6 +26,7 @@ int main()
         {
             fprintf(stderr, "Player %s not found: %s\n", name,
                     ina_strerrno(ina_errno));
+            error = true;
             break;
         }
     }
