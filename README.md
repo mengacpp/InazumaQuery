@@ -20,7 +20,7 @@ A C API for querying and comparing Inazuma Eleven player stats.
 
 **Currently available features:**
 
-- Open the **Inazuma Eleven 1, 2, and 3 player databases** by default, or import your own
+- Open the **Inazuma Eleven 1, 2, **and** 3 player databases** by default, or import your own
 - **Filter and sort** players to get the ones you are looking for
 - **Look for players** using their full name
 

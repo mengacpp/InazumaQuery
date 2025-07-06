@@ -125,12 +125,12 @@ void ina_hash_map_destroy(ina_hash_map_t **hmap)
 {
     if (!(*hmap)) return;
 
-    free((*hmap)->used);
-    free((*hmap)->values);
+    if ((*hmap)->used) free((*hmap)->used);
+    if ((*hmap)->values) free((*hmap)->values);
 
     for (size_t i = 0; i < (*hmap)->count; ++i)
     {
-        free((*hmap)->keys[i]);
+        if ((*hmap)->keys[i]) free((*hmap)->keys[i]);
     }
 
     *hmap = NULL;

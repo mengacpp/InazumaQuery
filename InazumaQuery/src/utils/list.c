@@ -130,7 +130,7 @@ void ina_list_destroy(ina_list_t **ls)
     if (!(*ls)) return;
 
 
-    free((*ls)->buf);
+    if ((*ls)->buf) free((*ls)->buf);
 
     free(*ls);
 

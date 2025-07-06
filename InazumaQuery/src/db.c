@@ -88,8 +88,8 @@ void ina_db_close(ina_db_t **db)
 {
     if (!(*db)) return;
 
-    ina_list_destroy(&(*db)->players);
-    ina_hash_map_destroy(&(*db)->fullname_hmap);
+    if ((*db)->players) ina_list_destroy(&(*db)->players);
+    if ((*db)->fullname_hmap) ina_hash_map_destroy(&(*db)->fullname_hmap);
 
     free(*db);
 
