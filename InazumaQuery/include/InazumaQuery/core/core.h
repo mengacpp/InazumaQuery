@@ -42,7 +42,22 @@
 /*
     Util function
 */
+#ifdef INA_DEBUG
 #define INA_NOT_IMPLEMENTED                                                    \
-    fprintf(stderr, "ERROR: function %s not implemented yet!\n", __func__);
+    fprintf(stderr, "Function %s not implemented yet!\n", __func__);           \
+    ina_errno = INA_ERRT_NOT_IMPL
+#else
+#define INA_NOT_IMPLEMENTED
+#endif
+
+#define INA_NAME_MAX_LEN                                                       \
+    25 // seems to be 22 in ie3. no data for other databases
+
+#define INA_STDERR                                                             \
+    ina_errno = INA_ERRT_STD;                                                  \
+    ina_stderrno = errno;
+
+// TODO remove this limit
+#define INA_DB_MAX_COUNT 2500
 
 #endif // INAZUMAQUERY_CORE_CORE_H_

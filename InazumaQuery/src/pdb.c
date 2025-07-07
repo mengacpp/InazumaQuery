@@ -18,8 +18,6 @@
 #include "InazumaQuery/utils/sort.h"
 #include "InazumaQuery/utils/utils.h"
 
-#define INA_PLAYER_DB_MAX_PLAYERS 2500
-
 bool ina_pdb_accept_all(ina_player_t const *e)
 {
     return true;
@@ -58,7 +56,10 @@ ina_pdb_t *ina_pdb_create(const char *csv_path)
         return NULL;
     }
 
-    db->fullname_hmap = ina_hash_map_create(INA_PLAYER_DB_MAX_PLAYERS);
+    // TODO create this after csv has been parsed
+    // avoid useless space and support players with more than
+    // INA_DB_MAX_COUNT players
+    db->fullname_hmap = ina_hash_map_create(INA_DB_MAX_COUNT);
 
     if (!db->fullname_hmap)
     {
@@ -107,19 +108,19 @@ void ina_pdb_destroy(ina_pdb_t **db)
 }
 
 static ina_player_filter_fn_t g_filter_fn;
-static ina_player_compare_fn g_compare_fn;
+static ina_player_compare_fn_t g_compare_fn;
 
-bool filter_wrapper(void const *e)
+static bool filter_wrapper(void const *e)
 {
-    return g_filter_fn((void const *)e);
+    return g_filter_fn((ina_player_t const *)e);
 }
 
-int compare_wrapper(void const *e, void const *e2)
+static int compare_wrapper(void const *e, void const *e2)
 {
     return g_compare_fn((ina_player_t const *)e, (ina_player_t const *)e2);
 }
 
-void set(void *e, void const *e2)
+static void set(void *e, void const *e2)
 {
     ina_player_t *player = e;
 
@@ -132,7 +133,7 @@ void set(void *e, void const *e2)
 // this will avoid copying all that memory
 INA_API ina_list_t *ina_pdb_query(ina_pdb_t const *db, uint16_t max_count,
                                   ina_player_filter_fn_t filter_fn,
-                                  ina_player_compare_fn compare_fn)
+                                  ina_player_compare_fn_t compare_fn)
 {
     if (!db)
     {
@@ -167,9 +168,15 @@ INA_API ina_list_t *ina_pdb_query(ina_pdb_t const *db, uint16_t max_count,
 ina_player_t const *ina_pdb_find_fullname(ina_pdb_t const *db,
                                           char const *fullname)
 {
-    char fullname_normalised[INA_FULLNAME_MAX_LEN];
+    if (!db || !fullname)
+    {
+        ina_errno = INA_ERRT_PARAM_NULL;
+        return NULL;
+    }
 
-    ina_normalise_string(fullname, fullname_normalised, INA_FULLNAME_MAX_LEN);
+    char fullname_normalised[INA_NAME_MAX_LEN];
+
+    ina_normalise_string(fullname, fullname_normalised, INA_NAME_MAX_LEN);
 
     bool found;
     unsigned int id =
@@ -194,19 +201,19 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
     {
     case 0:
     {
-        strncpy(player->fullname, cell_content, INA_FULLNAME_MAX_LEN);
+        strncpy(player->fullname, cell_content, INA_NAME_MAX_LEN);
 
         ina_normalise_string(player->fullname, player->fullname_normalised,
-                             INA_FULLNAME_MAX_LEN);
+                             INA_NAME_MAX_LEN);
 
         break;
     }
     case 1:
     {
-        strncpy(player->nickname, cell_content, INA_FULLNAME_MAX_LEN);
+        strncpy(player->nickname, cell_content, INA_NAME_MAX_LEN);
 
         ina_normalise_string(player->nickname, player->nickname_normalised,
-                             INA_FULLNAME_MAX_LEN);
+                             INA_NAME_MAX_LEN);
         break;
     }
     case 2:
@@ -217,13 +224,13 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
         int is_fw = ina_strcmp_normalised("FW", cell_content) == 0;
 
         if (is_gk)
-            player->position = PLAYER_POSITION_GK;
+            player->position = INA_PLAYER_POSITION_GK;
         else if (is_df)
-            player->position = PLAYER_POSITION_DF;
+            player->position = INA_PLAYER_POSITION_DF;
         else if (is_mf)
-            player->position = PLAYER_POSITION_MF;
+            player->position = INA_PLAYER_POSITION_MF;
         else if (is_fw)
-            player->position = PLAYER_POSITION_FW;
+            player->position = INA_PLAYER_POSITION_FW;
         else
         {
             fprintf(stderr, "ERROR: Invalid player position '%s'\n",
@@ -239,12 +246,12 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
         int is_female = ina_strcmp_normalised("female", cell_content) == 0;
 
         if (is_male)
-            player->gender = PLAYER_GENDER_MALE;
+            player->gender = INA_PLAYER_GENDER_MALE;
         else if (is_female)
-            player->gender = PLAYER_GENDER_FEMALE;
+            player->gender = INA_PLAYER_GENDER_FEMALE;
         else
         {
-            ina_errno = INA_ERRT_CSV_CELL_INVALID;
+            ina_errno = INA_ERRT_PDB_CSV_INVALID_CONTENT;
             return 0;
         }
 
@@ -257,14 +264,14 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
         int is_large = ina_strcmp_normalised("large", cell_content) == 0;
 
         if (is_small)
-            player->size = PLAYER_SIZE_SMALL;
+            player->size = INA_PLAYER_SIZE_SMALL;
         else if (is_medium)
-            player->size = PLAYER_SIZE_MEDIUM;
+            player->size = INA_PLAYER_SIZE_MEDIUM;
         else if (is_large)
-            player->size = PLAYER_SIZE_LARGE;
+            player->size = INA_PLAYER_SIZE_LARGE;
         else
         {
-            ina_errno = INA_ERRT_CSV_CELL_INVALID;
+            ina_errno = INA_ERRT_PDB_CSV_INVALID_CONTENT;
             return 0;
         }
 
@@ -272,22 +279,22 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
     }
     case 5:
     {
-        int is_air = ina_strcmp_normalised("air", cell_content) == 0;
+        int is_air = ina_strcmp_normalised("wind", cell_content) == 0;
         int is_earth = ina_strcmp_normalised("earth", cell_content) == 0;
         int is_fire = ina_strcmp_normalised("fire", cell_content) == 0;
         int is_wood = ina_strcmp_normalised("wood", cell_content) == 0;
 
         if (is_air)
-            player->element = ELEMENT_AIR;
+            player->element = INA_ELEMENT_WIND;
         else if (is_earth)
-            player->element = ELEMENT_EARTH;
+            player->element = INA_ELEMENT_EARTH;
         else if (is_fire)
-            player->element = ELEMENT_FIRE;
+            player->element = INA_ELEMENT_FIRE;
         else if (is_wood)
-            player->element = ELEMENT_WOOD;
+            player->element = INA_ELEMENT_WOOD;
         else
         {
-            ina_errno = INA_ERRT_CSV_CELL_INVALID;
+            ina_errno = INA_ERRT_PDB_CSV_INVALID_CONTENT;
             return 0;
         }
 
@@ -415,9 +422,9 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
     }
     case 36:
     {
-        strncpy(player->move1_name, cell_content, INA_FULLNAME_MAX_LEN);
+        strncpy(player->move1_name, cell_content, INA_NAME_MAX_LEN);
         ina_normalise_string(player->move1_name, player->move1_name_normalised,
-                             INA_FULLNAME_MAX_LEN);
+                             INA_NAME_MAX_LEN);
         break;
     }
     case 37:
@@ -426,9 +433,9 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
     }
     case 38:
     {
-        strncpy(player->move2_name, cell_content, INA_FULLNAME_MAX_LEN);
+        strncpy(player->move2_name, cell_content, INA_NAME_MAX_LEN);
         ina_normalise_string(player->move2_name, player->move2_name_normalised,
-                             INA_FULLNAME_MAX_LEN);
+                             INA_NAME_MAX_LEN);
         break;
     }
     case 39:
@@ -437,9 +444,9 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
     }
     case 40:
     {
-        strncpy(player->move3_name, cell_content, INA_FULLNAME_MAX_LEN);
+        strncpy(player->move3_name, cell_content, INA_NAME_MAX_LEN);
         ina_normalise_string(player->move3_name, player->move3_name_normalised,
-                             INA_FULLNAME_MAX_LEN);
+                             INA_NAME_MAX_LEN);
         break;
     }
     case 41:
@@ -448,9 +455,9 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
     }
     case 42:
     {
-        strncpy(player->move4_name, cell_content, INA_FULLNAME_MAX_LEN);
+        strncpy(player->move4_name, cell_content, INA_NAME_MAX_LEN);
         ina_normalise_string(player->move4_name, player->move4_name_normalised,
-                             INA_FULLNAME_MAX_LEN);
+                             INA_NAME_MAX_LEN);
         break;
     }
     case 43:

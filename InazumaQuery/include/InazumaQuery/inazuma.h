@@ -5,6 +5,7 @@
 // Sometime the ina_errno variable is not enough for the user to understand the
 // error properly
 #include "core/errno.h" // IWYU pragma: keep
+#include "mdb.h"        // IWYU pragma: keep
 #include "pdb.h"        // IWYU pragma: keep
 
 

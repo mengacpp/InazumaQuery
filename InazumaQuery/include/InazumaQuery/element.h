@@ -1,0 +1,12 @@
+#ifndef INAZUMAQUERY_ELEMENT_H_
+#define INAZUMAQUERY_ELEMENT_H_
+
+typedef enum
+{
+    INA_ELEMENT_EARTH,
+    INA_ELEMENT_WIND,
+    INA_ELEMENT_FIRE,
+    INA_ELEMENT_WOOD
+} ina_element_t;
+
+#endif // INAZUMAQUERY_ELEMENT_H_

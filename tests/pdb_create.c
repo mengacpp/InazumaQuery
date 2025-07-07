@@ -13,11 +13,10 @@ int main()
 
     if (!db)
     {
-        fprintf(stderr, "Failed to create database from file %s: %s", csv_path,
-                ina_strerrno(ina_errno));
-        ina_pdb_destroy(&db);
+        ina_perror("Failed to create database");
         return 1;
     }
+
     double cpu_secs = (double)(end - start) / CLOCKS_PER_SEC;
     printf("Time taken to open database: %.6f seconds\n", cpu_secs);
 

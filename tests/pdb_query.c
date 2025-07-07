@@ -29,7 +29,7 @@ int compare(ina_player_t const *a, ina_player_t const *b)
 
 bool filter(ina_player_t const *p)
 {
-    return p->position == PLAYER_POSITION_DF &&
+    return p->position == INA_PLAYER_POSITION_DF &&
            p->fullname_normalised[0] == 'a';
 }
 

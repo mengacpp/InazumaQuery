@@ -1,3 +1,6 @@
+/*
+    Player DataBase
+*/
 #ifndef INAZUMAQUERY_PDB_H_
 #define INAZUMAQUERY_PDB_H_
 
@@ -12,8 +15,8 @@
 
 typedef struct ina_pdb_t ina_pdb_t;
 
-typedef int (*ina_player_compare_fn)(ina_player_t const *,
-                                     ina_player_t const *);
+typedef int (*ina_player_compare_fn_t)(ina_player_t const *,
+                                       ina_player_t const *);
 typedef bool (*ina_player_filter_fn_t)(ina_player_t const *);
 
 
@@ -28,7 +31,7 @@ INA_API ina_pdb_t *ina_pdb_create(char const *csv_path);
 
 INA_API ina_list_t *ina_pdb_query(ina_pdb_t const *db, uint16_t max_count,
                                   ina_player_filter_fn_t filter_fn,
-                                  ina_player_compare_fn compare_fn);
+                                  ina_player_compare_fn_t compare_fn);
 
 INA_API ina_player_t const *ina_pdb_find_fullname(ina_pdb_t const *db,
                                                   char const *fullname);

@@ -1,5 +1,6 @@
 #include "InazumaQuery/utils/sort.h"
 #include "InazumaQuery/core/core.h"
+#include "InazumaQuery/core/errno.h" // IWYU pragma: keep
 #include "InazumaQuery/utils/list.h"
 
 #include <stddef.h>

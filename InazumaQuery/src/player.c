@@ -21,12 +21,3 @@ INA_API void ina_player_fprint(FILE *out, ina_player_t const *p)
     fprintf(out, "GUT %*i                 FRE  %*i\n", 5, p->lvl99_guts, 5,
             p->freedom);
 }
-
-/*
-    fp, tp,
-    kick, body,
-    control, guard,
-    speed, stamina,
-    guts; freedom;
-
-*/

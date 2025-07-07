@@ -1,0 +1,243 @@
+Body Shield,Block,Earth,1,105,115,50,,Shin (Medium),0x80
+Bamboo Pattern,Block,Earth,5,96,108,45,,Shin (Slow),0x81
+No Escape,Block,Earth,5,85,97,44,,Shin (Slow),0x7D
+Mega Wall,Block,Earth,1,85,95,44,Shot Block,Shin (Medium),0x82
+Road Roller,Block,Earth,1,80,92,42,Shot Block,Shin (Slow),0x83
+Circus Block,Block,Earth,1,74,84,40,,Shin (Medium),0x6F
+Mega Quake,Block,Earth,1,70,80,38,,Shin (Medium),0x6A
+Heavy Mettle,Block,Earth,1,63,73,17,Shot Block,Shin (Medium),0x70
+Gravitation,Block,Earth,5,54,64,14,Shot Block,Shin (Medium),0x73
+Earthquake,Block,Earth,5,46,56,30,,Shin (Medium),0x8E
+The Wall,Block,Earth,5,36,48,25,Shot Block,Shin (Slow),0x90
+About Face,Block,Earth,45,29,41,17,,Shin (Slow),0x68
+Horn Train,Block,Earth,10,6,16,17,Shot Block,Shin (Medium),0x9A
+Sumo Stomp,Block,Earth,1,0,12,15,,Shin (Slow),0x98
+Triple Dash,Dribble,Earth,5,105,113,50,,Shin (Fast),0xBA
+Three-Legged Rush,Dribble,Earth,1,84,94,44,,Shin (Medium),0xCC
+Rolling Hell,Dribble,Earth,5,73,85,38,,Shin (Slow),0xAA
+Mole Shuffle,Dribble,Earth,1,73,83,38,,Shin (Medium),0xC1
+Invisible Fake,Dribble,Earth,1,66,76,36,,Shin (Medium),0xC8
+Prima Donna,Dribble,Earth,1,57,69,32,,Shin (Slow),0xCE
+Mole Fake,Dribble,Earth,1,51,61,30,,Shin (Medium),0x9E
+Bewildered,Dribble,Earth,5,37,49,23,,Shin (Slow),0xA2
+Super Armadillo,Dribble,Earth,5,28,38,22,,Shin (Medium),0xA5
+Monkey Turn,Dribble,Earth,1,7,15,17,,Shin (Fast),0x9C
+Dash Accelerator,Dribble,Earth,1,0,8,15,,Shin (Fast),0xAB
+Infinite Wall,Keeper,Earth,0,105,121,57,,L (Medium),0x116
+Gigant Wall,Keeper,Earth,0,89,101,50,,Shin (Slow),0xCF
+Triple Defence,Keeper,Earth,0,89,97,50,,Shin (Fast),0x106
+Majin The Hand(E),Keeper,Earth,0,73,81,46,,Shin (Fast),0x112
+Table-Turner,Keeper,Earth,0,66,76,41,,Shin (Medium),0x114
+Utter Gutsiness Catch,Keeper,Earth,0,57,69,36,,Shin (Slow),0x11A
+Sliding Goal,Keeper,Earth,0,51,63,34,,Shin (Slow),0x109
+God Hand(E),Keeper,Earth,0,36,48,21,,Shin (Slow),0x10F
+Wild Claw,Keeper,Earth,0,31,41,27,,Shin (Medium),0xD2
+Wood Chopper,Keeper,Earth,0,5,15,19,,Shin (Medium),0xD4
+Toughness Block,Keeper,Earth,0,0,10,17,,Shin (Medium),0xD8
+The Earth,Shoot,Earth,0,120,134,70,,L (Fast),0x179
+Gaia Break,Shoot,Earth,0,114,122,31,,Shin (Fast),0x142
+Reflect Buster,Shoot,Earth,0,102,112,62,,Shin (Medium),0x181
+Eagle Buster,Shoot,Earth,0,96,108,59,Longshot,Shin (Slow),0x137
+Land Dragon,Shoot,Earth,0,91,103,56,,Shin (Slow),0x132
+Butterfly Trance,Shoot,Earth,0,91,103,56,Shot Block,Shin (Slow),0x138
+Megaton Head,Shoot,Earth,0,79,93,51,Shot Block,L (Fast),0x151
+Utter Gutsiness Club,Shoot,Earth,0,79,87,51,Longshot,Shin (Fast),0x130
+Spectacle Crash,Shoot,Earth,0,72,84,44,,Shin (Slow),0x143
+Kung Fu Fighting,Shoot,Earth,0,68,78,42,Shot Block,Shin (Medium),0x12B
+Leaping Thunder,Shoot,Earth,0,68,78,42,,Shin (Medium),0x136
+Rainbow Arc,Shoot,Earth,0,60,70,35,Longshot,Shin (Medium),0x16D
+Gyro Head,Shoot,Earth,0,57,67,33,Shot Block,Shin (Medium),0x128
+Dirt Ball,Shoot,Earth,0,48,58,24,,Shin (Medium),0x1A7
+Teleport Shot,Shoot,Earth,0,33,43,24,,Shin (Medium),0x187
+Tarzan Kick,Shoot,Earth,0,21,31,20,Shot Block,Shin (Medium),0x17C
+Snake Shot,Shoot,Earth,0,14,22,17,,Shin (Fast),0x19B
+Mad Express,Block,Fire,5,105,113,50,,Shin (Fast),0x88
+Ignite Steal,Block,Fire,1,94,104,22,,Shin (Medium),0x85
+Planet Shield,Block,Fire,1,80,90,20,,Shin (Medium),0x7A
+Shooting Star,Block,Fire,1,74,84,40,Shot Block,Shin (Medium),0x6C
+Divine Stamp,Block,Fire,5,70,80,38,Shot Block,Shin (Medium),0x89
+Volcano Cut,Block,Fire,1,63,73,36,Shot Block,Shin (Medium),0x77
+Flame Dance,Block,Fire,1,54,62,32,,Shin (Fast),0x7E
+Fake Bomber,Block,Fire,10,46,56,30,,Shin (Medium),0x76
+Super Sumo Stomp,Block,Fire,1,36,44,25,Shot Block,Shin (Fast),0x78
+Photon Crash,Block,Fire,1,29,39,11,,Shin (Medium),0x72
+Supreme Spin,Block,Fire,5,6,14,17,Shot Block,Shin (Fast),0x75
+Boost Glider,Dribble,Fire,5,105,117,50,,Shin (Slow),0xA1
+Flame Veil,Dribble,Fire,1,89,99,22,,Shin (Medium),0xC6
+Breakthrough 2,Dribble,Fire,45,84,96,33,,Shin (Slow),0xB4
+Lightning Sprint,Dribble,Fire,1,73,83,17,,Shin (Medium),0xBF
+Armadillo Circus,Dribble,Fire,1,73,83,38,,Shin (Medium),0xCB
+Gale Dash,Dribble,Fire,1,66,74,36,,Shin (Fast),0xB0
+Meteor Shower,Dribble,Fire,5,57,67,14,,Shin (Medium),0xC2
+Breakthrough,Dribble,Fire,45,51,63,22,,Shin (Slow),0xB6
+Heat Tackle,Dribble,Fire,5,37,47,23,,Shin (Medium),0xA9
+Bubble Gum,Dribble,Fire,1,28,38,22,,Shin (Medium),0xC9
+Double Touch,Dribble,Fire,1,7,17,17,,Shin (Medium),0xB3
+Beast Fang,Keeper,Fire,0,105,123,57,,L (Slow),0x111
+Triple God Hand,Keeper,Fire,0,105,119,57,,L (Fast),0xE8
+Burnout,Keeper,Fire,0,89,99,22,,Shin (Medium),0x126
+Drill Smasher,Keeper,Fire,0,89,97,22,,Shin (Fast),0xD5
+Double Rocket,Keeper,Fire,0,80,90,48,,Shin (Medium),0xD9
+Counter Strike,Keeper,Fire,0,73,83,43,,Shin (Medium),0x108
+Flame Breath,Keeper,Fire,0,66,76,41,,Shin (Medium),0x110
+Blazing Knuckle,Keeper,Fire,0,57,67,36,,Shin (Medium),0xD6
+Full Power Shield,Keeper,Fire,0,51,61,34,,Shin (Medium),0x105
+Fireball Head,Keeper,Fire,0,36,46,28,,Shin (Medium),0x11E
+Rocket Kobushi,Keeper,Fire,0,31,41,27,,Shin (Medium),0xD1
+Power Shield,Keeper,Fire,0,31,39,27,,Shin (Fast),0x10C
+Pressure Punch,Keeper,Fire,0,5,15,19,,Shin (Medium),0x107
+Fireball Knuckle,Keeper,Fire,0,0,8,17,,Shin (Fast),0x10D
+Neo Galaxy,Shoot,Fire,0,120,130,70,,Shin (Medium),0x14E
+Fire Blizzard(F),Shoot,Fire,0,120,130,35,,Shin (Medium),0x157
+Cross Fire(F),Shoot,Fire,0,120,130,70,,Shin (Medium),0x169
+The Galaxy,Shoot,Fire,0,114,126,66,,Shin (Slow),0x176
+Fireball Storm,Shoot,Fire,0,102,118,62,,L (Medium),0x171
+Triple Boost,Shoot,Fire,0,108,116,64,Longshot,Shin (Fast),0x14D
+Atomic Flare,Shoot,Fire,0,108,116,31,Shot Block,Shin (Fast),0x155
+The Phoenix,Shoot,Fire,0,102,114,62,,Shin (Slow),0x174
+Twin Boost F,Shoot,Fire,0,102,112,62,,Shin (Medium),0x144
+Triangle Z,Shoot,Fire,0,96,104,59,,Shin (Fast),0x183
+Meteor Blade,Shoot,Fire,0,91,101,28,Shot Block,Shin (Medium),0x153
+Fire Rooster,Shoot,Fire,0,91,101,56,Longshot,Shin (Medium),0x178
+Assault Shot,Shoot,Fire,0,84,94,44,Longshot,Shin (Medium),0x14F
+Dragon Cannon,Shoot,Fire,0,79,89,51,Shot Block,Shin (Medium),0x12C
+Dragon Tornado,Shoot,Fire,0,79,87,51,,Shin (Fast),0x17A
+Steeple Shot,Shoot,Fire,0,72,84,44,,Shin (Slow),0x152
+Twin Boost,Shoot,Fire,0,72,84,44,,Shin (Slow),0x1A4
+Utter Gutsiness Bat,Shoot,Fire,0,68,80,42,Shot Block,Shin (Slow),0x182
+Shine Drive,Shoot,Fire,0,68,78,42,,Shin (Medium),0x17F
+Double Grenade,Shoot,Fire,0,60,70,35,Shot Block,Shin (Medium),0x127
+Dynamite Shot,Shoot,Fire,0,60,70,35,,Shin (Medium),0x195
+Patriot Shot,Shoot,Fire,0,57,69,33,Longshot,Shin (Slow),0x194
+Fire Tornado,Shoot,Fire,0,57,65,33,Shot Block,Shin (Fast),0x1A3
+Meteor Attack,Shoot,Fire,0,48,58,24,,Shin (Medium),0x19C
+Heel Kick,Shoot,Fire,0,33,45,24,,Shin (Slow),0x12A
+Grenade Shot,Shoot,Fire,0,14,24,17,,Shin (Medium),0x1A0
+Perfect Tower,Block,Wind,1,105,115,50,,Shin (Medium),0x7C
+Hurricane Arrows,Block,Wind,5,96,108,45,,Shin (Slow),0x99
+Frozen Steal,Block,Wind,1,94,104,22,,Shin (Medium),0x65
+Whale Guard,Block,Wind,1,85,97,44,,Shin (Slow),0x86
+Whirlwind Force,Block,Wind,1,80,90,33,Shot Block,Shin (Medium),0x87
+Double Cyclone,Block,Wind,5,74,84,40,,Shin (Medium),0x66
+The Tower,Block,Wind,1,70,78,38,Shot Block,Shin (Fast),0x71
+Perimeter Zone,Block,Wind,1,63,73,36,,Shin (Medium),0x7B
+Cyclone,Block,Wind,5,54,64,32,,Shin (Medium),0x96
+Spinning Cut,Block,Wind,5,46,58,30,Shot Block,Shin (Slow),0x8F
+Land Of Ice,Block,Wind,1,36,44,25,,Shin (Fast),0x6D
+Blade Attack,Block,Wind,5,29,39,23,,Shin (Medium),0x69
+Coil Turn,Block,Wind,1,0,8,15,,Shin (Fast),0x92
+Heaven’s Time,Dribble,Wind,1,89,99,46,,Shin (Medium),0xBB
+Water Veil,Dribble,Wind,1,89,99,22,,Shin (Medium),0xCD
+Dash Storm,Dribble,Wind,5,73,83,38,,Shin (Medium),0xB7
+Aikido,Dribble,Wind,1,73,81,38,,Shin (Fast),0xBE
+Big Fan,Dribble,Wind,5,66,78,36,,Shin (Slow),0xC7
+Aurora Dribble,Dribble,Wind,1,57,67,32,,Shin (Medium),0xB1
+Whirlwind Cut,Dribble,Wind,1,51,61,30,,Shin (Medium),0x9D
+Ribbon Shower,Dribble,Wind,1,42,52,25,,Shin (Medium),0xC4
+Zigzag Spark,Dribble,Wind,5,37,47,23,,Shin (Medium),0xA8
+Moonsault,Dribble,Wind,1,28,38,22,,Shin (Medium),0xB5
+Poison Fog,Dribble,Wind,5,14,24,17,,Shin (Medium),0xA4
+Whirlwind Twister,Dribble,Wind,1,7,17,17,,Shin (Medium),0xAD
+Rodeo Clown,Dribble,Wind,1,0,8,15,,Shin (Fast),0xA7
+Flurry Dash,Dribble,Wind,1,0,8,15,,Shin (Fast),0xAE
+Fist of Justice,Keeper,Wind,0,105,121,57,,L (Medium),0xD3
+Temporal Wall,Keeper,Wind,0,105,117,25,,Shin (Slow),0x11D
+Ice Block,Keeper,Wind,0,89,99,22,,Shin (Medium),0x119
+Procyon Net,Keeper,Wind,0,89,99,22,,Shin (Medium),0x125
+Tsunami Wall,Keeper,Wind,0,73,83,43,,Shin (Medium),0x124
+Safety First,Keeper,Wind,0,66,76,41,,Shin (Medium),0x11B
+Aurora Curtain,Keeper,Wind,0,57,65,36,,Shin (Fast),0x113
+Whirlwind,Keeper,Wind,0,51,61,34,,Shin (Medium),0xD7
+Flower Power,Keeper,Wind,0,36,48,28,,Shin (Slow),0xE6
+Mistral,Keeper,Wind,0,31,41,27,,Shin (Medium),0xD0
+Tornado Catch,Keeper,Wind,0,5,13,19,,Shin (Fast),0x10E
+Swan Dive,Keeper,Wind,0,0,10,17,,Shin (Medium),0xE7
+Fire Blizzard(Wind),Shoot,Wind,0,120,130,35,,Shin (Medium),0x16A
+Cross Fire(Wind),Shoot,Wind,0,120,130,70,,Shin (Medium),0x16E
+Space Penguin,Shoot,Wind,0,120,128,35,,Shin (Fast),0x148
+God Break,Shoot,Wind,0,108,124,64,,L (Medium),0x150
+Inazuma-1 Drop,Shoot,Wind,0,114,122,66,,Shin (Fast),0x145
+Legendary Wolf,Shoot,Wind,0,102,118,62,,L (Medium),0x12D
+Northern Impact,Shoot,Wind,0,108,116,31,,Shin (Fast),0x156
+Wyvern Blizzard,Shoot,Wind,0,102,114,62,,Shin (Slow),0x14A
+Tri-Pegasus,Shoot,Wind,0,102,112,62,,Shin (Medium),0x133
+Gungnir,Shoot,Wind,0,96,106,28,Longshot,Shin (Medium),0x154
+God Knows,Shoot,Wind,0,96,106,59,,Shin (Medium),0x17B
+Divine Arrows,Shoot,Wind,0,91,103,56,,Shin (Slow),0x17E
+Revolution V,Shoot,Wind,0,91,99,56,,Shin (Fast),0x129
+Inazuma Break,Shoot,Wind,0,91,99,46,,Shin (Fast),0x177
+Tsunami Boost,Shoot,Wind,0,84,92,53,Longshot,Shin (Fast),0x170
+Eternal Blizzard,Shoot,Wind,0,79,89,40,,Shin (Medium),0x172
+Inazuma-1,Shoot,Wind,0,79,89,51,Shot Block,Shin (Medium),0x1A1
+Inazuma Drop,Shoot,Wind,0,72,80,44,Shot Block,Shin (Fast),0x1A6
+Hawk Shot,Shoot,Wind,0,68,78,42,Shot Block,Shin (Medium),0x19D
+Back Tornado,Shoot,Wind,0,60,70,35,Shot Block,Shin (Medium),0x17D
+Baby Dragon,Shoot,Wind,0,60,68,35,,Shin (Fast),0x173
+Cross Drive,Shoot,Wind,0,57,67,33,,Shin (Medium),0x191
+Condor Dive,Shoot,Wind,0,48,58,24,Shot Block,Shin (Medium),0x185
+Comet Shot,Shoot,Wind,0,33,45,24,Longshot,Shin (Slow),0x198
+Spiral Shot,Shoot,Wind,0,21,31,20,,Shin (Medium),0x193
+Spinning Shot,Shoot,Wind,0,14,24,17,,Shin (Medium),0x199
+Sigma Zone,Block,Wood,5,105,113,50,,Shin (Fast),0x67
+Stone Wall,Block,Wood,1,96,108,45,Shot Block,Shin (Slow),0x6B
+Harvest,Block,Wood,10,85,93,44,,Shin (Fast),0x8A
+Asteroid Belt,Block,Wood,5,80,90,20,Shot Block,Shin (Medium),0x7F
+Dual Storm,Block,Wood,5,74,84,40,,Shin (Medium),0x74
+Sleeping Dust,Block,Wood,1,70,80,38,,Shin (Medium),0x84
+Clone Defence,Block,Wood,1,63,73,36,,Shin (Medium),0x6E
+Shadow Stitch,Block,Wood,1,54,64,32,,Shin (Medium),0x97
+Spider Web,Block,Wood,1,46,56,30,,Shin (Medium),0x93
+Fake Ball,Block,Wood,5,36,46,25,,Shin (Medium),0x95
+Defence Scan,Block,Wood,1,29,39,23,,Shin (Medium),0x8B
+Doppelganger,Block,Wood,1,6,16,17,,Shin (Medium),0x8C
+Ghost Pull,Block,Wood,1,6,16,17,,Shin (Medium),0x8D
+Killer Slide,Block,Wood,45,0,8,10,,Shin (Fast),0x91
+Quick Draw,Block,Wood,1,0,8,15,,Shin (Fast),0x94
+Southern Cross,Dribble,Wood,5,105,117,50,,Shin (Slow),0xC5
+Dual Pass,Dribble,Wood,1,84,94,44,,Shin (Medium),0xB2
+Clone Faker,Dribble,Wood,1,66,76,36,,Shin (Medium),0xAF
+Deceptor Dribble,Dribble,Wood,1,57,65,32,,Shin (Fast),0x9B
+Dark Whirlwind,Dribble,Wood,5,51,61,30,,Shin (Medium),0xC0
+Warp Drive,Dribble,Wood,1,51,61,14,,Shin (Medium),0xC3
+Afterimage,Dribble,Wood,1,42,52,25,,Shin (Medium),0x9F
+Illusion Ball,Dribble,Wood,1,37,47,23,,Shin (Medium),0xAC
+Attack Scan,Dribble,Wood,1,28,38,22,,Shin (Medium),0xA3
+Magic,Dribble,Wood,1,14,22,17,,Shin (Fast),0xCA
+Black Magic,Dribble,Wood,1,7,15,17,,Shin (Fast),0xA6
+Mugen The Hand,Keeper,Wood,0,105,123,57,,L (Slow),0x121
+Clone Block,Keeper,Wood,0,80,90,48,,Shin (Medium),0x11F
+Dual Smash,Keeper,Wood,0,80,90,48,,Shin (Medium),0x122
+Majin The Hand(Wood),Keeper,Wood,0,73,81,46,,Shin (Fast),0x115
+Wormhole,Keeper,Wood,0,66,76,19,,Shin (Medium),0x11C
+Black Hole,Keeper,Wood,0,57,65,16,,Shin (Fast),0x118
+Claw Slash,Keeper,Wood,0,51,63,34,,Shin (Slow),0x120
+God Hand(W),Keeper,Wood,0,36,48,21,,Shin (Slow),0x117
+Shot Pocket,Keeper,Wood,0,36,44,28,,Shin (Fast),0x10A
+Warp Space,Keeper,Wood,0,5,15,19,,Shin (Medium),0x10B
+Killer Blade,Keeper,Wood,0,0,12,17,,Shin (Slow),0x123
+Supernova,Shoot,Wood,0,120,128,35,,Shin (Fast),0x147
+Death Zone 2,Shoot,Wood,0,108,122,64,,L (Fast),0x16F
+Dark Phoenix,Shoot,Wood,0,114,122,66,,Shin (Fast),0x14C
+Emperor Penguin No. 1,Shoot,Wood,0,102,120,62,,L (Slow),0x12E
+Double Tornado,Shoot,Wood,0,96,106,59,Shot Block,Shin (Medium),0x14B
+Death Zone,Shoot,Wood,0,96,104,59,,Shin (Fast),0x19F
+Cosmic Blast,Shoot,Wood,0,91,103,28,,Shin (Slow),0x141
+Wyvern Crash,Shoot,Wood,0,91,99,56,,Shin (Fast),0x149
+Emperor Penguin No. 2,Shoot,Wood,0,91,99,56,,Shin (Fast),0x175
+Ganymede Ray,Shoot,Wood,0,84,96,24,,Shin (Slow),0x135
+Dual Strike,Shoot,Wood,0,84,94,53,,Shin (Medium),0x131
+Clone Shot,Shoot,Wood,0,79,89,51,,Shin (Medium),0x196
+Double Wrath Shot,Shoot,Wood,0,79,87,51,Shot Block,Shin (Fast),0x134
+Security Shot,Shoot,Wood,0,72,82,44,,Shin (Medium),0x146
+Astro Break,Shoot,Wood,0,72,82,20,,Shin (Medium),0x16C
+Acrobat Bomber,Shoot,Wood,0,68,80,42,,Shin (Slow),0x16B
+Dark Tornado,Shoot,Wood,0,68,78,42,Shot Block,Shin (Medium),0x1A8
+Kung Fu Header,Shoot,Wood,0,60,70,35,,Shin (Medium),0x180
+Bed Of Roses,Shoot,Wood,0,60,68,35,,Shin (Fast),0x12F
+Freeze Shot,Shoot,Wood,0,57,67,33,,Shin (Medium),0x192
+Run Ball Run,Shoot,Wood,0,57,65,33,,Shin (Fast),0x184
+Dragon Crash,Shoot,Wood,0,57,65,33,,Shin (Fast),0x1A5
+Wrath Shot,Shoot,Wood,0,48,58,24,Shot Block,Shin (Medium),0x1A2
+Phantom Shot,Shoot,Wood,0,33,43,24,,Shin (Medium),0x19E
+Psycho Shot,Shoot,Wood,0,21,31,20,,Shin (Medium),0x186
+Rolling Kick,Shoot,Wood,0,14,22,17,Shot Block,Shin (Fast),0x197

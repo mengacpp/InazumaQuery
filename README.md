@@ -21,14 +21,13 @@ I'Ve created this project because i couldn't find an easy tool to find players t
 
 **Currently available features:**
 
-- Filter and sort players using their data and easily get the ones you are looking for
+- Filter and sort players and moves using their data and easily get the ones you are looking for
 - Use the provided databases for IE1 , IE2 and IE3 located in the [`data/`](https://github.com/mengacpp/InazumaQuery/tree/main/data) folder
 
 **Planned features:**
 
 - Create built in compare functions to sort players by 'skills' rather than by statistic (e.g. sorting by general ability to shoot rather than by kick statistic).  
 - Add secondary informations about players (team, recruitment method, recruitment location, skills)
-- Add moves database
 - Allow queries to accept an offset parameter for pagination.
 
 **Known bugs:**

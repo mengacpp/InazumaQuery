@@ -16,7 +16,7 @@ int compare_kick(ina_player_t const *p, ina_player_t const *p2)
 // in this case whe are checking that the player is of type air.
 bool filter_air_element(ina_player_t const *p)
 {
-    return p->element == ELEMENT_AIR;
+    return p->element == INA_ELEMENT_WIND;
 }
 
 int main()
