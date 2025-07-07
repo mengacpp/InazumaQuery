@@ -36,11 +36,12 @@ bool filter(ina_move_t const *m)
     return m->element == INA_ELEMENT_WIND;
 }
 
-void print_name(FILE *f, void const *e)
+void print(void *e, size_t i, size_t count)
 {
-    ina_player_t *p = (ina_player_t *)e;
+    ina_move_t *m = e;
 
-    fprintf(f, "%s", p->fullname);
+    ina_move_fprint(stdout, m);
+    printf("\n");
 }
 
 int main()
@@ -67,7 +68,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    ina_list_fprint(moves, stdout, print_name, "\n");
+    ina_list_foreach(moves, print);
 
     double cpu_secs = (double)(end - start) / CLOCKS_PER_SEC;
     printf("\nTime taken to filter and sort %zu moves: %.6f seconds\n",

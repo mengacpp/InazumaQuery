@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -19,17 +20,17 @@ bool rule(void const *e)
     return (v % 7 == 0);
 }
 
-void print_int(FILE *f, void const *i_ptr)
+void print_int(void *i_ptr, size_t i, size_t count)
 {
-    int i = *(int *)i_ptr;
+    int val = *(int *)i_ptr;
 
-    fprintf(f, "%i", i);
+    fprintf(stdout, "%i ", val);
 }
 
 void filter(ina_list_t *ls, ina_filter_fn_t rule_fn)
 {
     printf("start list:\n");
-    ina_list_fprint(ls, stdout, print_int, "\t");
+    ina_list_foreach(ls, print_int);
 
     clock_t start = clock();
     ina_list_t *result = ina_filter(ls, rule_fn);
@@ -37,11 +38,11 @@ void filter(ina_list_t *ls, ina_filter_fn_t rule_fn)
 
     if (!result)
     {
-        fprintf(stderr, "%s\n", ina_strerrno(ina_errno));
+        ina_perror("Failed to filter");
     }
 
     printf("\nresult list:\n");
-    ina_list_fprint(result, stdout, print_int, "\t");
+    ina_list_foreach(result, print_int);
 
     double cpu_secs = (double)(end - start) / CLOCKS_PER_SEC;
     printf("\nTime taken to sort: %.6f seconds\n", cpu_secs);

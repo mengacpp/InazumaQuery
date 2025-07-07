@@ -123,7 +123,7 @@ uint16_t ina_hash_map_get(ina_hash_map_t *hmap, char const *key, bool *found)
 
 void ina_hash_map_destroy(ina_hash_map_t **hmap)
 {
-    if (!(*hmap)) return;
+    if (!(hmap) || !(*hmap)) return;
 
     if ((*hmap)->used) free((*hmap)->used);
     if ((*hmap)->values) free((*hmap)->values);

@@ -186,23 +186,11 @@ size_t ina_list_sizeof_element(ina_list_t const *ls)
     return ls->e_size;
 }
 
-INA_API void ina_list_fprint(ina_list_t const *ls, FILE *out,
-                             ina_list_elem_printer_t elem_printer,
-                             char const *sep)
+void ina_list_foreach(ina_list_t const *ls, ina_list_iterator_fn_t iterator_fn)
 {
-    fprintf(out, "[");
-
-    for (size_t i = 0; i < ina_list_count(ls); ++i)
+    size_t count = ina_list_count(ls);
+    for (size_t i = 0; i < count; ++i)
     {
-        fflush(out);
-        elem_printer(out, ina_list_at(ls, i));
-        fflush(out);
-
-        if (i < ina_list_count(ls) - 1)
-        {
-            fprintf(out, "%s", sep);
-        }
+        iterator_fn(ina_list_at(ls, i), i, count);
     }
-
-    fprintf(out, "]");
 }

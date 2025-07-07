@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 
 #include "InazumaQuery/core/errno.h"
@@ -10,22 +11,32 @@ void print_int(FILE *f, void const *i_ptr)
     fprintf(f, "%i", i);
 }
 
+void print(void *e, size_t i, size_t count)
+{
+    printf("%i ", *(int *)e);
+}
+
 int main()
 {
     ina_list_t *ls = ina_list_create(sizeof(int));
+
+    if (!ls)
+    {
+        ina_perror("Failed to create list");
+        return 1;
+    }
 
     for (int i = 0; i < 10; ++i)
     {
         if (!ina_list_add(ls, &i))
         {
-            fprintf(stderr, "Failed to add to list: %s\n",
-                    ina_strerrno(ina_errno));
+            ina_perror("Failed to add to list");
+            ina_list_destroy(&ls);
             return 1;
         }
     }
 
-    ina_list_fprint(ls, stdout, print_int, "\t");
-
+    ina_list_foreach(ls, print);
 
     ina_list_destroy(&ls);
     return 0;

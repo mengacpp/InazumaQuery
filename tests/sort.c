@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -30,25 +31,23 @@ void set(void *e, void const *v)
     *(int *)e = *(int *)v;
 }
 
-void print_int(FILE *f, void const *i_ptr)
+void print_int(void *e, size_t i, size_t count)
 {
-    int i = *(int *)i_ptr;
-
-    fprintf(f, "%i", i);
+    printf("%i ", *(int *)e);
 }
 
 void sort(ina_list_t *ls, ina_list_cmp_fn_t compare_fn,
           ina_list_set_fn_t set_fn)
 {
     printf("list start:\n");
-    ina_list_fprint(ls, stdout, print_int, "\t");
+    ina_list_foreach(ls, print_int);
 
     clock_t start = clock();
     ina_sort(ls, compare_fn, set_fn);
     clock_t end = clock();
 
     printf("\nlist result:\n");
-    ina_list_fprint(ls, stdout, print_int, "\t");
+    ina_list_foreach(ls, print_int);
     double cpu_secs = (double)(end - start) / CLOCKS_PER_SEC;
     printf("\nTime taken to sort: %.6f seconds\n", cpu_secs);
 };

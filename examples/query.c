@@ -32,9 +32,6 @@ int main()
         ina_pdb_query(ie3_db, 0, filter_air_element, compare_kick);
 
 
-    // print all players found
-    ina_list_fprint(players, stdout, ina_player_list_printer, "\n");
-
     // cleanup
     ina_list_destroy(&players);
     ina_pdb_destroy(&ie3_db);

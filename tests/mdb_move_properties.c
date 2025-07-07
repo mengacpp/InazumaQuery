@@ -25,8 +25,7 @@ int main()
         return 1;
     }
 
-    printf("%s %i %f", killer_slide->name, killer_slide->base_power,
-           killer_slide->fouls_rate);
+    ina_move_fprint(stdout, killer_slide);
 
 
     ina_mdb_destroy(&db);

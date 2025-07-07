@@ -26,8 +26,7 @@ int main()
         return 1;
     }
 
-    printf("%s %i %s", axel_blaze->fullname, axel_blaze->lvl99_kick,
-           axel_blaze->move1_name);
+    ina_player_fprint(stdout, axel_blaze);
 
 
     ina_pdb_destroy(&db);

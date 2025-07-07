@@ -8,7 +8,7 @@
 
 typedef struct ina_list_t ina_list_t;
 
-typedef void (*ina_list_elem_printer_t)(FILE *out, void const *elem);
+typedef void (*ina_list_iterator_fn_t)(void *e, size_t i, size_t count);
 
 INA_BEGIN_EXTERN_C
 
@@ -27,9 +27,8 @@ INA_API bool ina_list_copy(ina_list_t *dst, ina_list_t const *src,
 
 INA_API size_t ina_list_sizeof_element(ina_list_t const *ls);
 
-INA_API void ina_list_fprint(ina_list_t const *ls, FILE *out,
-                             ina_list_elem_printer_t elem_printer,
-                             char const *sep);
+INA_API void ina_list_foreach(ina_list_t const *ls,
+                              ina_list_iterator_fn_t iterator_fn);
 
 INA_END_EXTERN_C
 

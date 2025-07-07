@@ -8,12 +8,13 @@
 int main()
 {
     clock_t start = clock();
-    ina_csv_t *csv = ina_csv_create(INA_DEBUG_DATA_DIR "/players/ie3.csv");
+    char *path = INA_DEBUG_DATA_DIR "/players/ie3.csv";
+    ina_csv_t *csv = ina_csv_create(path);
     clock_t end = clock();
 
     if (!csv)
     {
-        fprintf(stderr, "ERROR: %s", ina_strerrno(ina_errno));
+        ina_perror("Failed to create csv from file '%s'", path);
         return 1;
     }
 

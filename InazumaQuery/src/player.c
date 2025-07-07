@@ -1,11 +1,4 @@
 #include "InazumaQuery/player.h"
-#include <stdio.h>
-
-
-INA_API void ina_player_list_printer(FILE *out, void const *p)
-{
-    ina_player_fprint(out, (ina_player_t *)p);
-}
 
 INA_API void ina_player_fprint(FILE *out, ina_player_t const *p)
 {

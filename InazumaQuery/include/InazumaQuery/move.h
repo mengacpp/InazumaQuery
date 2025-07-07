@@ -4,6 +4,7 @@
 #include "InazumaQuery/core/core.h"
 
 #include <stdint.h>
+#include <stdio.h>
 
 #include "InazumaQuery/element.h"
 
@@ -52,6 +53,7 @@ typedef struct
 
 INA_BEGIN_EXTERN_C
 
+INA_API void ina_move_fprint(FILE *out, ina_move_t const *mv);
 
 INA_END_EXTERN_C
 

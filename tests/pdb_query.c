@@ -33,11 +33,11 @@ bool filter(ina_player_t const *p)
            p->fullname_normalised[0] == 'a';
 }
 
-void print_name(FILE *f, void const *e)
+void print(void *e, size_t i, size_t count)
 {
     ina_player_t *p = (ina_player_t *)e;
 
-    fprintf(f, "%s", p->fullname);
+    ina_player_fprint(stdout, p);
 }
 
 int main()
@@ -49,7 +49,7 @@ int main()
     ina_list_t *players = ina_pdb_query(ie3_db, 100, filter, compare);
     clock_t end = clock();
 
-    ina_list_fprint(players, stdout, print_name, "\n");
+    ina_list_foreach(players, print);
 
     double cpu_secs = (double)(end - start) / CLOCKS_PER_SEC;
     printf("\nTime taken to filter and sort %zu players: %.6f seconds\n",

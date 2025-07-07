@@ -13,7 +13,7 @@ int main()
 
     if (!db)
     {
-        ina_perror("Failed to create moves database");
+        ina_perror("Failed to create database");
         ina_mdb_destroy(&db);
         return 1;
     }

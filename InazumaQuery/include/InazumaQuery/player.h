@@ -78,7 +78,6 @@ typedef struct
 
 INA_BEGIN_EXTERN_C
 
-INA_API void ina_player_list_printer(FILE *out, void const *p);
 INA_API void ina_player_fprint(FILE *out, ina_player_t const *p);
 
 INA_END_EXTERN_C
