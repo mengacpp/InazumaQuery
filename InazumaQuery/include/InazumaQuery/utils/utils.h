@@ -1,5 +1,5 @@
-#ifndef INAZUMA_UTILS_UTILS_H_
-#define INAZUMA_UTILS_UTILS_H_
+#ifndef INAZUMAQUERY_UTILS_UTILS_H_
+#define INAZUMAQUERY_UTILS_UTILS_H_
 
 #include "InazumaQuery/core/core.h"
 #include <stddef.h>
@@ -14,4 +14,4 @@ INA_API int ina_strcmp_normalised(char const *str1, char const *str2);
 
 INA_END_EXTERN_C
 
-#endif // INAZUMA_UTILS_UTILS_H_
+#endif // INAZUMAQUERY_UTILS_UTILS_H_

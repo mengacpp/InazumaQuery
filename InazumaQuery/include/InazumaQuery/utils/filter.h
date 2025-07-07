@@ -1,5 +1,5 @@
-#ifndef INAZUMA_UTILS_FILTER_H_
-#define INAZUMA_UTILS_FILTER_H_
+#ifndef INAZUMAQUERY_UTILS_FILTER_H_
+#define INAZUMAQUERY_UTILS_FILTER_H_
 
 #include <stdbool.h>
 
@@ -14,4 +14,4 @@ INA_API ina_list_t *ina_filter(ina_list_t *ls, ina_filter_fn_t filter_fn);
 
 INA_END_EXTERN_C
 
-#endif // INAZUMA_UTILS_FILTER_H_
+#endif // INAZUMAQUERY_UTILS_FILTER_H_

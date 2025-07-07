@@ -47,18 +47,18 @@ void print_name(FILE *f, void const *e)
 
 int main()
 {
-    ina_db_t *ie3_db = ina_db_create_from_csv(INA_IE3_CSV);
+    ina_pdb_t *ie3_db = ina_pdb_create("ie3.csv");
 
 
     clock_t start = clock();
-    ina_list_t *players = ina_db_query(ie3_db, 100, filter, compare);
+    ina_list_t *players = ina_pdb_query(ie3_db, 100, filter, compare);
     clock_t end = clock();
 
     ina_list_fprint(players, stdout, print_name, "\n");
 
     ina_list_destroy(&players);
 
-    ina_db_close(&ie3_db);
+    ina_pdb_destroy(&ie3_db);
 
     return 0;
 }

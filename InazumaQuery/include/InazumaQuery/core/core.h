@@ -1,5 +1,5 @@
-#ifndef INAZUMA_CORE_CORE_H_
-#define INAZUMA_CORE_CORE_H_
+#ifndef INAZUMAQUERY_CORE_CORE_H_
+#define INAZUMAQUERY_CORE_CORE_H_
 
 
 /*
@@ -45,4 +45,4 @@
 #define INA_NOT_IMPLEMENTED                                                    \
     fprintf(stderr, "ERROR: function %s not implemented yet!\n", __func__);
 
-#endif // INAZUMA_CORE_CORE_H_
+#endif // INAZUMAQUERY_CORE_CORE_H_

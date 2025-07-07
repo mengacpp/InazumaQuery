@@ -1,5 +1,5 @@
-#ifndef INAZUMA_PLAYER_H_
-#define INAZUMA_PLAYER_H_
+#ifndef INAZUMAQUERY_PLAYER_H_
+#define INAZUMAQUERY_PLAYER_H_
 
 #include "InazumaQuery/core/core.h"
 #include <stdio.h>
@@ -91,4 +91,4 @@ INA_API void ina_player_fprint(FILE *out, ina_player_t const *p);
 INA_END_EXTERN_C
 
 
-#endif // INAZUMA_PLAYER_H_
+#endif // INAZUMAQUERY_PLAYER_H_

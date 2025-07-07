@@ -22,14 +22,14 @@ bool filter_air_element(ina_player_t const *p)
 int main()
 {
     // open the Inazuma eleven 3 player database
-    ina_db_t *ie3_db = ina_db_create_from_csv(INA_IE3_CSV);
+    ina_pdb_t *ie3_db = ina_pdb_create("ie3.csv");
 
     // from the ie3 database, find players that respect the filter_air_element
     // condition and sort them using the compare_kick
     // in simple terms, we are getting all players of element air and sorting
     // them by their kick stat at lvl99.
     ina_list_t *players =
-        ina_db_query(ie3_db, 0, filter_air_element, compare_kick);
+        ina_pdb_query(ie3_db, 0, filter_air_element, compare_kick);
 
 
     // print all players found
@@ -37,7 +37,7 @@ int main()
 
     // cleanup
     ina_list_destroy(&players);
-    ina_db_close(&ie3_db);
+    ina_pdb_destroy(&ie3_db);
 
     return 0;
 }

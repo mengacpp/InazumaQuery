@@ -1,5 +1,5 @@
-#ifndef INAZUMA_UTILS_HMAP_H_
-#define INAZUMA_UTILS_HMAP_H_
+#ifndef INAZUMAQUERY_UTILS_HASH_MAP_H_
+#define INAZUMAQUERY_UTILS_HASH_MAP_H_
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -30,4 +30,4 @@ INA_API void ina_hash_map_destroy(ina_hash_map_t **hmap);
 
 INA_END_EXTERN_C
 
-#endif // INAZUMA_UTILS_HMAP_H_
+#endif // INAZUMAQUERY_UTILS_HASH_MAP_H_

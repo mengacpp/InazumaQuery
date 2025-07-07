@@ -1,5 +1,5 @@
-#ifndef INAZUMA_UTILS_SORT_H_
-#define INAZUMA_UTILS_SORT_H_
+#ifndef INAZUMAQUERY_UTILS_SORT_H_
+#define INAZUMAQUERY_UTILS_SORT_H_
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -21,4 +21,4 @@ INA_API void ina_sort(ina_list_t const *list, ina_list_cmp_fn_t compare_fn,
 INA_END_EXTERN_C
 
 
-#endif // INAZUMA_UTILS_SORT_H_
+#endif // INAZUMAQUERY_UTILS_SORT_H_

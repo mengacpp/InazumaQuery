@@ -1,4 +1,4 @@
-#include "InazumaQuery/db.h"
+#include "InazumaQuery/pdb.h"
 
 #include <errno.h>
 #include <stddef.h>
@@ -20,18 +20,18 @@
 
 #define INA_PLAYER_DB_MAX_PLAYERS 2500
 
-bool ina_db_accept_all(ina_player_t const *e)
+bool ina_pdb_accept_all(ina_player_t const *e)
 {
     return true;
 };
 
-int ina_db_default_compare(ina_player_t const *e, ina_player_t const *e2)
+int ina_pdb_default_compare(ina_player_t const *e, ina_player_t const *e2)
 {
     return e->hex_id - e2->hex_id;
 };
 
 
-struct ina_db_t
+struct ina_pdb_t
 {
     ina_list_t *players;
     ina_hash_map_t *fullname_hmap;
@@ -41,9 +41,9 @@ int assign_to_player_by_col(ina_player_t *player, size_t col,
                             char const *cell_content);
 int get_stat_from_cell(char const *cell_content);
 
-ina_db_t *ina_db_create_from_csv(const char *csv_path)
+ina_pdb_t *ina_pdb_create(const char *csv_path)
 {
-    ina_db_t *db = malloc(sizeof(*db));
+    ina_pdb_t *db = malloc(sizeof(*db));
     if (!db)
     {
         ina_stderrno = errno;
@@ -54,7 +54,7 @@ ina_db_t *ina_db_create_from_csv(const char *csv_path)
     db->players = ina_list_create(sizeof(ina_player_t));
     if (!db->players)
     {
-        ina_db_close(&db);
+        ina_pdb_destroy(&db);
         return NULL;
     }
 
@@ -62,7 +62,7 @@ ina_db_t *ina_db_create_from_csv(const char *csv_path)
 
     if (!db->fullname_hmap)
     {
-        ina_db_close(&db);
+        ina_pdb_destroy(&db);
         return NULL;
     }
 
@@ -70,7 +70,7 @@ ina_db_t *ina_db_create_from_csv(const char *csv_path)
 
     if (!csv)
     {
-        ina_db_close(&db);
+        ina_pdb_destroy(&db);
         return NULL;
     }
 
@@ -94,7 +94,7 @@ ina_db_t *ina_db_create_from_csv(const char *csv_path)
     return db;
 }
 
-void ina_db_close(ina_db_t **db)
+void ina_pdb_destroy(ina_pdb_t **db)
 {
     if (!(*db)) return;
 
@@ -130,9 +130,9 @@ void set(void *e, void const *e2)
 
 // TODO return a list of pointers instead of a list of players
 // this will avoid copying all that memory
-INA_API ina_list_t *ina_db_query(ina_db_t const *db, uint16_t max_count,
-                                 ina_player_filter_fn_t filter_fn,
-                                 ina_player_compare_fn compare_fn)
+INA_API ina_list_t *ina_pdb_query(ina_pdb_t const *db, uint16_t max_count,
+                                  ina_player_filter_fn_t filter_fn,
+                                  ina_player_compare_fn compare_fn)
 {
     if (!db)
     {
@@ -140,8 +140,8 @@ INA_API ina_list_t *ina_db_query(ina_db_t const *db, uint16_t max_count,
         return NULL;
     }
 
-    g_compare_fn = compare_fn ? compare_fn : ina_db_default_compare;
-    g_filter_fn = filter_fn ? filter_fn : ina_db_accept_all;
+    g_compare_fn = compare_fn ? compare_fn : ina_pdb_default_compare;
+    g_filter_fn = filter_fn ? filter_fn : ina_pdb_accept_all;
 
     ina_list_t *filtered = ina_filter(db->players, filter_wrapper);
     ina_sort(filtered, compare_wrapper, set);
@@ -164,7 +164,7 @@ INA_API ina_list_t *ina_db_query(ina_db_t const *db, uint16_t max_count,
     return result;
 }
 
-ina_player_t const *ina_db_query_fullname(ina_db_t const *db,
+ina_player_t const *ina_pdb_find_fullname(ina_pdb_t const *db,
                                           char const *fullname)
 {
     char fullname_normalised[INA_FULLNAME_MAX_LEN];

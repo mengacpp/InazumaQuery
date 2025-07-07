@@ -1,5 +1,5 @@
-#ifndef INAZUMA_CORE_ERRNO_H_
-#define INAZUMA_CORE_ERRNO_H_
+#ifndef INAZUMAQUERY_CORE_ERRNO_H_
+#define INAZUMAQUERY_CORE_ERRNO_H_
 
 #include "InazumaQuery/core/core.h"
 
@@ -28,4 +28,4 @@ INA_API char *ina_strerrno(ina_errt_t ina_errno);
 
 INA_END_EXTERN_C
 
-#endif // INAZUMA_CORE_ERRNO_H_
+#endif // INAZUMAQUERY_CORE_ERRNO_H_

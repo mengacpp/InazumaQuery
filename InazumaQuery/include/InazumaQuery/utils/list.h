@@ -1,5 +1,5 @@
-#ifndef INAZUMA_UTILS_LIST_H_
-#define INAZUMA_UTILS_LIST_H_
+#ifndef INAZUMAQUERY_UTILS_LIST_H_
+#define INAZUMAQUERY_UTILS_LIST_H_
 
 #include "InazumaQuery/core/core.h"
 #include <stdbool.h>
@@ -33,4 +33,4 @@ INA_API void ina_list_fprint(ina_list_t const *ls, FILE *out,
 
 INA_END_EXTERN_C
 
-#endif // INAZUMA_UTILS_LIST_H_
+#endif // INAZUMAQUERY_UTILS_LIST_H_

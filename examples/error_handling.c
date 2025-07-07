@@ -9,7 +9,7 @@ int main()
     // when a function fails, the ina_errno variable is set.
     // if ina_errno == INA_ERRT_STD, then also ina_stderrno is set
     // to indicate the stdlib error that occurred
-    ina_db_t *db = ina_db_create_from_csv("invalid/path/to/csv");
+    ina_pdb_t *db = ina_pdb_create("invalid/path/to/csv");
 
     if (!db)
     {
@@ -20,7 +20,7 @@ int main()
         return 1;
     }
 
-    ina_db_close(&db);
+    ina_pdb_destroy(&db);
 
     return 0;
 }
