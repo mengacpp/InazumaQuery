@@ -38,23 +38,12 @@ bool filter(ina_player_t const *p)
     return true;
 }
 
-void print_name(FILE *f, void const *e)
-{
-    ina_player_t *p = (ina_player_t *)e;
-
-    fprintf(f, "%s", p->fullname);
-}
-
 int main()
 {
     ina_pdb_t *ie3_db = ina_pdb_create("ie3.csv");
 
-
-    clock_t start = clock();
+    // query 100 players in alphabetical order starting from A.
     ina_list_t *players = ina_pdb_query(ie3_db, 100, filter, compare);
-    clock_t end = clock();
-
-    ina_list_fprint(players, stdout, print_name, "\n");
 
     ina_list_destroy(&players);
 

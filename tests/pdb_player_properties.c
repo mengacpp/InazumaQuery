@@ -7,7 +7,7 @@
 
 int main()
 {
-    char const *csv_path = INA_DEBUG_DATA_DIR "/moves/ie2.csv";
+    char const *csv_path = INA_DEBUG_DATA_DIR "/players/ie2.csv";
     ina_pdb_t *db = ina_pdb_create(csv_path);
 
     if (!db)

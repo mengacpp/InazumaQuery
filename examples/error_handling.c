@@ -15,8 +15,7 @@ int main()
     {
         // ina_strerrno(ina_errno) will print the correct error message even if
         // a stdlib error occurred
-        fprintf(stderr, "ERROR: database not opened: %s\n",
-                ina_strerrno(ina_errno));
+        ina_perror("Failed to create database");
         return 1;
     }
 
